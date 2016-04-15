@@ -1,0 +1,40 @@
+INSTALLAZIONE - GESTIONE PROPEL ORM
+
+http://propelorm.org/documentation/01-installation.html
+
+MAPPARE SCHEMA SQL DA MYSQL
+
+1. dal promt di comandi, nella root folder del progetto --> propel init
+2. si avvia un wizard che chiede:
+	- quale db
+	- posizione (indirizzo, porta, nome database, nome utente e password)
+	- dove salvare il file .xml che viene generato (posizione root_folder/config)
+	- quale namespace assegnare all'importazione (ns_quickPoll)
+	- dove salvare le classi generate (root_folder/config/orm)
+3. una volta generato lo schema bisogna seguire questa guida dal titolo: "Building The Model" --> http://propelorm.org/documentation/02-buildtime.html
+	i comandi principali, che devono funzionare sono:
+	- propel sql:build
+	- propel model:build
+
+N.B.
+Il file composer.json dentro la root_folder del progetto deve essere fatto così:
+{
+  "require": {
+    "propel/propel": "~2.0@dev"
+  },
+  "autoload": {
+    "files": ["config/generated-conf/config.php"],
+    "classmap": ["config/orm/"]
+  }
+}
+
+
+AGGIORNAMENTO SCHEMA
+http://stackoverflow.com/questions/34058222/update-propel-generated-classes-after-modifying-database
+
+1. in root_folder/config -->  php propel sql:build --overwrite
+2.                       -->  php propel model:build
+3. in root_folder        -->  php composer.phar dump-autoload
+
+
+
