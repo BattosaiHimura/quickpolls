@@ -1,0 +1,9 @@
+{
+  "require": {
+    "propel/propel": "~2.0@dev"
+  },
+  "autoload": {
+    "files": ["config/generated-conf/config.php"],
+    "classmap": ["config/orm/"]
+  }
+}

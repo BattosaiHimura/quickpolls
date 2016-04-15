@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="Argument" idMethod="native" phpName="Argument">
+    <column name="idArgument" phpName="Idargument" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="Course_idCourse" phpName="CourseIdcourse" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="300" required="true"/>
+    <column name="date" phpName="Date" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="Course" name="fk_Argument_Course1">
+      <reference local="Course_idCourse" foreign="idCourse"/>
+    </foreign-key>
+    <index name="fk_Argument_Course1_idx">
+      <index-column name="Course_idCourse"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Course" idMethod="native" phpName="Course">
+    <column name="idCourse" phpName="Idcourse" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="dateFrom" phpName="Datefrom" type="TIMESTAMP" required="true"/>
+    <column name="dateTo" phpName="Dateto" type="TIMESTAMP" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="45" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="300" required="true"/>
+    <column name="session" phpName="Session" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="DailyLesson" idMethod="native" phpName="Dailylesson">
+    <column name="idPoll" phpName="Idpoll" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="comment" phpName="Comment" type="VARCHAR" size="300"/>
+    <column name="Argument_idArgument" phpName="ArgumentIdargument" type="INTEGER" required="true"/>
+    <column name="Argument_Course_idCourse" phpName="ArgumentCourseIdcourse" type="INTEGER" required="true"/>
+    <column name="date" phpName="Date" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="Argument" name="fk_DailyLesson_Argument1">
+      <reference local="Argument_idArgument" foreign="idArgument"/>
+      <reference local="Argument_Course_idCourse" foreign="Course_idCourse"/>
+    </foreign-key>
+    <index name="fk_DailyLesson_Argument1_idx">
+      <index-column name="Argument_idArgument"/>
+      <index-column name="Argument_Course_idCourse"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="DailyLesson_has_User" idMethod="native" phpName="DailylessonHasUser">
+    <column name="DailyLesson_idPoll" phpName="DailylessonIdpoll" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="User_idUser" phpName="UserIduser" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="date" phpName="Date" type="TIMESTAMP" required="true"/>
+    <column name="comments" phpName="Comments" type="VARCHAR" size="300"/>
+    <column name="Quality_idquality" phpName="QualityIdquality" type="INTEGER" primaryKey="true" required="true"/>
+    <foreign-key foreignTable="DailyLesson" name="fk_DailyLesson_has_User_DailyLesson1">
+      <reference local="DailyLesson_idPoll" foreign="idPoll"/>
+    </foreign-key>
+    <foreign-key foreignTable="Quality" name="fk_DailyLesson_has_User_Quality1">
+      <reference local="Quality_idquality" foreign="idquality"/>
+    </foreign-key>
+    <foreign-key foreignTable="User" name="fk_DailyLesson_has_User_User1">
+      <reference local="User_idUser" foreign="idUser"/>
+    </foreign-key>
+    <index name="fk_DailyLesson_has_User_User1_idx">
+      <index-column name="User_idUser"/>
+    </index>
+    <index name="fk_DailyLesson_has_User_DailyLesson1_idx">
+      <index-column name="DailyLesson_idPoll"/>
+    </index>
+    <index name="fk_DailyLesson_has_User_Quality1_idx">
+      <index-column name="Quality_idquality"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Final_vote" idMethod="native" phpName="FinalVote">
+    <column name="idFinal_vote" phpName="IdfinalVote" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="comment" phpName="Comment" type="VARCHAR" size="300"/>
+    <column name="tips" phpName="Tips" type="VARCHAR" size="300"/>
+    <column name="slidesPresent" phpName="Slidespresent" type="BOOLEAN" size="1"/>
+    <column name="Quality_idquality" phpName="QualityIdquality" type="INTEGER" required="true"/>
+    <column name="Course_idCourse" phpName="CourseIdcourse" type="INTEGER" required="true"/>
+    <column name="User_idUser" phpName="UserIduser" type="INTEGER" required="true"/>
+    <foreign-key foreignTable="Course" name="fk_Final_vote_Course1">
+      <reference local="Course_idCourse" foreign="idCourse"/>
+    </foreign-key>
+    <foreign-key foreignTable="Quality" name="fk_Final_vote_quality1">
+      <reference local="Quality_idquality" foreign="idquality"/>
+    </foreign-key>
+    <foreign-key foreignTable="User" name="fk_Final_vote_User1">
+      <reference local="User_idUser" foreign="idUser"/>
+    </foreign-key>
+    <index name="fk_Final_vote_quality1_idx">
+      <index-column name="Quality_idquality"/>
+    </index>
+    <index name="fk_Final_vote_Course1_idx">
+      <index-column name="Course_idCourse"/>
+    </index>
+    <index name="fk_Final_vote_User1_idx">
+      <index-column name="User_idUser"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Prof_has_Course" idMethod="native" phpName="ProfHasCourse">
+    <column name="User_idUser" phpName="UserIduser" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="Course_idCourse" phpName="CourseIdcourse" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="isLab" phpName="Islab" type="BOOLEAN" size="1" required="true"/>
+    <column name="presence" phpName="Presence" type="INTEGER" required="true"/>
+    <foreign-key foreignTable="Course" name="fk_User_has_Course_Course1">
+      <reference local="Course_idCourse" foreign="idCourse"/>
+    </foreign-key>
+    <foreign-key foreignTable="User" name="fk_User_has_Course_User1">
+      <reference local="User_idUser" foreign="idUser"/>
+    </foreign-key>
+    <index name="fk_User_has_Course_Course1_idx">
+      <index-column name="Course_idCourse"/>
+    </index>
+    <index name="fk_User_has_Course_User1_idx">
+      <index-column name="User_idUser"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Pwd" idMethod="native" phpName="Pwd">
+    <column name="idPwd" phpName="Idpwd" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="pwd" phpName="Pwd" type="CHAR" size="64" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Quality" idMethod="native" phpName="Quality">
+    <column name="idquality" phpName="Idquality" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="vote" phpName="Vote" type="DECIMAL" scale="0" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="User" idMethod="native" phpName="User">
+    <column name="idUser" phpName="Iduser" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="45" required="true"/>
+    <column name="surname" phpName="Surname" type="VARCHAR" size="45" required="true"/>
+    <column name="matricola" phpName="Matricola" type="VARCHAR" size="10"/>
+    <column name="UserType_idUserType" phpName="UsertypeIdusertype" type="INTEGER" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="100"/>
+    <foreign-key foreignTable="User_type" name="fk_User_UserType">
+      <reference local="UserType_idUserType" foreign="idUserType"/>
+    </foreign-key>
+    <index name="fk_User_UserType_idx">
+      <index-column name="UserType_idUserType"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="User_has_Pwd" idMethod="native" phpName="UserHasPwd">
+    <column name="User_idUser" phpName="UserIduser" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="Pwd_idPwd" phpName="PwdIdpwd" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="dateFrom" phpName="Datefrom" type="TIMESTAMP" required="true"/>
+    <column name="dateTo" phpName="Dateto" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="Pwd" name="fk_User_has_Pwd_Pwd1">
+      <reference local="Pwd_idPwd" foreign="idPwd"/>
+    </foreign-key>
+    <foreign-key foreignTable="User" name="fk_User_has_Pwd_User1">
+      <reference local="User_idUser" foreign="idUser"/>
+    </foreign-key>
+    <index name="fk_User_has_Pwd_Pwd1_idx">
+      <index-column name="Pwd_idPwd"/>
+    </index>
+    <index name="fk_User_has_Pwd_User1_idx">
+      <index-column name="User_idUser"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="User_type" idMethod="native" phpName="UserType">
+    <column name="idUserType" phpName="Idusertype" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="45" required="true"/>
+    <column name="dateFrom" phpName="Datefrom" type="TIMESTAMP" required="true"/>
+    <column name="dateTo" phpName="Dateto" type="TIMESTAMP" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Actual_pwd" phpName="Actual_pwd" skipSql="true" idMethod="native">
+    <column name="idUser" phpName="Iduser" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="45" required="true"/>
+    <column name="surname" phpName="Surname" type="VARCHAR" size="45" required="true"/>
+    <column name="matricola" phpName="Matricola" type="VARCHAR" size="10"/>
+    <column name="UserType_idUserType" phpName="UsertypeIdusertype" type="INTEGER" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="100"/>
+    <column name="User_idUser" phpName="UserIduser" type="INTEGER" required="true"/>
+    <column name="Pwd_idPwd" phpName="PwdIdpwd" type="INTEGER" required="true"/>
+    <column name="dateFrom" phpName="Datefrom" type="TIMESTAMP" required="true"/>
+    <column name="dateTo" phpName="Dateto" type="TIMESTAMP" required="true"/>
+    <column name="idPwd" phpName="Idpwd" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="pwd" phpName="Pwd" type="CHAR" size="64" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>
