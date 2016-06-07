@@ -1,11 +1,25 @@
-<div>
-    <h1>This is the Login Page!</h1>
 
-    <form action="login/run" method="post">
+			
+            <form id="loginForm" class="form-signin" method="post" action="login/run">
+                <h2 class="form-signin-heading">Accedi</h2>
 
-        <label>Login</label><input type="text" name="login" /><br />
-        <label>Password</label><input type="text" name="password" /><br />
-        <label></label><input type="submit" />
-    </form>
+				<div class="form-group">
+					<label for="inputEmail" class="sr-only">Indirizzo Email</label>
+					<input type="email" id="inputEmail" name="email" class="form-control" placeholder="Indirizzo Email" required autofocus>
+				</div>
 
-</div>
+				<div class="form-group">
+					<label for="inputPassword" class="sr-only">Password</label>
+					<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+				</div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+				
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+
+        </div> <!-- /container -->

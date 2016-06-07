@@ -4,6 +4,7 @@ class Index extends Controller {
 
 	function __construct() {
 		parent::__construct();
+		Session::init();
 	}
 
 	function index() {
@@ -17,6 +18,13 @@ class Index extends Controller {
 	function detail() {
 		//echo 'We are inside Index-Detail';
 		$this->view->render('index/indexPage');
+	}
+
+
+	function logout() {
+		Session::destroy();
+		header("Location: ".URL."index");
+		exit;
 	}
 
 }
