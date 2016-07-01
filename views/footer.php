@@ -87,6 +87,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<span class="sr-only">Vota Sondaggio <?php echo $poll->getTitle()?></span>
 								<h4 class="modal-title"><?php echo $poll->getTitle() ?></h4>
 							</div>
 
@@ -106,6 +107,7 @@
 										<input id="input-a" name="<?php echo $arg->getId(); ?>" value="2" type="number"
 											   class="rating"
 											   min=0 max=5 step=1 data-size="xs">
+										<span class="sr-only">Vota Argomento <?php echo $arg->getDescription()?></span>
 										<?php
 									}
 									?>

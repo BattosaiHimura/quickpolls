@@ -71,12 +71,14 @@
 						?>
 						<a href="<?php echo URL;?>dashboard?poll=<?php echo $poll->getId();?>">
 							<span class="glyphicon glyphicon-ok-sign green"></span>
+							<span class="sr-only">Vota Sondaggio <?php echo $poll->getTitle()?></span>
 						</a>
 						<?php
 						} else {
 						?>
 						<a href="<?php echo URL;?>dashboard?poll=<?php echo $poll->getId();?>">
 							<span class="glyphicon glyphicon-remove-sign red"></span>
+							<span class="sr-only">Vota Sondaggio <?php echo $poll->getTitle()?></span>
 						</a>
 						<?php
 						}
@@ -117,15 +119,18 @@
 			?>
 			<h1 class="page-header"><?php echo $course->getName() ?></h1>
 
-			<div class="row placeholders ">
+			<span class="sr-only" for="grafici">Grafici</span>
+			<div class="row placeholders " id="grafici">
 				<script src="public/js/chart.js"></script>
 				<script src="public/plugins/chartjs/dist/Chart.bundle.js"></script>
-				<div class="col-xs-12 col-sm-6  col-md-4 col-md-offset-2 canvas-holder">
+				<label class="sr-only" for="grafCorso">Grafico Corso (PHP dati corso)</label>
+				<div class="col-xs-12 col-sm-6  col-md-4 col-md-offset-2 canvas-holder" id="grafCorso">
 					<canvas id="chart-area" width="600" height="600"></canvas>
 					<h4><?php echo $course->getName(); ?></h4>
 					<span class="text-muted">Grafico generale</span>
 				</div>
 				<?php if (count($polls) > 0) { ?>
+					<label class="sr-only" for="grafPoll">Grafico Sondaggio (PHP dati sondaggio)</label>
 					<div class="col-xs-12 col-sm-6 col-md-4 canvas-holder">
 						<canvas id="chart-areaA" width="600" height="600"></canvas>
 						<h4><?php echo $polls[0]->getTitle(); ?></h4>
@@ -197,7 +202,8 @@
 
 <?php
 	} else {
-		header("Location".URL."index/logout");
+		//header("Location".URL."index/logout");
+		echo "<h1>Solo Chuck Norris sa dividere per zero.</h1>";
 		exit;
 	}
 ?>

@@ -8,7 +8,8 @@ class MyError extends Controller {
 	}
 
 	function index() {
-		$this->view->msg = 'This page doesn\'t exist!';
+		//$this->view->msg = 'This page doesn\'t exist!';
+		$this->view->msg = 'Perch&egrave; scrivi boiate figliuolo?';
 		$this->view->render('errors/errorPage');
 	}
 
