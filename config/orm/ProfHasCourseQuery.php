@@ -3,7 +3,7 @@
 use Base\ProfHasCourseQuery as BaseProfHasCourseQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'Prof_has_Course' table.
+ * Skeleton subclass for performing query and update operations on the 'prof_has_course' table.
  *
  *
  *

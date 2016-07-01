@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \UserType;
-use \UserTypeQuery;
+use \Comments;
+use \CommentsQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'user_type' table.
+ * This class defines the structure of the 'comments' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class UserTypeTableMap extends TableMap
+class CommentsTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class UserTypeTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.UserTypeTableMap';
+    const CLASS_NAME = '.Map.CommentsTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class UserTypeTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'user_type';
+    const TABLE_NAME = 'comments';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\UserType';
+    const OM_CLASS = '\\Comments';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'UserType';
+    const CLASS_DEFAULT = 'Comments';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 2;
+    const NUM_COLUMNS = 3;
 
     /**
      * The number of lazy-loaded columns
@@ -69,17 +69,22 @@ class UserTypeTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 2;
+    const NUM_HYDRATE_COLUMNS = 3;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'user_type.id';
+    const COL_ID = 'comments.id';
 
     /**
-     * the column name for the description field
+     * the column name for the vote_id field
      */
-    const COL_DESCRIPTION = 'user_type.description';
+    const COL_VOTE_ID = 'comments.vote_id';
+
+    /**
+     * the column name for the comment field
+     */
+    const COL_COMMENT = 'comments.comment';
 
     /**
      * The default string format for model objects of the related table
@@ -93,11 +98,11 @@ class UserTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Description', ),
-        self::TYPE_CAMELNAME     => array('id', 'description', ),
-        self::TYPE_COLNAME       => array(UserTypeTableMap::COL_ID, UserTypeTableMap::COL_DESCRIPTION, ),
-        self::TYPE_FIELDNAME     => array('id', 'description', ),
-        self::TYPE_NUM           => array(0, 1, )
+        self::TYPE_PHPNAME       => array('Id', 'VoteId', 'Comment', ),
+        self::TYPE_CAMELNAME     => array('id', 'voteId', 'comment', ),
+        self::TYPE_COLNAME       => array(CommentsTableMap::COL_ID, CommentsTableMap::COL_VOTE_ID, CommentsTableMap::COL_COMMENT, ),
+        self::TYPE_FIELDNAME     => array('id', 'vote_id', 'comment', ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
 
     /**
@@ -107,11 +112,11 @@ class UserTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Description' => 1, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'description' => 1, ),
-        self::TYPE_COLNAME       => array(UserTypeTableMap::COL_ID => 0, UserTypeTableMap::COL_DESCRIPTION => 1, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'description' => 1, ),
-        self::TYPE_NUM           => array(0, 1, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'VoteId' => 1, 'Comment' => 2, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'voteId' => 1, 'comment' => 2, ),
+        self::TYPE_COLNAME       => array(CommentsTableMap::COL_ID => 0, CommentsTableMap::COL_VOTE_ID => 1, CommentsTableMap::COL_COMMENT => 2, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'vote_id' => 1, 'comment' => 2, ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
 
     /**
@@ -124,15 +129,16 @@ class UserTypeTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('user_type');
-        $this->setPhpName('UserType');
+        $this->setName('comments');
+        $this->setPhpName('Comments');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\UserType');
+        $this->setClassName('\\Comments');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('description', 'Description', 'VARCHAR', true, 45, null);
+        $this->addForeignKey('vote_id', 'VoteId', 'INTEGER', 'votes', 'id', true, null, null);
+        $this->addColumn('comment', 'Comment', 'VARCHAR', true, 300, null);
     } // initialize()
 
     /**
@@ -140,13 +146,13 @@ class UserTypeTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Users', '\\Users', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('Votes', '\\Votes', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':user_type_id',
+    0 => ':vote_id',
     1 => ':id',
   ),
-), null, null, 'Userss', false);
+), null, null, null, false);
     } // buildRelations()
 
     /**
@@ -206,7 +212,7 @@ class UserTypeTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? UserTypeTableMap::CLASS_DEFAULT : UserTypeTableMap::OM_CLASS;
+        return $withPrefix ? CommentsTableMap::CLASS_DEFAULT : CommentsTableMap::OM_CLASS;
     }
 
     /**
@@ -220,22 +226,22 @@ class UserTypeTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (UserType object, last column rank)
+     * @return array           (Comments object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = UserTypeTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = UserTypeTableMap::getInstanceFromPool($key))) {
+        $key = CommentsTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = CommentsTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + UserTypeTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + CommentsTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = UserTypeTableMap::OM_CLASS;
-            /** @var UserType $obj */
+            $cls = CommentsTableMap::OM_CLASS;
+            /** @var Comments $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            UserTypeTableMap::addInstanceToPool($obj, $key);
+            CommentsTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -258,18 +264,18 @@ class UserTypeTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = UserTypeTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = UserTypeTableMap::getInstanceFromPool($key))) {
+            $key = CommentsTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = CommentsTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var UserType $obj */
+                /** @var Comments $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                UserTypeTableMap::addInstanceToPool($obj, $key);
+                CommentsTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -290,11 +296,13 @@ class UserTypeTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(UserTypeTableMap::COL_ID);
-            $criteria->addSelectColumn(UserTypeTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(CommentsTableMap::COL_ID);
+            $criteria->addSelectColumn(CommentsTableMap::COL_VOTE_ID);
+            $criteria->addSelectColumn(CommentsTableMap::COL_COMMENT);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.vote_id');
+            $criteria->addSelectColumn($alias . '.comment');
         }
     }
 
@@ -307,7 +315,7 @@ class UserTypeTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(UserTypeTableMap::DATABASE_NAME)->getTable(UserTypeTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(CommentsTableMap::DATABASE_NAME)->getTable(CommentsTableMap::TABLE_NAME);
     }
 
     /**
@@ -315,16 +323,16 @@ class UserTypeTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(UserTypeTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(UserTypeTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new UserTypeTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(CommentsTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(CommentsTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new CommentsTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a UserType or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Comments or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or UserType object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Comments object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -335,27 +343,27 @@ class UserTypeTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CommentsTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \UserType) { // it's a model object
+        } elseif ($values instanceof \Comments) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(UserTypeTableMap::DATABASE_NAME);
-            $criteria->add(UserTypeTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(CommentsTableMap::DATABASE_NAME);
+            $criteria->add(CommentsTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = UserTypeQuery::create()->mergeWith($criteria);
+        $query = CommentsQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            UserTypeTableMap::clearInstancePool();
+            CommentsTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                UserTypeTableMap::removeInstanceFromPool($singleval);
+                CommentsTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -363,20 +371,20 @@ class UserTypeTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the user_type table.
+     * Deletes all rows from the comments table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return UserTypeQuery::create()->doDeleteAll($con);
+        return CommentsQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a UserType or Criteria object.
+     * Performs an INSERT on the database, given a Comments or Criteria object.
      *
-     * @param mixed               $criteria Criteria or UserType object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Comments object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -385,22 +393,22 @@ class UserTypeTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CommentsTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from UserType object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Comments object
         }
 
-        if ($criteria->containsKey(UserTypeTableMap::COL_ID) && $criteria->keyContainsValue(UserTypeTableMap::COL_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.UserTypeTableMap::COL_ID.')');
+        if ($criteria->containsKey(CommentsTableMap::COL_ID) && $criteria->keyContainsValue(CommentsTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.CommentsTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = UserTypeQuery::create()->mergeWith($criteria);
+        $query = CommentsQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -409,7 +417,7 @@ class UserTypeTableMap extends TableMap
         });
     }
 
-} // UserTypeTableMap
+} // CommentsTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-UserTypeTableMap::buildTableMap();
+CommentsTableMap::buildTableMap();

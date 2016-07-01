@@ -3,7 +3,7 @@
 use Base\UserHasPwd as BaseUserHasPwd;
 
 /**
- * Skeleton subclass for representing a row from the 'User_has_Pwd' table.
+ * Skeleton subclass for representing a row from the 'user_has_pwd' table.
  *
  *
  *

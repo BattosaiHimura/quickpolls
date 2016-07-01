@@ -1,9 +1,9 @@
 <?php
 
-use Base\QualityQuery as BaseQualityQuery;
+use Base\PollsHasArguments as BasePollsHasArguments;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'quality' table.
+ * Skeleton subclass for representing a row from the 'polls_has_arguments' table.
  *
  *
  *
@@ -12,7 +12,7 @@ use Base\QualityQuery as BaseQualityQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class QualityQuery extends BaseQualityQuery
+class PollsHasArguments extends BasePollsHasArguments
 {
 
 }

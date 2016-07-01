@@ -16,18 +16,18 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'Prof_has_Course' table.
+ * Base class that represents a query for the 'prof_has_course' table.
  *
  *
  *
- * @method     ChildProfHasCourseQuery orderByUserIduser($order = Criteria::ASC) Order by the User_idUser column
- * @method     ChildProfHasCourseQuery orderByCourseIdcourse($order = Criteria::ASC) Order by the Course_idCourse column
- * @method     ChildProfHasCourseQuery orderByIslab($order = Criteria::ASC) Order by the isLab column
+ * @method     ChildProfHasCourseQuery orderByUsersId($order = Criteria::ASC) Order by the users_id column
+ * @method     ChildProfHasCourseQuery orderByCoursesId($order = Criteria::ASC) Order by the courses_id column
+ * @method     ChildProfHasCourseQuery orderByIsLab($order = Criteria::ASC) Order by the is_lab column
  * @method     ChildProfHasCourseQuery orderByPresence($order = Criteria::ASC) Order by the presence column
  *
- * @method     ChildProfHasCourseQuery groupByUserIduser() Group by the User_idUser column
- * @method     ChildProfHasCourseQuery groupByCourseIdcourse() Group by the Course_idCourse column
- * @method     ChildProfHasCourseQuery groupByIslab() Group by the isLab column
+ * @method     ChildProfHasCourseQuery groupByUsersId() Group by the users_id column
+ * @method     ChildProfHasCourseQuery groupByCoursesId() Group by the courses_id column
+ * @method     ChildProfHasCourseQuery groupByIsLab() Group by the is_lab column
  * @method     ChildProfHasCourseQuery groupByPresence() Group by the presence column
  *
  * @method     ChildProfHasCourseQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -38,48 +38,48 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildProfHasCourseQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildProfHasCourseQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildProfHasCourseQuery leftJoinCourse($relationAlias = null) Adds a LEFT JOIN clause to the query using the Course relation
- * @method     ChildProfHasCourseQuery rightJoinCourse($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Course relation
- * @method     ChildProfHasCourseQuery innerJoinCourse($relationAlias = null) Adds a INNER JOIN clause to the query using the Course relation
+ * @method     ChildProfHasCourseQuery leftJoinUsers($relationAlias = null) Adds a LEFT JOIN clause to the query using the Users relation
+ * @method     ChildProfHasCourseQuery rightJoinUsers($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Users relation
+ * @method     ChildProfHasCourseQuery innerJoinUsers($relationAlias = null) Adds a INNER JOIN clause to the query using the Users relation
  *
- * @method     ChildProfHasCourseQuery joinWithCourse($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Course relation
+ * @method     ChildProfHasCourseQuery joinWithUsers($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Users relation
  *
- * @method     ChildProfHasCourseQuery leftJoinWithCourse() Adds a LEFT JOIN clause and with to the query using the Course relation
- * @method     ChildProfHasCourseQuery rightJoinWithCourse() Adds a RIGHT JOIN clause and with to the query using the Course relation
- * @method     ChildProfHasCourseQuery innerJoinWithCourse() Adds a INNER JOIN clause and with to the query using the Course relation
+ * @method     ChildProfHasCourseQuery leftJoinWithUsers() Adds a LEFT JOIN clause and with to the query using the Users relation
+ * @method     ChildProfHasCourseQuery rightJoinWithUsers() Adds a RIGHT JOIN clause and with to the query using the Users relation
+ * @method     ChildProfHasCourseQuery innerJoinWithUsers() Adds a INNER JOIN clause and with to the query using the Users relation
  *
- * @method     ChildProfHasCourseQuery leftJoinUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the User relation
- * @method     ChildProfHasCourseQuery rightJoinUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the User relation
- * @method     ChildProfHasCourseQuery innerJoinUser($relationAlias = null) Adds a INNER JOIN clause to the query using the User relation
+ * @method     ChildProfHasCourseQuery leftJoinCourses($relationAlias = null) Adds a LEFT JOIN clause to the query using the Courses relation
+ * @method     ChildProfHasCourseQuery rightJoinCourses($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Courses relation
+ * @method     ChildProfHasCourseQuery innerJoinCourses($relationAlias = null) Adds a INNER JOIN clause to the query using the Courses relation
  *
- * @method     ChildProfHasCourseQuery joinWithUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the User relation
+ * @method     ChildProfHasCourseQuery joinWithCourses($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Courses relation
  *
- * @method     ChildProfHasCourseQuery leftJoinWithUser() Adds a LEFT JOIN clause and with to the query using the User relation
- * @method     ChildProfHasCourseQuery rightJoinWithUser() Adds a RIGHT JOIN clause and with to the query using the User relation
- * @method     ChildProfHasCourseQuery innerJoinWithUser() Adds a INNER JOIN clause and with to the query using the User relation
+ * @method     ChildProfHasCourseQuery leftJoinWithCourses() Adds a LEFT JOIN clause and with to the query using the Courses relation
+ * @method     ChildProfHasCourseQuery rightJoinWithCourses() Adds a RIGHT JOIN clause and with to the query using the Courses relation
+ * @method     ChildProfHasCourseQuery innerJoinWithCourses() Adds a INNER JOIN clause and with to the query using the Courses relation
  *
- * @method     \CourseQuery|\UserQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \UsersQuery|\CoursesQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildProfHasCourse findOne(ConnectionInterface $con = null) Return the first ChildProfHasCourse matching the query
  * @method     ChildProfHasCourse findOneOrCreate(ConnectionInterface $con = null) Return the first ChildProfHasCourse matching the query, or a new ChildProfHasCourse object populated from the query conditions when no match is found
  *
- * @method     ChildProfHasCourse findOneByUserIduser(int $User_idUser) Return the first ChildProfHasCourse filtered by the User_idUser column
- * @method     ChildProfHasCourse findOneByCourseIdcourse(int $Course_idCourse) Return the first ChildProfHasCourse filtered by the Course_idCourse column
- * @method     ChildProfHasCourse findOneByIslab(boolean $isLab) Return the first ChildProfHasCourse filtered by the isLab column
+ * @method     ChildProfHasCourse findOneByUsersId(int $users_id) Return the first ChildProfHasCourse filtered by the users_id column
+ * @method     ChildProfHasCourse findOneByCoursesId(int $courses_id) Return the first ChildProfHasCourse filtered by the courses_id column
+ * @method     ChildProfHasCourse findOneByIsLab(boolean $is_lab) Return the first ChildProfHasCourse filtered by the is_lab column
  * @method     ChildProfHasCourse findOneByPresence(int $presence) Return the first ChildProfHasCourse filtered by the presence column *
 
  * @method     ChildProfHasCourse requirePk($key, ConnectionInterface $con = null) Return the ChildProfHasCourse by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildProfHasCourse requireOne(ConnectionInterface $con = null) Return the first ChildProfHasCourse matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildProfHasCourse requireOneByUserIduser(int $User_idUser) Return the first ChildProfHasCourse filtered by the User_idUser column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildProfHasCourse requireOneByCourseIdcourse(int $Course_idCourse) Return the first ChildProfHasCourse filtered by the Course_idCourse column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildProfHasCourse requireOneByIslab(boolean $isLab) Return the first ChildProfHasCourse filtered by the isLab column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProfHasCourse requireOneByUsersId(int $users_id) Return the first ChildProfHasCourse filtered by the users_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProfHasCourse requireOneByCoursesId(int $courses_id) Return the first ChildProfHasCourse filtered by the courses_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProfHasCourse requireOneByIsLab(boolean $is_lab) Return the first ChildProfHasCourse filtered by the is_lab column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildProfHasCourse requireOneByPresence(int $presence) Return the first ChildProfHasCourse filtered by the presence column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildProfHasCourse[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildProfHasCourse objects based on current ModelCriteria
- * @method     ChildProfHasCourse[]|ObjectCollection findByUserIduser(int $User_idUser) Return ChildProfHasCourse objects filtered by the User_idUser column
- * @method     ChildProfHasCourse[]|ObjectCollection findByCourseIdcourse(int $Course_idCourse) Return ChildProfHasCourse objects filtered by the Course_idCourse column
- * @method     ChildProfHasCourse[]|ObjectCollection findByIslab(boolean $isLab) Return ChildProfHasCourse objects filtered by the isLab column
+ * @method     ChildProfHasCourse[]|ObjectCollection findByUsersId(int $users_id) Return ChildProfHasCourse objects filtered by the users_id column
+ * @method     ChildProfHasCourse[]|ObjectCollection findByCoursesId(int $courses_id) Return ChildProfHasCourse objects filtered by the courses_id column
+ * @method     ChildProfHasCourse[]|ObjectCollection findByIsLab(boolean $is_lab) Return ChildProfHasCourse objects filtered by the is_lab column
  * @method     ChildProfHasCourse[]|ObjectCollection findByPresence(int $presence) Return ChildProfHasCourse objects filtered by the presence column
  * @method     ChildProfHasCourse[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -133,7 +133,7 @@ abstract class ProfHasCourseQuery extends ModelCriteria
      * $obj = $c->findPk(array(12, 34), $con);
      * </code>
      *
-     * @param array[$User_idUser, $Course_idCourse] $key Primary key to use for the query
+     * @param array[$users_id, $courses_id] $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
      * @return ChildProfHasCourse|array|mixed the result, formatted by the current formatter
@@ -179,7 +179,7 @@ abstract class ProfHasCourseQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT User_idUser, Course_idCourse, isLab, presence FROM Prof_has_Course WHERE User_idUser = :p0 AND Course_idCourse = :p1';
+        $sql = 'SELECT users_id, courses_id, is_lab, presence FROM prof_has_course WHERE users_id = :p0 AND courses_id = :p1';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -253,8 +253,8 @@ abstract class ProfHasCourseQuery extends ModelCriteria
      */
     public function filterByPrimaryKey($key)
     {
-        $this->addUsingAlias(ProfHasCourseTableMap::COL_USER_IDUSER, $key[0], Criteria::EQUAL);
-        $this->addUsingAlias(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $key[1], Criteria::EQUAL);
+        $this->addUsingAlias(ProfHasCourseTableMap::COL_USERS_ID, $key[0], Criteria::EQUAL);
+        $this->addUsingAlias(ProfHasCourseTableMap::COL_COURSES_ID, $key[1], Criteria::EQUAL);
 
         return $this;
     }
@@ -272,8 +272,8 @@ abstract class ProfHasCourseQuery extends ModelCriteria
             return $this->add(null, '1<>1', Criteria::CUSTOM);
         }
         foreach ($keys as $key) {
-            $cton0 = $this->getNewCriterion(ProfHasCourseTableMap::COL_USER_IDUSER, $key[0], Criteria::EQUAL);
-            $cton1 = $this->getNewCriterion(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $key[1], Criteria::EQUAL);
+            $cton0 = $this->getNewCriterion(ProfHasCourseTableMap::COL_USERS_ID, $key[0], Criteria::EQUAL);
+            $cton1 = $this->getNewCriterion(ProfHasCourseTableMap::COL_COURSES_ID, $key[1], Criteria::EQUAL);
             $cton0->addAnd($cton1);
             $this->addOr($cton0);
         }
@@ -282,18 +282,18 @@ abstract class ProfHasCourseQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the User_idUser column
+     * Filter the query on the users_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByUserIduser(1234); // WHERE User_idUser = 1234
-     * $query->filterByUserIduser(array(12, 34)); // WHERE User_idUser IN (12, 34)
-     * $query->filterByUserIduser(array('min' => 12)); // WHERE User_idUser > 12
+     * $query->filterByUsersId(1234); // WHERE users_id = 1234
+     * $query->filterByUsersId(array(12, 34)); // WHERE users_id IN (12, 34)
+     * $query->filterByUsersId(array('min' => 12)); // WHERE users_id > 12
      * </code>
      *
-     * @see       filterByUser()
+     * @see       filterByUsers()
      *
-     * @param     mixed $userIduser The value to use as filter.
+     * @param     mixed $usersId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -301,16 +301,16 @@ abstract class ProfHasCourseQuery extends ModelCriteria
      *
      * @return $this|ChildProfHasCourseQuery The current query, for fluid interface
      */
-    public function filterByUserIduser($userIduser = null, $comparison = null)
+    public function filterByUsersId($usersId = null, $comparison = null)
     {
-        if (is_array($userIduser)) {
+        if (is_array($usersId)) {
             $useMinMax = false;
-            if (isset($userIduser['min'])) {
-                $this->addUsingAlias(ProfHasCourseTableMap::COL_USER_IDUSER, $userIduser['min'], Criteria::GREATER_EQUAL);
+            if (isset($usersId['min'])) {
+                $this->addUsingAlias(ProfHasCourseTableMap::COL_USERS_ID, $usersId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($userIduser['max'])) {
-                $this->addUsingAlias(ProfHasCourseTableMap::COL_USER_IDUSER, $userIduser['max'], Criteria::LESS_EQUAL);
+            if (isset($usersId['max'])) {
+                $this->addUsingAlias(ProfHasCourseTableMap::COL_USERS_ID, $usersId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -321,22 +321,22 @@ abstract class ProfHasCourseQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(ProfHasCourseTableMap::COL_USER_IDUSER, $userIduser, $comparison);
+        return $this->addUsingAlias(ProfHasCourseTableMap::COL_USERS_ID, $usersId, $comparison);
     }
 
     /**
-     * Filter the query on the Course_idCourse column
+     * Filter the query on the courses_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByCourseIdcourse(1234); // WHERE Course_idCourse = 1234
-     * $query->filterByCourseIdcourse(array(12, 34)); // WHERE Course_idCourse IN (12, 34)
-     * $query->filterByCourseIdcourse(array('min' => 12)); // WHERE Course_idCourse > 12
+     * $query->filterByCoursesId(1234); // WHERE courses_id = 1234
+     * $query->filterByCoursesId(array(12, 34)); // WHERE courses_id IN (12, 34)
+     * $query->filterByCoursesId(array('min' => 12)); // WHERE courses_id > 12
      * </code>
      *
-     * @see       filterByCourse()
+     * @see       filterByCourses()
      *
-     * @param     mixed $courseIdcourse The value to use as filter.
+     * @param     mixed $coursesId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -344,16 +344,16 @@ abstract class ProfHasCourseQuery extends ModelCriteria
      *
      * @return $this|ChildProfHasCourseQuery The current query, for fluid interface
      */
-    public function filterByCourseIdcourse($courseIdcourse = null, $comparison = null)
+    public function filterByCoursesId($coursesId = null, $comparison = null)
     {
-        if (is_array($courseIdcourse)) {
+        if (is_array($coursesId)) {
             $useMinMax = false;
-            if (isset($courseIdcourse['min'])) {
-                $this->addUsingAlias(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $courseIdcourse['min'], Criteria::GREATER_EQUAL);
+            if (isset($coursesId['min'])) {
+                $this->addUsingAlias(ProfHasCourseTableMap::COL_COURSES_ID, $coursesId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($courseIdcourse['max'])) {
-                $this->addUsingAlias(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $courseIdcourse['max'], Criteria::LESS_EQUAL);
+            if (isset($coursesId['max'])) {
+                $this->addUsingAlias(ProfHasCourseTableMap::COL_COURSES_ID, $coursesId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -364,19 +364,19 @@ abstract class ProfHasCourseQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $courseIdcourse, $comparison);
+        return $this->addUsingAlias(ProfHasCourseTableMap::COL_COURSES_ID, $coursesId, $comparison);
     }
 
     /**
-     * Filter the query on the isLab column
+     * Filter the query on the is_lab column
      *
      * Example usage:
      * <code>
-     * $query->filterByIslab(true); // WHERE isLab = true
-     * $query->filterByIslab('yes'); // WHERE isLab = true
+     * $query->filterByIsLab(true); // WHERE is_lab = true
+     * $query->filterByIsLab('yes'); // WHERE is_lab = true
      * </code>
      *
-     * @param     boolean|string $islab The value to use as filter.
+     * @param     boolean|string $isLab The value to use as filter.
      *              Non-boolean arguments are converted using the following rules:
      *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
@@ -385,13 +385,13 @@ abstract class ProfHasCourseQuery extends ModelCriteria
      *
      * @return $this|ChildProfHasCourseQuery The current query, for fluid interface
      */
-    public function filterByIslab($islab = null, $comparison = null)
+    public function filterByIsLab($isLab = null, $comparison = null)
     {
-        if (is_string($islab)) {
-            $islab = in_array(strtolower($islab), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+        if (is_string($isLab)) {
+            $isLab = in_array(strtolower($isLab), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
         }
 
-        return $this->addUsingAlias(ProfHasCourseTableMap::COL_ISLAB, $islab, $comparison);
+        return $this->addUsingAlias(ProfHasCourseTableMap::COL_IS_LAB, $isLab, $comparison);
     }
 
     /**
@@ -436,44 +436,44 @@ abstract class ProfHasCourseQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Course object
+     * Filter the query by a related \Users object
      *
-     * @param \Course|ObjectCollection $course The related object(s) to use as filter
+     * @param \Users|ObjectCollection $users The related object(s) to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildProfHasCourseQuery The current query, for fluid interface
      */
-    public function filterByCourse($course, $comparison = null)
+    public function filterByUsers($users, $comparison = null)
     {
-        if ($course instanceof \Course) {
+        if ($users instanceof \Users) {
             return $this
-                ->addUsingAlias(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $course->getIdcourse(), $comparison);
-        } elseif ($course instanceof ObjectCollection) {
+                ->addUsingAlias(ProfHasCourseTableMap::COL_USERS_ID, $users->getId(), $comparison);
+        } elseif ($users instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $course->toKeyValue('PrimaryKey', 'Idcourse'), $comparison);
+                ->addUsingAlias(ProfHasCourseTableMap::COL_USERS_ID, $users->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByCourse() only accepts arguments of type \Course or Collection');
+            throw new PropelException('filterByUsers() only accepts arguments of type \Users or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Course relation
+     * Adds a JOIN clause to the query using the Users relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildProfHasCourseQuery The current query, for fluid interface
      */
-    public function joinCourse($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinUsers($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Course');
+        $relationMap = $tableMap->getRelation('Users');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -488,14 +488,14 @@ abstract class ProfHasCourseQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Course');
+            $this->addJoinObject($join, 'Users');
         }
 
         return $this;
     }
 
     /**
-     * Use the Course relation Course object
+     * Use the Users relation Users object
      *
      * @see useQuery()
      *
@@ -503,54 +503,54 @@ abstract class ProfHasCourseQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \CourseQuery A secondary query class using the current class as primary query
+     * @return \UsersQuery A secondary query class using the current class as primary query
      */
-    public function useCourseQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useUsersQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinCourse($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Course', '\CourseQuery');
+            ->joinUsers($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Users', '\UsersQuery');
     }
 
     /**
-     * Filter the query by a related \User object
+     * Filter the query by a related \Courses object
      *
-     * @param \User|ObjectCollection $user The related object(s) to use as filter
+     * @param \Courses|ObjectCollection $courses The related object(s) to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildProfHasCourseQuery The current query, for fluid interface
      */
-    public function filterByUser($user, $comparison = null)
+    public function filterByCourses($courses, $comparison = null)
     {
-        if ($user instanceof \User) {
+        if ($courses instanceof \Courses) {
             return $this
-                ->addUsingAlias(ProfHasCourseTableMap::COL_USER_IDUSER, $user->getIduser(), $comparison);
-        } elseif ($user instanceof ObjectCollection) {
+                ->addUsingAlias(ProfHasCourseTableMap::COL_COURSES_ID, $courses->getId(), $comparison);
+        } elseif ($courses instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(ProfHasCourseTableMap::COL_USER_IDUSER, $user->toKeyValue('PrimaryKey', 'Iduser'), $comparison);
+                ->addUsingAlias(ProfHasCourseTableMap::COL_COURSES_ID, $courses->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByUser() only accepts arguments of type \User or Collection');
+            throw new PropelException('filterByCourses() only accepts arguments of type \Courses or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the User relation
+     * Adds a JOIN clause to the query using the Courses relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildProfHasCourseQuery The current query, for fluid interface
      */
-    public function joinUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinCourses($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('User');
+        $relationMap = $tableMap->getRelation('Courses');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -565,14 +565,14 @@ abstract class ProfHasCourseQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'User');
+            $this->addJoinObject($join, 'Courses');
         }
 
         return $this;
     }
 
     /**
-     * Use the User relation User object
+     * Use the Courses relation Courses object
      *
      * @see useQuery()
      *
@@ -580,13 +580,13 @@ abstract class ProfHasCourseQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \UserQuery A secondary query class using the current class as primary query
+     * @return \CoursesQuery A secondary query class using the current class as primary query
      */
-    public function useUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useCoursesQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinUser($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'User', '\UserQuery');
+            ->joinCourses($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Courses', '\CoursesQuery');
     }
 
     /**
@@ -599,8 +599,8 @@ abstract class ProfHasCourseQuery extends ModelCriteria
     public function prune($profHasCourse = null)
     {
         if ($profHasCourse) {
-            $this->addCond('pruneCond0', $this->getAliasedColName(ProfHasCourseTableMap::COL_USER_IDUSER), $profHasCourse->getUserIduser(), Criteria::NOT_EQUAL);
-            $this->addCond('pruneCond1', $this->getAliasedColName(ProfHasCourseTableMap::COL_COURSE_IDCOURSE), $profHasCourse->getCourseIdcourse(), Criteria::NOT_EQUAL);
+            $this->addCond('pruneCond0', $this->getAliasedColName(ProfHasCourseTableMap::COL_USERS_ID), $profHasCourse->getUsersId(), Criteria::NOT_EQUAL);
+            $this->addCond('pruneCond1', $this->getAliasedColName(ProfHasCourseTableMap::COL_COURSES_ID), $profHasCourse->getCoursesId(), Criteria::NOT_EQUAL);
             $this->combine(array('pruneCond0', 'pruneCond1'), Criteria::LOGICAL_OR);
         }
 
@@ -608,7 +608,7 @@ abstract class ProfHasCourseQuery extends ModelCriteria
     }
 
     /**
-     * Deletes all rows from the Prof_has_Course table.
+     * Deletes all rows from the prof_has_course table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).

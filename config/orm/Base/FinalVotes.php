@@ -2,23 +2,21 @@
 
 namespace Base;
 
-use \FinalVotes as ChildFinalVotes;
+use \Courses as ChildCourses;
+use \CoursesQuery as ChildCoursesQuery;
 use \FinalVotesQuery as ChildFinalVotesQuery;
 use \Quality as ChildQuality;
 use \QualityQuery as ChildQualityQuery;
-use \Votes as ChildVotes;
-use \VotesQuery as ChildVotesQuery;
+use \Users as ChildUsers;
+use \UsersQuery as ChildUsersQuery;
 use \Exception;
 use \PDO;
 use Map\FinalVotesTableMap;
-use Map\QualityTableMap;
-use Map\VotesTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -27,18 +25,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'quality' table.
+ * Base class that represents a row from the 'final_votes' table.
  *
  *
  *
  * @package    propel.generator..Base
  */
-abstract class Quality implements ActiveRecordInterface
+abstract class FinalVotes implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\QualityTableMap';
+    const TABLE_MAP = '\\Map\\FinalVotesTableMap';
 
 
     /**
@@ -75,30 +73,47 @@ abstract class Quality implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the vote field.
+     * The value for the quality_id field.
      *
      * @var        int
      */
-    protected $vote;
+    protected $quality_id;
 
     /**
-     * The value for the description field.
+     * The value for the courses_id field.
+     *
+     * @var        int
+     */
+    protected $courses_id;
+
+    /**
+     * The value for the users_id field.
+     *
+     * @var        int
+     */
+    protected $users_id;
+
+    /**
+     * The value for the comment field.
      *
      * @var        string
      */
-    protected $description;
+    protected $comment;
 
     /**
-     * @var        ObjectCollection|ChildFinalVotes[] Collection to store aggregation of ChildFinalVotes objects.
+     * @var        ChildQuality
      */
-    protected $collFinalVotess;
-    protected $collFinalVotessPartial;
+    protected $aQuality;
 
     /**
-     * @var        ObjectCollection|ChildVotes[] Collection to store aggregation of ChildVotes objects.
+     * @var        ChildCourses
      */
-    protected $collVotess;
-    protected $collVotessPartial;
+    protected $aCourses;
+
+    /**
+     * @var        ChildUsers
+     */
+    protected $aUsers;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -109,19 +124,7 @@ abstract class Quality implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildFinalVotes[]
-     */
-    protected $finalVotessScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildVotes[]
-     */
-    protected $votessScheduledForDeletion = null;
-
-    /**
-     * Initializes internal state of Base\Quality object.
+     * Initializes internal state of Base\FinalVotes object.
      */
     public function __construct()
     {
@@ -216,9 +219,9 @@ abstract class Quality implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Quality</code> instance.  If
-     * <code>obj</code> is an instance of <code>Quality</code>, delegates to
-     * <code>equals(Quality)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>FinalVotes</code> instance.  If
+     * <code>obj</code> is an instance of <code>FinalVotes</code>, delegates to
+     * <code>equals(FinalVotes)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -284,7 +287,7 @@ abstract class Quality implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Quality The current object, for fluid interface
+     * @return $this|FinalVotes The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -356,30 +359,50 @@ abstract class Quality implements ActiveRecordInterface
     }
 
     /**
-     * Get the [vote] column value.
+     * Get the [quality_id] column value.
      *
      * @return int
      */
-    public function getVote()
+    public function getQualityId()
     {
-        return $this->vote;
+        return $this->quality_id;
     }
 
     /**
-     * Get the [description] column value.
+     * Get the [courses_id] column value.
+     *
+     * @return int
+     */
+    public function getCoursesId()
+    {
+        return $this->courses_id;
+    }
+
+    /**
+     * Get the [users_id] column value.
+     *
+     * @return int
+     */
+    public function getUsersId()
+    {
+        return $this->users_id;
+    }
+
+    /**
+     * Get the [comment] column value.
      *
      * @return string
      */
-    public function getDescription()
+    public function getComment()
     {
-        return $this->description;
+        return $this->comment;
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return $this|\Quality The current object (for fluent API support)
+     * @return $this|\FinalVotes The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -389,51 +412,103 @@ abstract class Quality implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[QualityTableMap::COL_ID] = true;
+            $this->modifiedColumns[FinalVotesTableMap::COL_ID] = true;
         }
 
         return $this;
     } // setId()
 
     /**
-     * Set the value of [vote] column.
+     * Set the value of [quality_id] column.
      *
      * @param int $v new value
-     * @return $this|\Quality The current object (for fluent API support)
+     * @return $this|\FinalVotes The current object (for fluent API support)
      */
-    public function setVote($v)
+    public function setQualityId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->vote !== $v) {
-            $this->vote = $v;
-            $this->modifiedColumns[QualityTableMap::COL_VOTE] = true;
+        if ($this->quality_id !== $v) {
+            $this->quality_id = $v;
+            $this->modifiedColumns[FinalVotesTableMap::COL_QUALITY_ID] = true;
+        }
+
+        if ($this->aQuality !== null && $this->aQuality->getId() !== $v) {
+            $this->aQuality = null;
         }
 
         return $this;
-    } // setVote()
+    } // setQualityId()
 
     /**
-     * Set the value of [description] column.
+     * Set the value of [courses_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\FinalVotes The current object (for fluent API support)
+     */
+    public function setCoursesId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->courses_id !== $v) {
+            $this->courses_id = $v;
+            $this->modifiedColumns[FinalVotesTableMap::COL_COURSES_ID] = true;
+        }
+
+        if ($this->aCourses !== null && $this->aCourses->getId() !== $v) {
+            $this->aCourses = null;
+        }
+
+        return $this;
+    } // setCoursesId()
+
+    /**
+     * Set the value of [users_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\FinalVotes The current object (for fluent API support)
+     */
+    public function setUsersId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->users_id !== $v) {
+            $this->users_id = $v;
+            $this->modifiedColumns[FinalVotesTableMap::COL_USERS_ID] = true;
+        }
+
+        if ($this->aUsers !== null && $this->aUsers->getId() !== $v) {
+            $this->aUsers = null;
+        }
+
+        return $this;
+    } // setUsersId()
+
+    /**
+     * Set the value of [comment] column.
      *
      * @param string $v new value
-     * @return $this|\Quality The current object (for fluent API support)
+     * @return $this|\FinalVotes The current object (for fluent API support)
      */
-    public function setDescription($v)
+    public function setComment($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->description !== $v) {
-            $this->description = $v;
-            $this->modifiedColumns[QualityTableMap::COL_DESCRIPTION] = true;
+        if ($this->comment !== $v) {
+            $this->comment = $v;
+            $this->modifiedColumns[FinalVotesTableMap::COL_COMMENT] = true;
         }
 
         return $this;
-    } // setDescription()
+    } // setComment()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -471,14 +546,20 @@ abstract class Quality implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : QualityTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : FinalVotesTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : QualityTableMap::translateFieldName('Vote', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->vote = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : FinalVotesTableMap::translateFieldName('QualityId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->quality_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : QualityTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->description = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : FinalVotesTableMap::translateFieldName('CoursesId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->courses_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : FinalVotesTableMap::translateFieldName('UsersId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->users_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : FinalVotesTableMap::translateFieldName('Comment', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->comment = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -487,10 +568,10 @@ abstract class Quality implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = QualityTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = FinalVotesTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Quality'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\FinalVotes'), 0, $e);
         }
     }
 
@@ -509,6 +590,15 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aQuality !== null && $this->quality_id !== $this->aQuality->getId()) {
+            $this->aQuality = null;
+        }
+        if ($this->aCourses !== null && $this->courses_id !== $this->aCourses->getId()) {
+            $this->aCourses = null;
+        }
+        if ($this->aUsers !== null && $this->users_id !== $this->aUsers->getId()) {
+            $this->aUsers = null;
+        }
     } // ensureConsistency
 
     /**
@@ -532,13 +622,13 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(QualityTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(FinalVotesTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildQualityQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildFinalVotesQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -548,10 +638,9 @@ abstract class Quality implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collFinalVotess = null;
-
-            $this->collVotess = null;
-
+            $this->aQuality = null;
+            $this->aCourses = null;
+            $this->aUsers = null;
         } // if (deep)
     }
 
@@ -561,8 +650,8 @@ abstract class Quality implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Quality::setDeleted()
-     * @see Quality::isDeleted()
+     * @see FinalVotes::setDeleted()
+     * @see FinalVotes::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -571,11 +660,11 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(QualityTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(FinalVotesTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildQualityQuery::create()
+            $deleteQuery = ChildFinalVotesQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -606,7 +695,7 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(QualityTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(FinalVotesTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -625,7 +714,7 @@ abstract class Quality implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                QualityTableMap::addInstanceToPool($this);
+                FinalVotesTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -651,6 +740,32 @@ abstract class Quality implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aQuality !== null) {
+                if ($this->aQuality->isModified() || $this->aQuality->isNew()) {
+                    $affectedRows += $this->aQuality->save($con);
+                }
+                $this->setQuality($this->aQuality);
+            }
+
+            if ($this->aCourses !== null) {
+                if ($this->aCourses->isModified() || $this->aCourses->isNew()) {
+                    $affectedRows += $this->aCourses->save($con);
+                }
+                $this->setCourses($this->aCourses);
+            }
+
+            if ($this->aUsers !== null) {
+                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
+                    $affectedRows += $this->aUsers->save($con);
+                }
+                $this->setUsers($this->aUsers);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -660,40 +775,6 @@ abstract class Quality implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
-            }
-
-            if ($this->finalVotessScheduledForDeletion !== null) {
-                if (!$this->finalVotessScheduledForDeletion->isEmpty()) {
-                    \FinalVotesQuery::create()
-                        ->filterByPrimaryKeys($this->finalVotessScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->finalVotessScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collFinalVotess !== null) {
-                foreach ($this->collFinalVotess as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->votessScheduledForDeletion !== null) {
-                if (!$this->votessScheduledForDeletion->isEmpty()) {
-                    \VotesQuery::create()
-                        ->filterByPrimaryKeys($this->votessScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->votessScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collVotess !== null) {
-                foreach ($this->collVotess as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             $this->alreadyInSave = false;
@@ -716,24 +797,30 @@ abstract class Quality implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[QualityTableMap::COL_ID] = true;
+        $this->modifiedColumns[FinalVotesTableMap::COL_ID] = true;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . QualityTableMap::COL_ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . FinalVotesTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(QualityTableMap::COL_ID)) {
+        if ($this->isColumnModified(FinalVotesTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(QualityTableMap::COL_VOTE)) {
-            $modifiedColumns[':p' . $index++]  = 'vote';
+        if ($this->isColumnModified(FinalVotesTableMap::COL_QUALITY_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'quality_id';
         }
-        if ($this->isColumnModified(QualityTableMap::COL_DESCRIPTION)) {
-            $modifiedColumns[':p' . $index++]  = 'description';
+        if ($this->isColumnModified(FinalVotesTableMap::COL_COURSES_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'courses_id';
+        }
+        if ($this->isColumnModified(FinalVotesTableMap::COL_USERS_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'users_id';
+        }
+        if ($this->isColumnModified(FinalVotesTableMap::COL_COMMENT)) {
+            $modifiedColumns[':p' . $index++]  = 'comment';
         }
 
         $sql = sprintf(
-            'INSERT INTO quality (%s) VALUES (%s)',
+            'INSERT INTO final_votes (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -745,11 +832,17 @@ abstract class Quality implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'vote':
-                        $stmt->bindValue($identifier, $this->vote, PDO::PARAM_INT);
+                    case 'quality_id':
+                        $stmt->bindValue($identifier, $this->quality_id, PDO::PARAM_INT);
                         break;
-                    case 'description':
-                        $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
+                    case 'courses_id':
+                        $stmt->bindValue($identifier, $this->courses_id, PDO::PARAM_INT);
+                        break;
+                    case 'users_id':
+                        $stmt->bindValue($identifier, $this->users_id, PDO::PARAM_INT);
+                        break;
+                    case 'comment':
+                        $stmt->bindValue($identifier, $this->comment, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -797,7 +890,7 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = QualityTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = FinalVotesTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -817,10 +910,16 @@ abstract class Quality implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getVote();
+                return $this->getQualityId();
                 break;
             case 2:
-                return $this->getDescription();
+                return $this->getCoursesId();
+                break;
+            case 3:
+                return $this->getUsersId();
+                break;
+            case 4:
+                return $this->getComment();
                 break;
             default:
                 return null;
@@ -846,15 +945,17 @@ abstract class Quality implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Quality'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['FinalVotes'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Quality'][$this->hashCode()] = true;
-        $keys = QualityTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['FinalVotes'][$this->hashCode()] = true;
+        $keys = FinalVotesTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getVote(),
-            $keys[2] => $this->getDescription(),
+            $keys[1] => $this->getQualityId(),
+            $keys[2] => $this->getCoursesId(),
+            $keys[3] => $this->getUsersId(),
+            $keys[4] => $this->getComment(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -862,35 +963,50 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collFinalVotess) {
+            if (null !== $this->aQuality) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'finalVotess';
+                        $key = 'quality';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'final_votess';
+                        $key = 'quality';
                         break;
                     default:
-                        $key = 'FinalVotess';
+                        $key = 'Quality';
                 }
 
-                $result[$key] = $this->collFinalVotess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->aQuality->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->collVotess) {
+            if (null !== $this->aCourses) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'votess';
+                        $key = 'courses';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'votess';
+                        $key = 'courses';
                         break;
                     default:
-                        $key = 'Votess';
+                        $key = 'Courses';
                 }
 
-                $result[$key] = $this->collVotess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->aCourses->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aUsers) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'users';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'users';
+                        break;
+                    default:
+                        $key = 'Users';
+                }
+
+                $result[$key] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -906,11 +1022,11 @@ abstract class Quality implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Quality
+     * @return $this|\FinalVotes
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = QualityTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = FinalVotesTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -921,7 +1037,7 @@ abstract class Quality implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Quality
+     * @return $this|\FinalVotes
      */
     public function setByPosition($pos, $value)
     {
@@ -930,10 +1046,16 @@ abstract class Quality implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setVote($value);
+                $this->setQualityId($value);
                 break;
             case 2:
-                $this->setDescription($value);
+                $this->setCoursesId($value);
+                break;
+            case 3:
+                $this->setUsersId($value);
+                break;
+            case 4:
+                $this->setComment($value);
                 break;
         } // switch()
 
@@ -959,16 +1081,22 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = QualityTableMap::getFieldNames($keyType);
+        $keys = FinalVotesTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setVote($arr[$keys[1]]);
+            $this->setQualityId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setDescription($arr[$keys[2]]);
+            $this->setCoursesId($arr[$keys[2]]);
+        }
+        if (array_key_exists($keys[3], $arr)) {
+            $this->setUsersId($arr[$keys[3]]);
+        }
+        if (array_key_exists($keys[4], $arr)) {
+            $this->setComment($arr[$keys[4]]);
         }
     }
 
@@ -989,7 +1117,7 @@ abstract class Quality implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Quality The current object, for fluid interface
+     * @return $this|\FinalVotes The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1009,16 +1137,22 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(QualityTableMap::DATABASE_NAME);
+        $criteria = new Criteria(FinalVotesTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(QualityTableMap::COL_ID)) {
-            $criteria->add(QualityTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(FinalVotesTableMap::COL_ID)) {
+            $criteria->add(FinalVotesTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(QualityTableMap::COL_VOTE)) {
-            $criteria->add(QualityTableMap::COL_VOTE, $this->vote);
+        if ($this->isColumnModified(FinalVotesTableMap::COL_QUALITY_ID)) {
+            $criteria->add(FinalVotesTableMap::COL_QUALITY_ID, $this->quality_id);
         }
-        if ($this->isColumnModified(QualityTableMap::COL_DESCRIPTION)) {
-            $criteria->add(QualityTableMap::COL_DESCRIPTION, $this->description);
+        if ($this->isColumnModified(FinalVotesTableMap::COL_COURSES_ID)) {
+            $criteria->add(FinalVotesTableMap::COL_COURSES_ID, $this->courses_id);
+        }
+        if ($this->isColumnModified(FinalVotesTableMap::COL_USERS_ID)) {
+            $criteria->add(FinalVotesTableMap::COL_USERS_ID, $this->users_id);
+        }
+        if ($this->isColumnModified(FinalVotesTableMap::COL_COMMENT)) {
+            $criteria->add(FinalVotesTableMap::COL_COMMENT, $this->comment);
         }
 
         return $criteria;
@@ -1036,8 +1170,8 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildQualityQuery::create();
-        $criteria->add(QualityTableMap::COL_ID, $this->id);
+        $criteria = ChildFinalVotesQuery::create();
+        $criteria->add(FinalVotesTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1099,35 +1233,17 @@ abstract class Quality implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Quality (or compatible) type.
+     * @param      object $copyObj An object of \FinalVotes (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setVote($this->getVote());
-        $copyObj->setDescription($this->getDescription());
-
-        if ($deepCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-
-            foreach ($this->getFinalVotess() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addFinalVotes($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getVotess() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addVotes($relObj->copy($deepCopy));
-                }
-            }
-
-        } // if ($deepCopy)
-
+        $copyObj->setQualityId($this->getQualityId());
+        $copyObj->setCoursesId($this->getCoursesId());
+        $copyObj->setUsersId($this->getUsersId());
+        $copyObj->setComment($this->getComment());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1143,7 +1259,7 @@ abstract class Quality implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Quality Clone of current object.
+     * @return \FinalVotes Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1156,573 +1272,157 @@ abstract class Quality implements ActiveRecordInterface
         return $copyObj;
     }
 
-
     /**
-     * Initializes a collection based on the name of a relation.
-     * Avoids crafting an 'init[$relationName]s' method name
-     * that wouldn't work when StandardEnglishPluralizer is used.
+     * Declares an association between this object and a ChildQuality object.
      *
-     * @param      string $relationName The name of the relation to initialize
-     * @return void
-     */
-    public function initRelation($relationName)
-    {
-        if ('FinalVotes' == $relationName) {
-            return $this->initFinalVotess();
-        }
-        if ('Votes' == $relationName) {
-            return $this->initVotess();
-        }
-    }
-
-    /**
-     * Clears out the collFinalVotess collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addFinalVotess()
-     */
-    public function clearFinalVotess()
-    {
-        $this->collFinalVotess = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collFinalVotess collection loaded partially.
-     */
-    public function resetPartialFinalVotess($v = true)
-    {
-        $this->collFinalVotessPartial = $v;
-    }
-
-    /**
-     * Initializes the collFinalVotess collection.
-     *
-     * By default this just sets the collFinalVotess collection to an empty array (like clearcollFinalVotess());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initFinalVotess($overrideExisting = true)
-    {
-        if (null !== $this->collFinalVotess && !$overrideExisting) {
-            return;
-        }
-
-        $collectionClassName = FinalVotesTableMap::getTableMap()->getCollectionClassName();
-
-        $this->collFinalVotess = new $collectionClassName;
-        $this->collFinalVotess->setModel('\FinalVotes');
-    }
-
-    /**
-     * Gets an array of ChildFinalVotes objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildQuality is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildFinalVotes[] List of ChildFinalVotes objects
+     * @param  ChildQuality $v
+     * @return $this|\FinalVotes The current object (for fluent API support)
      * @throws PropelException
      */
-    public function getFinalVotess(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function setQuality(ChildQuality $v = null)
     {
-        $partial = $this->collFinalVotessPartial && !$this->isNew();
-        if (null === $this->collFinalVotess || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collFinalVotess) {
-                // return empty collection
-                $this->initFinalVotess();
-            } else {
-                $collFinalVotess = ChildFinalVotesQuery::create(null, $criteria)
-                    ->filterByQuality($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collFinalVotessPartial && count($collFinalVotess)) {
-                        $this->initFinalVotess(false);
-
-                        foreach ($collFinalVotess as $obj) {
-                            if (false == $this->collFinalVotess->contains($obj)) {
-                                $this->collFinalVotess->append($obj);
-                            }
-                        }
-
-                        $this->collFinalVotessPartial = true;
-                    }
-
-                    return $collFinalVotess;
-                }
-
-                if ($partial && $this->collFinalVotess) {
-                    foreach ($this->collFinalVotess as $obj) {
-                        if ($obj->isNew()) {
-                            $collFinalVotess[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collFinalVotess = $collFinalVotess;
-                $this->collFinalVotessPartial = false;
-            }
+        if ($v === null) {
+            $this->setQualityId(NULL);
+        } else {
+            $this->setQualityId($v->getId());
         }
 
-        return $this->collFinalVotess;
-    }
+        $this->aQuality = $v;
 
-    /**
-     * Sets a collection of ChildFinalVotes objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $finalVotess A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildQuality The current object (for fluent API support)
-     */
-    public function setFinalVotess(Collection $finalVotess, ConnectionInterface $con = null)
-    {
-        /** @var ChildFinalVotes[] $finalVotessToDelete */
-        $finalVotessToDelete = $this->getFinalVotess(new Criteria(), $con)->diff($finalVotess);
-
-
-        $this->finalVotessScheduledForDeletion = $finalVotessToDelete;
-
-        foreach ($finalVotessToDelete as $finalVotesRemoved) {
-            $finalVotesRemoved->setQuality(null);
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildQuality object, it will not be re-added.
+        if ($v !== null) {
+            $v->addFinalVotes($this);
         }
 
-        $this->collFinalVotess = null;
-        foreach ($finalVotess as $finalVotes) {
-            $this->addFinalVotes($finalVotes);
-        }
-
-        $this->collFinalVotess = $finalVotess;
-        $this->collFinalVotessPartial = false;
 
         return $this;
     }
 
+
     /**
-     * Returns the number of related FinalVotes objects.
+     * Get the associated ChildQuality object
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related FinalVotes objects.
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildQuality The associated ChildQuality object.
      * @throws PropelException
      */
-    public function countFinalVotess(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function getQuality(ConnectionInterface $con = null)
     {
-        $partial = $this->collFinalVotessPartial && !$this->isNew();
-        if (null === $this->collFinalVotess || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collFinalVotess) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getFinalVotess());
-            }
-
-            $query = ChildFinalVotesQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByQuality($this)
-                ->count($con);
+        if ($this->aQuality === null && ($this->quality_id !== null)) {
+            $this->aQuality = ChildQualityQuery::create()->findPk($this->quality_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aQuality->addFinalVotess($this);
+             */
         }
 
-        return count($this->collFinalVotess);
+        return $this->aQuality;
     }
 
     /**
-     * Method called to associate a ChildFinalVotes object to this object
-     * through the ChildFinalVotes foreign key attribute.
+     * Declares an association between this object and a ChildCourses object.
      *
-     * @param  ChildFinalVotes $l ChildFinalVotes
-     * @return $this|\Quality The current object (for fluent API support)
-     */
-    public function addFinalVotes(ChildFinalVotes $l)
-    {
-        if ($this->collFinalVotess === null) {
-            $this->initFinalVotess();
-            $this->collFinalVotessPartial = true;
-        }
-
-        if (!$this->collFinalVotess->contains($l)) {
-            $this->doAddFinalVotes($l);
-
-            if ($this->finalVotessScheduledForDeletion and $this->finalVotessScheduledForDeletion->contains($l)) {
-                $this->finalVotessScheduledForDeletion->remove($this->finalVotessScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildFinalVotes $finalVotes The ChildFinalVotes object to add.
-     */
-    protected function doAddFinalVotes(ChildFinalVotes $finalVotes)
-    {
-        $this->collFinalVotess[]= $finalVotes;
-        $finalVotes->setQuality($this);
-    }
-
-    /**
-     * @param  ChildFinalVotes $finalVotes The ChildFinalVotes object to remove.
-     * @return $this|ChildQuality The current object (for fluent API support)
-     */
-    public function removeFinalVotes(ChildFinalVotes $finalVotes)
-    {
-        if ($this->getFinalVotess()->contains($finalVotes)) {
-            $pos = $this->collFinalVotess->search($finalVotes);
-            $this->collFinalVotess->remove($pos);
-            if (null === $this->finalVotessScheduledForDeletion) {
-                $this->finalVotessScheduledForDeletion = clone $this->collFinalVotess;
-                $this->finalVotessScheduledForDeletion->clear();
-            }
-            $this->finalVotessScheduledForDeletion[]= clone $finalVotes;
-            $finalVotes->setQuality(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Quality is new, it will return
-     * an empty collection; or if this Quality has previously
-     * been saved, it will retrieve related FinalVotess from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Quality.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildFinalVotes[] List of ChildFinalVotes objects
-     */
-    public function getFinalVotessJoinCourses(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildFinalVotesQuery::create(null, $criteria);
-        $query->joinWith('Courses', $joinBehavior);
-
-        return $this->getFinalVotess($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Quality is new, it will return
-     * an empty collection; or if this Quality has previously
-     * been saved, it will retrieve related FinalVotess from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Quality.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildFinalVotes[] List of ChildFinalVotes objects
-     */
-    public function getFinalVotessJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildFinalVotesQuery::create(null, $criteria);
-        $query->joinWith('Users', $joinBehavior);
-
-        return $this->getFinalVotess($query, $con);
-    }
-
-    /**
-     * Clears out the collVotess collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addVotess()
-     */
-    public function clearVotess()
-    {
-        $this->collVotess = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collVotess collection loaded partially.
-     */
-    public function resetPartialVotess($v = true)
-    {
-        $this->collVotessPartial = $v;
-    }
-
-    /**
-     * Initializes the collVotess collection.
-     *
-     * By default this just sets the collVotess collection to an empty array (like clearcollVotess());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initVotess($overrideExisting = true)
-    {
-        if (null !== $this->collVotess && !$overrideExisting) {
-            return;
-        }
-
-        $collectionClassName = VotesTableMap::getTableMap()->getCollectionClassName();
-
-        $this->collVotess = new $collectionClassName;
-        $this->collVotess->setModel('\Votes');
-    }
-
-    /**
-     * Gets an array of ChildVotes objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildQuality is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildVotes[] List of ChildVotes objects
+     * @param  ChildCourses $v
+     * @return $this|\FinalVotes The current object (for fluent API support)
      * @throws PropelException
      */
-    public function getVotess(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function setCourses(ChildCourses $v = null)
     {
-        $partial = $this->collVotessPartial && !$this->isNew();
-        if (null === $this->collVotess || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collVotess) {
-                // return empty collection
-                $this->initVotess();
-            } else {
-                $collVotess = ChildVotesQuery::create(null, $criteria)
-                    ->filterByQuality($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collVotessPartial && count($collVotess)) {
-                        $this->initVotess(false);
-
-                        foreach ($collVotess as $obj) {
-                            if (false == $this->collVotess->contains($obj)) {
-                                $this->collVotess->append($obj);
-                            }
-                        }
-
-                        $this->collVotessPartial = true;
-                    }
-
-                    return $collVotess;
-                }
-
-                if ($partial && $this->collVotess) {
-                    foreach ($this->collVotess as $obj) {
-                        if ($obj->isNew()) {
-                            $collVotess[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collVotess = $collVotess;
-                $this->collVotessPartial = false;
-            }
+        if ($v === null) {
+            $this->setCoursesId(NULL);
+        } else {
+            $this->setCoursesId($v->getId());
         }
 
-        return $this->collVotess;
-    }
+        $this->aCourses = $v;
 
-    /**
-     * Sets a collection of ChildVotes objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $votess A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildQuality The current object (for fluent API support)
-     */
-    public function setVotess(Collection $votess, ConnectionInterface $con = null)
-    {
-        /** @var ChildVotes[] $votessToDelete */
-        $votessToDelete = $this->getVotess(new Criteria(), $con)->diff($votess);
-
-
-        $this->votessScheduledForDeletion = $votessToDelete;
-
-        foreach ($votessToDelete as $votesRemoved) {
-            $votesRemoved->setQuality(null);
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildCourses object, it will not be re-added.
+        if ($v !== null) {
+            $v->addFinalVotes($this);
         }
 
-        $this->collVotess = null;
-        foreach ($votess as $votes) {
-            $this->addVotes($votes);
-        }
-
-        $this->collVotess = $votess;
-        $this->collVotessPartial = false;
 
         return $this;
     }
 
+
     /**
-     * Returns the number of related Votes objects.
+     * Get the associated ChildCourses object
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Votes objects.
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildCourses The associated ChildCourses object.
      * @throws PropelException
      */
-    public function countVotess(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function getCourses(ConnectionInterface $con = null)
     {
-        $partial = $this->collVotessPartial && !$this->isNew();
-        if (null === $this->collVotess || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collVotess) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getVotess());
-            }
-
-            $query = ChildVotesQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByQuality($this)
-                ->count($con);
+        if ($this->aCourses === null && ($this->courses_id !== null)) {
+            $this->aCourses = ChildCoursesQuery::create()->findPk($this->courses_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aCourses->addFinalVotess($this);
+             */
         }
 
-        return count($this->collVotess);
+        return $this->aCourses;
     }
 
     /**
-     * Method called to associate a ChildVotes object to this object
-     * through the ChildVotes foreign key attribute.
+     * Declares an association between this object and a ChildUsers object.
      *
-     * @param  ChildVotes $l ChildVotes
-     * @return $this|\Quality The current object (for fluent API support)
+     * @param  ChildUsers $v
+     * @return $this|\FinalVotes The current object (for fluent API support)
+     * @throws PropelException
      */
-    public function addVotes(ChildVotes $l)
+    public function setUsers(ChildUsers $v = null)
     {
-        if ($this->collVotess === null) {
-            $this->initVotess();
-            $this->collVotessPartial = true;
+        if ($v === null) {
+            $this->setUsersId(NULL);
+        } else {
+            $this->setUsersId($v->getId());
         }
 
-        if (!$this->collVotess->contains($l)) {
-            $this->doAddVotes($l);
+        $this->aUsers = $v;
 
-            if ($this->votessScheduledForDeletion and $this->votessScheduledForDeletion->contains($l)) {
-                $this->votessScheduledForDeletion->remove($this->votessScheduledForDeletion->search($l));
-            }
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUsers object, it will not be re-added.
+        if ($v !== null) {
+            $v->addFinalVotes($this);
         }
 
-        return $this;
-    }
-
-    /**
-     * @param ChildVotes $votes The ChildVotes object to add.
-     */
-    protected function doAddVotes(ChildVotes $votes)
-    {
-        $this->collVotess[]= $votes;
-        $votes->setQuality($this);
-    }
-
-    /**
-     * @param  ChildVotes $votes The ChildVotes object to remove.
-     * @return $this|ChildQuality The current object (for fluent API support)
-     */
-    public function removeVotes(ChildVotes $votes)
-    {
-        if ($this->getVotess()->contains($votes)) {
-            $pos = $this->collVotess->search($votes);
-            $this->collVotess->remove($pos);
-            if (null === $this->votessScheduledForDeletion) {
-                $this->votessScheduledForDeletion = clone $this->collVotess;
-                $this->votessScheduledForDeletion->clear();
-            }
-            $this->votessScheduledForDeletion[]= clone $votes;
-            $votes->setQuality(null);
-        }
 
         return $this;
     }
 
 
     /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Quality is new, it will return
-     * an empty collection; or if this Quality has previously
-     * been saved, it will retrieve related Votess from storage.
+     * Get the associated ChildUsers object
      *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Quality.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildVotes[] List of ChildVotes objects
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUsers The associated ChildUsers object.
+     * @throws PropelException
      */
-    public function getVotessJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getUsers(ConnectionInterface $con = null)
     {
-        $query = ChildVotesQuery::create(null, $criteria);
-        $query->joinWith('Users', $joinBehavior);
+        if ($this->aUsers === null && ($this->users_id !== null)) {
+            $this->aUsers = ChildUsersQuery::create()->findPk($this->users_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUsers->addFinalVotess($this);
+             */
+        }
 
-        return $this->getVotess($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Quality is new, it will return
-     * an empty collection; or if this Quality has previously
-     * been saved, it will retrieve related Votess from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Quality.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildVotes[] List of ChildVotes objects
-     */
-    public function getVotessJoinPollsHasArguments(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildVotesQuery::create(null, $criteria);
-        $query->joinWith('PollsHasArguments', $joinBehavior);
-
-        return $this->getVotess($query, $con);
+        return $this->aUsers;
     }
 
     /**
@@ -1732,9 +1432,20 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aQuality) {
+            $this->aQuality->removeFinalVotes($this);
+        }
+        if (null !== $this->aCourses) {
+            $this->aCourses->removeFinalVotes($this);
+        }
+        if (null !== $this->aUsers) {
+            $this->aUsers->removeFinalVotes($this);
+        }
         $this->id = null;
-        $this->vote = null;
-        $this->description = null;
+        $this->quality_id = null;
+        $this->courses_id = null;
+        $this->users_id = null;
+        $this->comment = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1753,20 +1464,11 @@ abstract class Quality implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collFinalVotess) {
-                foreach ($this->collFinalVotess as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collVotess) {
-                foreach ($this->collVotess as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collFinalVotess = null;
-        $this->collVotess = null;
+        $this->aQuality = null;
+        $this->aCourses = null;
+        $this->aUsers = null;
     }
 
     /**
@@ -1776,7 +1478,7 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(QualityTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(FinalVotesTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

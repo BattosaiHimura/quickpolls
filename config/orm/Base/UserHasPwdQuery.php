@@ -16,19 +16,19 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'User_has_Pwd' table.
+ * Base class that represents a query for the 'user_has_pwd' table.
  *
  *
  *
- * @method     ChildUserHasPwdQuery orderByUserIduser($order = Criteria::ASC) Order by the User_idUser column
- * @method     ChildUserHasPwdQuery orderByPwdIdpwd($order = Criteria::ASC) Order by the Pwd_idPwd column
- * @method     ChildUserHasPwdQuery orderByDatefrom($order = Criteria::ASC) Order by the dateFrom column
- * @method     ChildUserHasPwdQuery orderByDateto($order = Criteria::ASC) Order by the dateTo column
+ * @method     ChildUserHasPwdQuery orderByUserId($order = Criteria::ASC) Order by the user_id column
+ * @method     ChildUserHasPwdQuery orderByPwdId($order = Criteria::ASC) Order by the pwd_id column
+ * @method     ChildUserHasPwdQuery orderByDateFrom($order = Criteria::ASC) Order by the date_from column
+ * @method     ChildUserHasPwdQuery orderByDateTo($order = Criteria::ASC) Order by the date_to column
  *
- * @method     ChildUserHasPwdQuery groupByUserIduser() Group by the User_idUser column
- * @method     ChildUserHasPwdQuery groupByPwdIdpwd() Group by the Pwd_idPwd column
- * @method     ChildUserHasPwdQuery groupByDatefrom() Group by the dateFrom column
- * @method     ChildUserHasPwdQuery groupByDateto() Group by the dateTo column
+ * @method     ChildUserHasPwdQuery groupByUserId() Group by the user_id column
+ * @method     ChildUserHasPwdQuery groupByPwdId() Group by the pwd_id column
+ * @method     ChildUserHasPwdQuery groupByDateFrom() Group by the date_from column
+ * @method     ChildUserHasPwdQuery groupByDateTo() Group by the date_to column
  *
  * @method     ChildUserHasPwdQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildUserHasPwdQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -38,49 +38,49 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserHasPwdQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildUserHasPwdQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildUserHasPwdQuery leftJoinPwd($relationAlias = null) Adds a LEFT JOIN clause to the query using the Pwd relation
- * @method     ChildUserHasPwdQuery rightJoinPwd($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Pwd relation
- * @method     ChildUserHasPwdQuery innerJoinPwd($relationAlias = null) Adds a INNER JOIN clause to the query using the Pwd relation
+ * @method     ChildUserHasPwdQuery leftJoinUsers($relationAlias = null) Adds a LEFT JOIN clause to the query using the Users relation
+ * @method     ChildUserHasPwdQuery rightJoinUsers($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Users relation
+ * @method     ChildUserHasPwdQuery innerJoinUsers($relationAlias = null) Adds a INNER JOIN clause to the query using the Users relation
  *
- * @method     ChildUserHasPwdQuery joinWithPwd($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Pwd relation
+ * @method     ChildUserHasPwdQuery joinWithUsers($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Users relation
  *
- * @method     ChildUserHasPwdQuery leftJoinWithPwd() Adds a LEFT JOIN clause and with to the query using the Pwd relation
- * @method     ChildUserHasPwdQuery rightJoinWithPwd() Adds a RIGHT JOIN clause and with to the query using the Pwd relation
- * @method     ChildUserHasPwdQuery innerJoinWithPwd() Adds a INNER JOIN clause and with to the query using the Pwd relation
+ * @method     ChildUserHasPwdQuery leftJoinWithUsers() Adds a LEFT JOIN clause and with to the query using the Users relation
+ * @method     ChildUserHasPwdQuery rightJoinWithUsers() Adds a RIGHT JOIN clause and with to the query using the Users relation
+ * @method     ChildUserHasPwdQuery innerJoinWithUsers() Adds a INNER JOIN clause and with to the query using the Users relation
  *
- * @method     ChildUserHasPwdQuery leftJoinUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the User relation
- * @method     ChildUserHasPwdQuery rightJoinUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the User relation
- * @method     ChildUserHasPwdQuery innerJoinUser($relationAlias = null) Adds a INNER JOIN clause to the query using the User relation
+ * @method     ChildUserHasPwdQuery leftJoinPwds($relationAlias = null) Adds a LEFT JOIN clause to the query using the Pwds relation
+ * @method     ChildUserHasPwdQuery rightJoinPwds($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Pwds relation
+ * @method     ChildUserHasPwdQuery innerJoinPwds($relationAlias = null) Adds a INNER JOIN clause to the query using the Pwds relation
  *
- * @method     ChildUserHasPwdQuery joinWithUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the User relation
+ * @method     ChildUserHasPwdQuery joinWithPwds($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Pwds relation
  *
- * @method     ChildUserHasPwdQuery leftJoinWithUser() Adds a LEFT JOIN clause and with to the query using the User relation
- * @method     ChildUserHasPwdQuery rightJoinWithUser() Adds a RIGHT JOIN clause and with to the query using the User relation
- * @method     ChildUserHasPwdQuery innerJoinWithUser() Adds a INNER JOIN clause and with to the query using the User relation
+ * @method     ChildUserHasPwdQuery leftJoinWithPwds() Adds a LEFT JOIN clause and with to the query using the Pwds relation
+ * @method     ChildUserHasPwdQuery rightJoinWithPwds() Adds a RIGHT JOIN clause and with to the query using the Pwds relation
+ * @method     ChildUserHasPwdQuery innerJoinWithPwds() Adds a INNER JOIN clause and with to the query using the Pwds relation
  *
- * @method     \PwdQuery|\UserQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \UsersQuery|\PwdsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildUserHasPwd findOne(ConnectionInterface $con = null) Return the first ChildUserHasPwd matching the query
  * @method     ChildUserHasPwd findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUserHasPwd matching the query, or a new ChildUserHasPwd object populated from the query conditions when no match is found
  *
- * @method     ChildUserHasPwd findOneByUserIduser(int $User_idUser) Return the first ChildUserHasPwd filtered by the User_idUser column
- * @method     ChildUserHasPwd findOneByPwdIdpwd(int $Pwd_idPwd) Return the first ChildUserHasPwd filtered by the Pwd_idPwd column
- * @method     ChildUserHasPwd findOneByDatefrom(string $dateFrom) Return the first ChildUserHasPwd filtered by the dateFrom column
- * @method     ChildUserHasPwd findOneByDateto(string $dateTo) Return the first ChildUserHasPwd filtered by the dateTo column *
+ * @method     ChildUserHasPwd findOneByUserId(int $user_id) Return the first ChildUserHasPwd filtered by the user_id column
+ * @method     ChildUserHasPwd findOneByPwdId(int $pwd_id) Return the first ChildUserHasPwd filtered by the pwd_id column
+ * @method     ChildUserHasPwd findOneByDateFrom(string $date_from) Return the first ChildUserHasPwd filtered by the date_from column
+ * @method     ChildUserHasPwd findOneByDateTo(string $date_to) Return the first ChildUserHasPwd filtered by the date_to column *
 
  * @method     ChildUserHasPwd requirePk($key, ConnectionInterface $con = null) Return the ChildUserHasPwd by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUserHasPwd requireOne(ConnectionInterface $con = null) Return the first ChildUserHasPwd matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildUserHasPwd requireOneByUserIduser(int $User_idUser) Return the first ChildUserHasPwd filtered by the User_idUser column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUserHasPwd requireOneByPwdIdpwd(int $Pwd_idPwd) Return the first ChildUserHasPwd filtered by the Pwd_idPwd column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUserHasPwd requireOneByDatefrom(string $dateFrom) Return the first ChildUserHasPwd filtered by the dateFrom column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUserHasPwd requireOneByDateto(string $dateTo) Return the first ChildUserHasPwd filtered by the dateTo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUserHasPwd requireOneByUserId(int $user_id) Return the first ChildUserHasPwd filtered by the user_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUserHasPwd requireOneByPwdId(int $pwd_id) Return the first ChildUserHasPwd filtered by the pwd_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUserHasPwd requireOneByDateFrom(string $date_from) Return the first ChildUserHasPwd filtered by the date_from column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUserHasPwd requireOneByDateTo(string $date_to) Return the first ChildUserHasPwd filtered by the date_to column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUserHasPwd[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUserHasPwd objects based on current ModelCriteria
- * @method     ChildUserHasPwd[]|ObjectCollection findByUserIduser(int $User_idUser) Return ChildUserHasPwd objects filtered by the User_idUser column
- * @method     ChildUserHasPwd[]|ObjectCollection findByPwdIdpwd(int $Pwd_idPwd) Return ChildUserHasPwd objects filtered by the Pwd_idPwd column
- * @method     ChildUserHasPwd[]|ObjectCollection findByDatefrom(string $dateFrom) Return ChildUserHasPwd objects filtered by the dateFrom column
- * @method     ChildUserHasPwd[]|ObjectCollection findByDateto(string $dateTo) Return ChildUserHasPwd objects filtered by the dateTo column
+ * @method     ChildUserHasPwd[]|ObjectCollection findByUserId(int $user_id) Return ChildUserHasPwd objects filtered by the user_id column
+ * @method     ChildUserHasPwd[]|ObjectCollection findByPwdId(int $pwd_id) Return ChildUserHasPwd objects filtered by the pwd_id column
+ * @method     ChildUserHasPwd[]|ObjectCollection findByDateFrom(string $date_from) Return ChildUserHasPwd objects filtered by the date_from column
+ * @method     ChildUserHasPwd[]|ObjectCollection findByDateTo(string $date_to) Return ChildUserHasPwd objects filtered by the date_to column
  * @method     ChildUserHasPwd[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -133,7 +133,7 @@ abstract class UserHasPwdQuery extends ModelCriteria
      * $obj = $c->findPk(array(12, 34), $con);
      * </code>
      *
-     * @param array[$User_idUser, $Pwd_idPwd] $key Primary key to use for the query
+     * @param array[$user_id, $pwd_id] $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
      * @return ChildUserHasPwd|array|mixed the result, formatted by the current formatter
@@ -179,7 +179,7 @@ abstract class UserHasPwdQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT User_idUser, Pwd_idPwd, dateFrom, dateTo FROM User_has_Pwd WHERE User_idUser = :p0 AND Pwd_idPwd = :p1';
+        $sql = 'SELECT user_id, pwd_id, date_from, date_to FROM user_has_pwd WHERE user_id = :p0 AND pwd_id = :p1';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -253,8 +253,8 @@ abstract class UserHasPwdQuery extends ModelCriteria
      */
     public function filterByPrimaryKey($key)
     {
-        $this->addUsingAlias(UserHasPwdTableMap::COL_USER_IDUSER, $key[0], Criteria::EQUAL);
-        $this->addUsingAlias(UserHasPwdTableMap::COL_PWD_IDPWD, $key[1], Criteria::EQUAL);
+        $this->addUsingAlias(UserHasPwdTableMap::COL_USER_ID, $key[0], Criteria::EQUAL);
+        $this->addUsingAlias(UserHasPwdTableMap::COL_PWD_ID, $key[1], Criteria::EQUAL);
 
         return $this;
     }
@@ -272,8 +272,8 @@ abstract class UserHasPwdQuery extends ModelCriteria
             return $this->add(null, '1<>1', Criteria::CUSTOM);
         }
         foreach ($keys as $key) {
-            $cton0 = $this->getNewCriterion(UserHasPwdTableMap::COL_USER_IDUSER, $key[0], Criteria::EQUAL);
-            $cton1 = $this->getNewCriterion(UserHasPwdTableMap::COL_PWD_IDPWD, $key[1], Criteria::EQUAL);
+            $cton0 = $this->getNewCriterion(UserHasPwdTableMap::COL_USER_ID, $key[0], Criteria::EQUAL);
+            $cton1 = $this->getNewCriterion(UserHasPwdTableMap::COL_PWD_ID, $key[1], Criteria::EQUAL);
             $cton0->addAnd($cton1);
             $this->addOr($cton0);
         }
@@ -282,18 +282,18 @@ abstract class UserHasPwdQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the User_idUser column
+     * Filter the query on the user_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByUserIduser(1234); // WHERE User_idUser = 1234
-     * $query->filterByUserIduser(array(12, 34)); // WHERE User_idUser IN (12, 34)
-     * $query->filterByUserIduser(array('min' => 12)); // WHERE User_idUser > 12
+     * $query->filterByUserId(1234); // WHERE user_id = 1234
+     * $query->filterByUserId(array(12, 34)); // WHERE user_id IN (12, 34)
+     * $query->filterByUserId(array('min' => 12)); // WHERE user_id > 12
      * </code>
      *
-     * @see       filterByUser()
+     * @see       filterByUsers()
      *
-     * @param     mixed $userIduser The value to use as filter.
+     * @param     mixed $userId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -301,16 +301,16 @@ abstract class UserHasPwdQuery extends ModelCriteria
      *
      * @return $this|ChildUserHasPwdQuery The current query, for fluid interface
      */
-    public function filterByUserIduser($userIduser = null, $comparison = null)
+    public function filterByUserId($userId = null, $comparison = null)
     {
-        if (is_array($userIduser)) {
+        if (is_array($userId)) {
             $useMinMax = false;
-            if (isset($userIduser['min'])) {
-                $this->addUsingAlias(UserHasPwdTableMap::COL_USER_IDUSER, $userIduser['min'], Criteria::GREATER_EQUAL);
+            if (isset($userId['min'])) {
+                $this->addUsingAlias(UserHasPwdTableMap::COL_USER_ID, $userId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($userIduser['max'])) {
-                $this->addUsingAlias(UserHasPwdTableMap::COL_USER_IDUSER, $userIduser['max'], Criteria::LESS_EQUAL);
+            if (isset($userId['max'])) {
+                $this->addUsingAlias(UserHasPwdTableMap::COL_USER_ID, $userId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -321,22 +321,22 @@ abstract class UserHasPwdQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(UserHasPwdTableMap::COL_USER_IDUSER, $userIduser, $comparison);
+        return $this->addUsingAlias(UserHasPwdTableMap::COL_USER_ID, $userId, $comparison);
     }
 
     /**
-     * Filter the query on the Pwd_idPwd column
+     * Filter the query on the pwd_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByPwdIdpwd(1234); // WHERE Pwd_idPwd = 1234
-     * $query->filterByPwdIdpwd(array(12, 34)); // WHERE Pwd_idPwd IN (12, 34)
-     * $query->filterByPwdIdpwd(array('min' => 12)); // WHERE Pwd_idPwd > 12
+     * $query->filterByPwdId(1234); // WHERE pwd_id = 1234
+     * $query->filterByPwdId(array(12, 34)); // WHERE pwd_id IN (12, 34)
+     * $query->filterByPwdId(array('min' => 12)); // WHERE pwd_id > 12
      * </code>
      *
-     * @see       filterByPwd()
+     * @see       filterByPwds()
      *
-     * @param     mixed $pwdIdpwd The value to use as filter.
+     * @param     mixed $pwdId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -344,16 +344,16 @@ abstract class UserHasPwdQuery extends ModelCriteria
      *
      * @return $this|ChildUserHasPwdQuery The current query, for fluid interface
      */
-    public function filterByPwdIdpwd($pwdIdpwd = null, $comparison = null)
+    public function filterByPwdId($pwdId = null, $comparison = null)
     {
-        if (is_array($pwdIdpwd)) {
+        if (is_array($pwdId)) {
             $useMinMax = false;
-            if (isset($pwdIdpwd['min'])) {
-                $this->addUsingAlias(UserHasPwdTableMap::COL_PWD_IDPWD, $pwdIdpwd['min'], Criteria::GREATER_EQUAL);
+            if (isset($pwdId['min'])) {
+                $this->addUsingAlias(UserHasPwdTableMap::COL_PWD_ID, $pwdId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($pwdIdpwd['max'])) {
-                $this->addUsingAlias(UserHasPwdTableMap::COL_PWD_IDPWD, $pwdIdpwd['max'], Criteria::LESS_EQUAL);
+            if (isset($pwdId['max'])) {
+                $this->addUsingAlias(UserHasPwdTableMap::COL_PWD_ID, $pwdId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -364,20 +364,20 @@ abstract class UserHasPwdQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(UserHasPwdTableMap::COL_PWD_IDPWD, $pwdIdpwd, $comparison);
+        return $this->addUsingAlias(UserHasPwdTableMap::COL_PWD_ID, $pwdId, $comparison);
     }
 
     /**
-     * Filter the query on the dateFrom column
+     * Filter the query on the date_from column
      *
      * Example usage:
      * <code>
-     * $query->filterByDatefrom('2011-03-14'); // WHERE dateFrom = '2011-03-14'
-     * $query->filterByDatefrom('now'); // WHERE dateFrom = '2011-03-14'
-     * $query->filterByDatefrom(array('max' => 'yesterday')); // WHERE dateFrom > '2011-03-13'
+     * $query->filterByDateFrom('2011-03-14'); // WHERE date_from = '2011-03-14'
+     * $query->filterByDateFrom('now'); // WHERE date_from = '2011-03-14'
+     * $query->filterByDateFrom(array('max' => 'yesterday')); // WHERE date_from > '2011-03-13'
      * </code>
      *
-     * @param     mixed $datefrom The value to use as filter.
+     * @param     mixed $dateFrom The value to use as filter.
      *              Values can be integers (unix timestamps), DateTime objects, or strings.
      *              Empty strings are treated as NULL.
      *              Use scalar values for equality.
@@ -387,16 +387,16 @@ abstract class UserHasPwdQuery extends ModelCriteria
      *
      * @return $this|ChildUserHasPwdQuery The current query, for fluid interface
      */
-    public function filterByDatefrom($datefrom = null, $comparison = null)
+    public function filterByDateFrom($dateFrom = null, $comparison = null)
     {
-        if (is_array($datefrom)) {
+        if (is_array($dateFrom)) {
             $useMinMax = false;
-            if (isset($datefrom['min'])) {
-                $this->addUsingAlias(UserHasPwdTableMap::COL_DATEFROM, $datefrom['min'], Criteria::GREATER_EQUAL);
+            if (isset($dateFrom['min'])) {
+                $this->addUsingAlias(UserHasPwdTableMap::COL_DATE_FROM, $dateFrom['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($datefrom['max'])) {
-                $this->addUsingAlias(UserHasPwdTableMap::COL_DATEFROM, $datefrom['max'], Criteria::LESS_EQUAL);
+            if (isset($dateFrom['max'])) {
+                $this->addUsingAlias(UserHasPwdTableMap::COL_DATE_FROM, $dateFrom['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -407,20 +407,20 @@ abstract class UserHasPwdQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(UserHasPwdTableMap::COL_DATEFROM, $datefrom, $comparison);
+        return $this->addUsingAlias(UserHasPwdTableMap::COL_DATE_FROM, $dateFrom, $comparison);
     }
 
     /**
-     * Filter the query on the dateTo column
+     * Filter the query on the date_to column
      *
      * Example usage:
      * <code>
-     * $query->filterByDateto('2011-03-14'); // WHERE dateTo = '2011-03-14'
-     * $query->filterByDateto('now'); // WHERE dateTo = '2011-03-14'
-     * $query->filterByDateto(array('max' => 'yesterday')); // WHERE dateTo > '2011-03-13'
+     * $query->filterByDateTo('2011-03-14'); // WHERE date_to = '2011-03-14'
+     * $query->filterByDateTo('now'); // WHERE date_to = '2011-03-14'
+     * $query->filterByDateTo(array('max' => 'yesterday')); // WHERE date_to > '2011-03-13'
      * </code>
      *
-     * @param     mixed $dateto The value to use as filter.
+     * @param     mixed $dateTo The value to use as filter.
      *              Values can be integers (unix timestamps), DateTime objects, or strings.
      *              Empty strings are treated as NULL.
      *              Use scalar values for equality.
@@ -430,16 +430,16 @@ abstract class UserHasPwdQuery extends ModelCriteria
      *
      * @return $this|ChildUserHasPwdQuery The current query, for fluid interface
      */
-    public function filterByDateto($dateto = null, $comparison = null)
+    public function filterByDateTo($dateTo = null, $comparison = null)
     {
-        if (is_array($dateto)) {
+        if (is_array($dateTo)) {
             $useMinMax = false;
-            if (isset($dateto['min'])) {
-                $this->addUsingAlias(UserHasPwdTableMap::COL_DATETO, $dateto['min'], Criteria::GREATER_EQUAL);
+            if (isset($dateTo['min'])) {
+                $this->addUsingAlias(UserHasPwdTableMap::COL_DATE_TO, $dateTo['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($dateto['max'])) {
-                $this->addUsingAlias(UserHasPwdTableMap::COL_DATETO, $dateto['max'], Criteria::LESS_EQUAL);
+            if (isset($dateTo['max'])) {
+                $this->addUsingAlias(UserHasPwdTableMap::COL_DATE_TO, $dateTo['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -450,48 +450,48 @@ abstract class UserHasPwdQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(UserHasPwdTableMap::COL_DATETO, $dateto, $comparison);
+        return $this->addUsingAlias(UserHasPwdTableMap::COL_DATE_TO, $dateTo, $comparison);
     }
 
     /**
-     * Filter the query by a related \Pwd object
+     * Filter the query by a related \Users object
      *
-     * @param \Pwd|ObjectCollection $pwd The related object(s) to use as filter
+     * @param \Users|ObjectCollection $users The related object(s) to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildUserHasPwdQuery The current query, for fluid interface
      */
-    public function filterByPwd($pwd, $comparison = null)
+    public function filterByUsers($users, $comparison = null)
     {
-        if ($pwd instanceof \Pwd) {
+        if ($users instanceof \Users) {
             return $this
-                ->addUsingAlias(UserHasPwdTableMap::COL_PWD_IDPWD, $pwd->getIdpwd(), $comparison);
-        } elseif ($pwd instanceof ObjectCollection) {
+                ->addUsingAlias(UserHasPwdTableMap::COL_USER_ID, $users->getId(), $comparison);
+        } elseif ($users instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(UserHasPwdTableMap::COL_PWD_IDPWD, $pwd->toKeyValue('PrimaryKey', 'Idpwd'), $comparison);
+                ->addUsingAlias(UserHasPwdTableMap::COL_USER_ID, $users->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByPwd() only accepts arguments of type \Pwd or Collection');
+            throw new PropelException('filterByUsers() only accepts arguments of type \Users or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Pwd relation
+     * Adds a JOIN clause to the query using the Users relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildUserHasPwdQuery The current query, for fluid interface
      */
-    public function joinPwd($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinUsers($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Pwd');
+        $relationMap = $tableMap->getRelation('Users');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -506,14 +506,14 @@ abstract class UserHasPwdQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Pwd');
+            $this->addJoinObject($join, 'Users');
         }
 
         return $this;
     }
 
     /**
-     * Use the Pwd relation Pwd object
+     * Use the Users relation Users object
      *
      * @see useQuery()
      *
@@ -521,54 +521,54 @@ abstract class UserHasPwdQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \PwdQuery A secondary query class using the current class as primary query
+     * @return \UsersQuery A secondary query class using the current class as primary query
      */
-    public function usePwdQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useUsersQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinPwd($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Pwd', '\PwdQuery');
+            ->joinUsers($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Users', '\UsersQuery');
     }
 
     /**
-     * Filter the query by a related \User object
+     * Filter the query by a related \Pwds object
      *
-     * @param \User|ObjectCollection $user The related object(s) to use as filter
+     * @param \Pwds|ObjectCollection $pwds The related object(s) to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildUserHasPwdQuery The current query, for fluid interface
      */
-    public function filterByUser($user, $comparison = null)
+    public function filterByPwds($pwds, $comparison = null)
     {
-        if ($user instanceof \User) {
+        if ($pwds instanceof \Pwds) {
             return $this
-                ->addUsingAlias(UserHasPwdTableMap::COL_USER_IDUSER, $user->getIduser(), $comparison);
-        } elseif ($user instanceof ObjectCollection) {
+                ->addUsingAlias(UserHasPwdTableMap::COL_PWD_ID, $pwds->getId(), $comparison);
+        } elseif ($pwds instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(UserHasPwdTableMap::COL_USER_IDUSER, $user->toKeyValue('PrimaryKey', 'Iduser'), $comparison);
+                ->addUsingAlias(UserHasPwdTableMap::COL_PWD_ID, $pwds->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByUser() only accepts arguments of type \User or Collection');
+            throw new PropelException('filterByPwds() only accepts arguments of type \Pwds or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the User relation
+     * Adds a JOIN clause to the query using the Pwds relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildUserHasPwdQuery The current query, for fluid interface
      */
-    public function joinUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinPwds($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('User');
+        $relationMap = $tableMap->getRelation('Pwds');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -583,14 +583,14 @@ abstract class UserHasPwdQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'User');
+            $this->addJoinObject($join, 'Pwds');
         }
 
         return $this;
     }
 
     /**
-     * Use the User relation User object
+     * Use the Pwds relation Pwds object
      *
      * @see useQuery()
      *
@@ -598,13 +598,13 @@ abstract class UserHasPwdQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \UserQuery A secondary query class using the current class as primary query
+     * @return \PwdsQuery A secondary query class using the current class as primary query
      */
-    public function useUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function usePwdsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinUser($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'User', '\UserQuery');
+            ->joinPwds($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Pwds', '\PwdsQuery');
     }
 
     /**
@@ -617,8 +617,8 @@ abstract class UserHasPwdQuery extends ModelCriteria
     public function prune($userHasPwd = null)
     {
         if ($userHasPwd) {
-            $this->addCond('pruneCond0', $this->getAliasedColName(UserHasPwdTableMap::COL_USER_IDUSER), $userHasPwd->getUserIduser(), Criteria::NOT_EQUAL);
-            $this->addCond('pruneCond1', $this->getAliasedColName(UserHasPwdTableMap::COL_PWD_IDPWD), $userHasPwd->getPwdIdpwd(), Criteria::NOT_EQUAL);
+            $this->addCond('pruneCond0', $this->getAliasedColName(UserHasPwdTableMap::COL_USER_ID), $userHasPwd->getUserId(), Criteria::NOT_EQUAL);
+            $this->addCond('pruneCond1', $this->getAliasedColName(UserHasPwdTableMap::COL_PWD_ID), $userHasPwd->getPwdId(), Criteria::NOT_EQUAL);
             $this->combine(array('pruneCond0', 'pruneCond1'), Criteria::LOGICAL_OR);
         }
 
@@ -626,7 +626,7 @@ abstract class UserHasPwdQuery extends ModelCriteria
     }
 
     /**
-     * Deletes all rows from the User_has_Pwd table.
+     * Deletes all rows from the user_has_pwd table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).

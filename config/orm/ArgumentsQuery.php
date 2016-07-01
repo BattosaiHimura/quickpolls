@@ -1,9 +1,9 @@
 <?php
 
-use Base\QualityQuery as BaseQualityQuery;
+use Base\ArgumentsQuery as BaseArgumentsQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'quality' table.
+ * Skeleton subclass for performing query and update operations on the 'arguments' table.
  *
  *
  *
@@ -12,7 +12,7 @@ use Base\QualityQuery as BaseQualityQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class QualityQuery extends BaseQualityQuery
+class ArgumentsQuery extends BaseArgumentsQuery
 {
 
 }

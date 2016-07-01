@@ -3,7 +3,7 @@
 use Base\ProfHasCourse as BaseProfHasCourse;
 
 /**
- * Skeleton subclass for representing a row from the 'Prof_has_Course' table.
+ * Skeleton subclass for representing a row from the 'prof_has_course' table.
  *
  *
  *

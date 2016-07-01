@@ -4,14 +4,22 @@ namespace Base;
 
 use \FinalVotes as ChildFinalVotes;
 use \FinalVotesQuery as ChildFinalVotesQuery;
-use \Quality as ChildQuality;
-use \QualityQuery as ChildQualityQuery;
+use \ProfHasCourse as ChildProfHasCourse;
+use \ProfHasCourseQuery as ChildProfHasCourseQuery;
+use \UserHasPwd as ChildUserHasPwd;
+use \UserHasPwdQuery as ChildUserHasPwdQuery;
+use \UserType as ChildUserType;
+use \UserTypeQuery as ChildUserTypeQuery;
+use \Users as ChildUsers;
+use \UsersQuery as ChildUsersQuery;
 use \Votes as ChildVotes;
 use \VotesQuery as ChildVotesQuery;
 use \Exception;
 use \PDO;
 use Map\FinalVotesTableMap;
-use Map\QualityTableMap;
+use Map\ProfHasCourseTableMap;
+use Map\UserHasPwdTableMap;
+use Map\UsersTableMap;
 use Map\VotesTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -27,18 +35,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'quality' table.
+ * Base class that represents a row from the 'users' table.
  *
  *
  *
  * @package    propel.generator..Base
  */
-abstract class Quality implements ActiveRecordInterface
+abstract class Users implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\QualityTableMap';
+    const TABLE_MAP = '\\Map\\UsersTableMap';
 
 
     /**
@@ -75,24 +83,55 @@ abstract class Quality implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the vote field.
+     * The value for the user_type_id field.
      *
      * @var        int
      */
-    protected $vote;
+    protected $user_type_id;
 
     /**
-     * The value for the description field.
+     * The value for the name field.
      *
      * @var        string
      */
-    protected $description;
+    protected $name;
+
+    /**
+     * The value for the surname field.
+     *
+     * @var        string
+     */
+    protected $surname;
+
+    /**
+     * The value for the email field.
+     *
+     * @var        string
+     */
+    protected $email;
+
+    /**
+     * @var        ChildUserType
+     */
+    protected $aUserType;
 
     /**
      * @var        ObjectCollection|ChildFinalVotes[] Collection to store aggregation of ChildFinalVotes objects.
      */
     protected $collFinalVotess;
     protected $collFinalVotessPartial;
+
+    /**
+     * @var        ObjectCollection|ChildProfHasCourse[] Collection to store aggregation of ChildProfHasCourse objects.
+     */
+    protected $collProfHasCourses;
+    protected $collProfHasCoursesPartial;
+
+    /**
+     * @var        ObjectCollection|ChildUserHasPwd[] Collection to store aggregation of ChildUserHasPwd objects.
+     */
+    protected $collUserHasPwds;
+    protected $collUserHasPwdsPartial;
 
     /**
      * @var        ObjectCollection|ChildVotes[] Collection to store aggregation of ChildVotes objects.
@@ -116,12 +155,24 @@ abstract class Quality implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildProfHasCourse[]
+     */
+    protected $profHasCoursesScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildUserHasPwd[]
+     */
+    protected $userHasPwdsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildVotes[]
      */
     protected $votessScheduledForDeletion = null;
 
     /**
-     * Initializes internal state of Base\Quality object.
+     * Initializes internal state of Base\Users object.
      */
     public function __construct()
     {
@@ -216,9 +267,9 @@ abstract class Quality implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Quality</code> instance.  If
-     * <code>obj</code> is an instance of <code>Quality</code>, delegates to
-     * <code>equals(Quality)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Users</code> instance.  If
+     * <code>obj</code> is an instance of <code>Users</code>, delegates to
+     * <code>equals(Users)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -284,7 +335,7 @@ abstract class Quality implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Quality The current object, for fluid interface
+     * @return $this|Users The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -356,30 +407,50 @@ abstract class Quality implements ActiveRecordInterface
     }
 
     /**
-     * Get the [vote] column value.
+     * Get the [user_type_id] column value.
      *
      * @return int
      */
-    public function getVote()
+    public function getUserTypeId()
     {
-        return $this->vote;
+        return $this->user_type_id;
     }
 
     /**
-     * Get the [description] column value.
+     * Get the [name] column value.
      *
      * @return string
      */
-    public function getDescription()
+    public function getName()
     {
-        return $this->description;
+        return $this->name;
+    }
+
+    /**
+     * Get the [surname] column value.
+     *
+     * @return string
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    /**
+     * Get the [email] column value.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return $this|\Quality The current object (for fluent API support)
+     * @return $this|\Users The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -389,51 +460,95 @@ abstract class Quality implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[QualityTableMap::COL_ID] = true;
+            $this->modifiedColumns[UsersTableMap::COL_ID] = true;
         }
 
         return $this;
     } // setId()
 
     /**
-     * Set the value of [vote] column.
+     * Set the value of [user_type_id] column.
      *
      * @param int $v new value
-     * @return $this|\Quality The current object (for fluent API support)
+     * @return $this|\Users The current object (for fluent API support)
      */
-    public function setVote($v)
+    public function setUserTypeId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->vote !== $v) {
-            $this->vote = $v;
-            $this->modifiedColumns[QualityTableMap::COL_VOTE] = true;
+        if ($this->user_type_id !== $v) {
+            $this->user_type_id = $v;
+            $this->modifiedColumns[UsersTableMap::COL_USER_TYPE_ID] = true;
+        }
+
+        if ($this->aUserType !== null && $this->aUserType->getId() !== $v) {
+            $this->aUserType = null;
         }
 
         return $this;
-    } // setVote()
+    } // setUserTypeId()
 
     /**
-     * Set the value of [description] column.
+     * Set the value of [name] column.
      *
      * @param string $v new value
-     * @return $this|\Quality The current object (for fluent API support)
+     * @return $this|\Users The current object (for fluent API support)
      */
-    public function setDescription($v)
+    public function setName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->description !== $v) {
-            $this->description = $v;
-            $this->modifiedColumns[QualityTableMap::COL_DESCRIPTION] = true;
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[UsersTableMap::COL_NAME] = true;
         }
 
         return $this;
-    } // setDescription()
+    } // setName()
+
+    /**
+     * Set the value of [surname] column.
+     *
+     * @param string $v new value
+     * @return $this|\Users The current object (for fluent API support)
+     */
+    public function setSurname($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->surname !== $v) {
+            $this->surname = $v;
+            $this->modifiedColumns[UsersTableMap::COL_SURNAME] = true;
+        }
+
+        return $this;
+    } // setSurname()
+
+    /**
+     * Set the value of [email] column.
+     *
+     * @param string $v new value
+     * @return $this|\Users The current object (for fluent API support)
+     */
+    public function setEmail($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->email !== $v) {
+            $this->email = $v;
+            $this->modifiedColumns[UsersTableMap::COL_EMAIL] = true;
+        }
+
+        return $this;
+    } // setEmail()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -471,14 +586,20 @@ abstract class Quality implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : QualityTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UsersTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : QualityTableMap::translateFieldName('Vote', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->vote = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UsersTableMap::translateFieldName('UserTypeId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->user_type_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : QualityTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->description = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UsersTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->name = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UsersTableMap::translateFieldName('Surname', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->surname = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UsersTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->email = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -487,10 +608,10 @@ abstract class Quality implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = QualityTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = UsersTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Quality'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Users'), 0, $e);
         }
     }
 
@@ -509,6 +630,9 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aUserType !== null && $this->user_type_id !== $this->aUserType->getId()) {
+            $this->aUserType = null;
+        }
     } // ensureConsistency
 
     /**
@@ -532,13 +656,13 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(QualityTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(UsersTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildQualityQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildUsersQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -548,7 +672,12 @@ abstract class Quality implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aUserType = null;
             $this->collFinalVotess = null;
+
+            $this->collProfHasCourses = null;
+
+            $this->collUserHasPwds = null;
 
             $this->collVotess = null;
 
@@ -561,8 +690,8 @@ abstract class Quality implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Quality::setDeleted()
-     * @see Quality::isDeleted()
+     * @see Users::setDeleted()
+     * @see Users::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -571,11 +700,11 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(QualityTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UsersTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildQualityQuery::create()
+            $deleteQuery = ChildUsersQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -606,7 +735,7 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(QualityTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UsersTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -625,7 +754,7 @@ abstract class Quality implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                QualityTableMap::addInstanceToPool($this);
+                UsersTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -651,6 +780,18 @@ abstract class Quality implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aUserType !== null) {
+                if ($this->aUserType->isModified() || $this->aUserType->isNew()) {
+                    $affectedRows += $this->aUserType->save($con);
+                }
+                $this->setUserType($this->aUserType);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -673,6 +814,40 @@ abstract class Quality implements ActiveRecordInterface
 
             if ($this->collFinalVotess !== null) {
                 foreach ($this->collFinalVotess as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->profHasCoursesScheduledForDeletion !== null) {
+                if (!$this->profHasCoursesScheduledForDeletion->isEmpty()) {
+                    \ProfHasCourseQuery::create()
+                        ->filterByPrimaryKeys($this->profHasCoursesScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->profHasCoursesScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collProfHasCourses !== null) {
+                foreach ($this->collProfHasCourses as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->userHasPwdsScheduledForDeletion !== null) {
+                if (!$this->userHasPwdsScheduledForDeletion->isEmpty()) {
+                    \UserHasPwdQuery::create()
+                        ->filterByPrimaryKeys($this->userHasPwdsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->userHasPwdsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collUserHasPwds !== null) {
+                foreach ($this->collUserHasPwds as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -716,24 +891,30 @@ abstract class Quality implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[QualityTableMap::COL_ID] = true;
+        $this->modifiedColumns[UsersTableMap::COL_ID] = true;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . QualityTableMap::COL_ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UsersTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(QualityTableMap::COL_ID)) {
+        if ($this->isColumnModified(UsersTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(QualityTableMap::COL_VOTE)) {
-            $modifiedColumns[':p' . $index++]  = 'vote';
+        if ($this->isColumnModified(UsersTableMap::COL_USER_TYPE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'user_type_id';
         }
-        if ($this->isColumnModified(QualityTableMap::COL_DESCRIPTION)) {
-            $modifiedColumns[':p' . $index++]  = 'description';
+        if ($this->isColumnModified(UsersTableMap::COL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = 'name';
+        }
+        if ($this->isColumnModified(UsersTableMap::COL_SURNAME)) {
+            $modifiedColumns[':p' . $index++]  = 'surname';
+        }
+        if ($this->isColumnModified(UsersTableMap::COL_EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'email';
         }
 
         $sql = sprintf(
-            'INSERT INTO quality (%s) VALUES (%s)',
+            'INSERT INTO users (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -745,11 +926,17 @@ abstract class Quality implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'vote':
-                        $stmt->bindValue($identifier, $this->vote, PDO::PARAM_INT);
+                    case 'user_type_id':
+                        $stmt->bindValue($identifier, $this->user_type_id, PDO::PARAM_INT);
                         break;
-                    case 'description':
-                        $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
+                    case 'name':
+                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
+                        break;
+                    case 'surname':
+                        $stmt->bindValue($identifier, $this->surname, PDO::PARAM_STR);
+                        break;
+                    case 'email':
+                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -797,7 +984,7 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = QualityTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UsersTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -817,10 +1004,16 @@ abstract class Quality implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getVote();
+                return $this->getUserTypeId();
                 break;
             case 2:
-                return $this->getDescription();
+                return $this->getName();
+                break;
+            case 3:
+                return $this->getSurname();
+                break;
+            case 4:
+                return $this->getEmail();
                 break;
             default:
                 return null;
@@ -846,15 +1039,17 @@ abstract class Quality implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Quality'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Users'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Quality'][$this->hashCode()] = true;
-        $keys = QualityTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Users'][$this->hashCode()] = true;
+        $keys = UsersTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getVote(),
-            $keys[2] => $this->getDescription(),
+            $keys[1] => $this->getUserTypeId(),
+            $keys[2] => $this->getName(),
+            $keys[3] => $this->getSurname(),
+            $keys[4] => $this->getEmail(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -862,6 +1057,21 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->aUserType) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'userType';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'user_type';
+                        break;
+                    default:
+                        $key = 'UserType';
+                }
+
+                $result[$key] = $this->aUserType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
             if (null !== $this->collFinalVotess) {
 
                 switch ($keyType) {
@@ -876,6 +1086,36 @@ abstract class Quality implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collFinalVotess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collProfHasCourses) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'profHasCourses';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'prof_has_courses';
+                        break;
+                    default:
+                        $key = 'ProfHasCourses';
+                }
+
+                $result[$key] = $this->collProfHasCourses->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collUserHasPwds) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'userHasPwds';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'user_has_pwds';
+                        break;
+                    default:
+                        $key = 'UserHasPwds';
+                }
+
+                $result[$key] = $this->collUserHasPwds->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collVotess) {
 
@@ -906,11 +1146,11 @@ abstract class Quality implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Quality
+     * @return $this|\Users
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = QualityTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UsersTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -921,7 +1161,7 @@ abstract class Quality implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Quality
+     * @return $this|\Users
      */
     public function setByPosition($pos, $value)
     {
@@ -930,10 +1170,16 @@ abstract class Quality implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setVote($value);
+                $this->setUserTypeId($value);
                 break;
             case 2:
-                $this->setDescription($value);
+                $this->setName($value);
+                break;
+            case 3:
+                $this->setSurname($value);
+                break;
+            case 4:
+                $this->setEmail($value);
                 break;
         } // switch()
 
@@ -959,16 +1205,22 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = QualityTableMap::getFieldNames($keyType);
+        $keys = UsersTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setVote($arr[$keys[1]]);
+            $this->setUserTypeId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setDescription($arr[$keys[2]]);
+            $this->setName($arr[$keys[2]]);
+        }
+        if (array_key_exists($keys[3], $arr)) {
+            $this->setSurname($arr[$keys[3]]);
+        }
+        if (array_key_exists($keys[4], $arr)) {
+            $this->setEmail($arr[$keys[4]]);
         }
     }
 
@@ -989,7 +1241,7 @@ abstract class Quality implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Quality The current object, for fluid interface
+     * @return $this|\Users The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1009,16 +1261,22 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(QualityTableMap::DATABASE_NAME);
+        $criteria = new Criteria(UsersTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(QualityTableMap::COL_ID)) {
-            $criteria->add(QualityTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(UsersTableMap::COL_ID)) {
+            $criteria->add(UsersTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(QualityTableMap::COL_VOTE)) {
-            $criteria->add(QualityTableMap::COL_VOTE, $this->vote);
+        if ($this->isColumnModified(UsersTableMap::COL_USER_TYPE_ID)) {
+            $criteria->add(UsersTableMap::COL_USER_TYPE_ID, $this->user_type_id);
         }
-        if ($this->isColumnModified(QualityTableMap::COL_DESCRIPTION)) {
-            $criteria->add(QualityTableMap::COL_DESCRIPTION, $this->description);
+        if ($this->isColumnModified(UsersTableMap::COL_NAME)) {
+            $criteria->add(UsersTableMap::COL_NAME, $this->name);
+        }
+        if ($this->isColumnModified(UsersTableMap::COL_SURNAME)) {
+            $criteria->add(UsersTableMap::COL_SURNAME, $this->surname);
+        }
+        if ($this->isColumnModified(UsersTableMap::COL_EMAIL)) {
+            $criteria->add(UsersTableMap::COL_EMAIL, $this->email);
         }
 
         return $criteria;
@@ -1036,8 +1294,8 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildQualityQuery::create();
-        $criteria->add(QualityTableMap::COL_ID, $this->id);
+        $criteria = ChildUsersQuery::create();
+        $criteria->add(UsersTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1099,15 +1357,17 @@ abstract class Quality implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Quality (or compatible) type.
+     * @param      object $copyObj An object of \Users (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setVote($this->getVote());
-        $copyObj->setDescription($this->getDescription());
+        $copyObj->setUserTypeId($this->getUserTypeId());
+        $copyObj->setName($this->getName());
+        $copyObj->setSurname($this->getSurname());
+        $copyObj->setEmail($this->getEmail());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1117,6 +1377,18 @@ abstract class Quality implements ActiveRecordInterface
             foreach ($this->getFinalVotess() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addFinalVotes($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getProfHasCourses() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addProfHasCourse($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getUserHasPwds() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addUserHasPwd($relObj->copy($deepCopy));
                 }
             }
 
@@ -1143,7 +1415,7 @@ abstract class Quality implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Quality Clone of current object.
+     * @return \Users Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1154,6 +1426,57 @@ abstract class Quality implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
+    }
+
+    /**
+     * Declares an association between this object and a ChildUserType object.
+     *
+     * @param  ChildUserType $v
+     * @return $this|\Users The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUserType(ChildUserType $v = null)
+    {
+        if ($v === null) {
+            $this->setUserTypeId(NULL);
+        } else {
+            $this->setUserTypeId($v->getId());
+        }
+
+        $this->aUserType = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUserType object, it will not be re-added.
+        if ($v !== null) {
+            $v->addUsers($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildUserType object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUserType The associated ChildUserType object.
+     * @throws PropelException
+     */
+    public function getUserType(ConnectionInterface $con = null)
+    {
+        if ($this->aUserType === null && ($this->user_type_id !== null)) {
+            $this->aUserType = ChildUserTypeQuery::create()->findPk($this->user_type_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUserType->addUserss($this);
+             */
+        }
+
+        return $this->aUserType;
     }
 
 
@@ -1169,6 +1492,12 @@ abstract class Quality implements ActiveRecordInterface
     {
         if ('FinalVotes' == $relationName) {
             return $this->initFinalVotess();
+        }
+        if ('ProfHasCourse' == $relationName) {
+            return $this->initProfHasCourses();
+        }
+        if ('UserHasPwd' == $relationName) {
+            return $this->initUserHasPwds();
         }
         if ('Votes' == $relationName) {
             return $this->initVotess();
@@ -1227,7 +1556,7 @@ abstract class Quality implements ActiveRecordInterface
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildQuality is new, it will return
+     * If this ChildUsers is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
@@ -1244,7 +1573,7 @@ abstract class Quality implements ActiveRecordInterface
                 $this->initFinalVotess();
             } else {
                 $collFinalVotess = ChildFinalVotesQuery::create(null, $criteria)
-                    ->filterByQuality($this)
+                    ->filterByUsers($this)
                     ->find($con);
 
                 if (null !== $criteria) {
@@ -1287,7 +1616,7 @@ abstract class Quality implements ActiveRecordInterface
      *
      * @param      Collection $finalVotess A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildQuality The current object (for fluent API support)
+     * @return $this|ChildUsers The current object (for fluent API support)
      */
     public function setFinalVotess(Collection $finalVotess, ConnectionInterface $con = null)
     {
@@ -1298,7 +1627,7 @@ abstract class Quality implements ActiveRecordInterface
         $this->finalVotessScheduledForDeletion = $finalVotessToDelete;
 
         foreach ($finalVotessToDelete as $finalVotesRemoved) {
-            $finalVotesRemoved->setQuality(null);
+            $finalVotesRemoved->setUsers(null);
         }
 
         $this->collFinalVotess = null;
@@ -1339,7 +1668,7 @@ abstract class Quality implements ActiveRecordInterface
             }
 
             return $query
-                ->filterByQuality($this)
+                ->filterByUsers($this)
                 ->count($con);
         }
 
@@ -1351,7 +1680,7 @@ abstract class Quality implements ActiveRecordInterface
      * through the ChildFinalVotes foreign key attribute.
      *
      * @param  ChildFinalVotes $l ChildFinalVotes
-     * @return $this|\Quality The current object (for fluent API support)
+     * @return $this|\Users The current object (for fluent API support)
      */
     public function addFinalVotes(ChildFinalVotes $l)
     {
@@ -1377,12 +1706,12 @@ abstract class Quality implements ActiveRecordInterface
     protected function doAddFinalVotes(ChildFinalVotes $finalVotes)
     {
         $this->collFinalVotess[]= $finalVotes;
-        $finalVotes->setQuality($this);
+        $finalVotes->setUsers($this);
     }
 
     /**
      * @param  ChildFinalVotes $finalVotes The ChildFinalVotes object to remove.
-     * @return $this|ChildQuality The current object (for fluent API support)
+     * @return $this|ChildUsers The current object (for fluent API support)
      */
     public function removeFinalVotes(ChildFinalVotes $finalVotes)
     {
@@ -1394,7 +1723,7 @@ abstract class Quality implements ActiveRecordInterface
                 $this->finalVotessScheduledForDeletion->clear();
             }
             $this->finalVotessScheduledForDeletion[]= clone $finalVotes;
-            $finalVotes->setQuality(null);
+            $finalVotes->setUsers(null);
         }
 
         return $this;
@@ -1404,13 +1733,38 @@ abstract class Quality implements ActiveRecordInterface
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Quality is new, it will return
-     * an empty collection; or if this Quality has previously
+     * Otherwise if this Users is new, it will return
+     * an empty collection; or if this Users has previously
      * been saved, it will retrieve related FinalVotess from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Quality.
+     * actually need in Users.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildFinalVotes[] List of ChildFinalVotes objects
+     */
+    public function getFinalVotessJoinQuality(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildFinalVotesQuery::create(null, $criteria);
+        $query->joinWith('Quality', $joinBehavior);
+
+        return $this->getFinalVotess($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Users is new, it will return
+     * an empty collection; or if this Users has previously
+     * been saved, it will retrieve related FinalVotess from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Users.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
@@ -1425,29 +1779,510 @@ abstract class Quality implements ActiveRecordInterface
         return $this->getFinalVotess($query, $con);
     }
 
+    /**
+     * Clears out the collProfHasCourses collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addProfHasCourses()
+     */
+    public function clearProfHasCourses()
+    {
+        $this->collProfHasCourses = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collProfHasCourses collection loaded partially.
+     */
+    public function resetPartialProfHasCourses($v = true)
+    {
+        $this->collProfHasCoursesPartial = $v;
+    }
+
+    /**
+     * Initializes the collProfHasCourses collection.
+     *
+     * By default this just sets the collProfHasCourses collection to an empty array (like clearcollProfHasCourses());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initProfHasCourses($overrideExisting = true)
+    {
+        if (null !== $this->collProfHasCourses && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = ProfHasCourseTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collProfHasCourses = new $collectionClassName;
+        $this->collProfHasCourses->setModel('\ProfHasCourse');
+    }
+
+    /**
+     * Gets an array of ChildProfHasCourse objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildUsers is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildProfHasCourse[] List of ChildProfHasCourse objects
+     * @throws PropelException
+     */
+    public function getProfHasCourses(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collProfHasCoursesPartial && !$this->isNew();
+        if (null === $this->collProfHasCourses || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collProfHasCourses) {
+                // return empty collection
+                $this->initProfHasCourses();
+            } else {
+                $collProfHasCourses = ChildProfHasCourseQuery::create(null, $criteria)
+                    ->filterByUsers($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collProfHasCoursesPartial && count($collProfHasCourses)) {
+                        $this->initProfHasCourses(false);
+
+                        foreach ($collProfHasCourses as $obj) {
+                            if (false == $this->collProfHasCourses->contains($obj)) {
+                                $this->collProfHasCourses->append($obj);
+                            }
+                        }
+
+                        $this->collProfHasCoursesPartial = true;
+                    }
+
+                    return $collProfHasCourses;
+                }
+
+                if ($partial && $this->collProfHasCourses) {
+                    foreach ($this->collProfHasCourses as $obj) {
+                        if ($obj->isNew()) {
+                            $collProfHasCourses[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collProfHasCourses = $collProfHasCourses;
+                $this->collProfHasCoursesPartial = false;
+            }
+        }
+
+        return $this->collProfHasCourses;
+    }
+
+    /**
+     * Sets a collection of ChildProfHasCourse objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $profHasCourses A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildUsers The current object (for fluent API support)
+     */
+    public function setProfHasCourses(Collection $profHasCourses, ConnectionInterface $con = null)
+    {
+        /** @var ChildProfHasCourse[] $profHasCoursesToDelete */
+        $profHasCoursesToDelete = $this->getProfHasCourses(new Criteria(), $con)->diff($profHasCourses);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->profHasCoursesScheduledForDeletion = clone $profHasCoursesToDelete;
+
+        foreach ($profHasCoursesToDelete as $profHasCourseRemoved) {
+            $profHasCourseRemoved->setUsers(null);
+        }
+
+        $this->collProfHasCourses = null;
+        foreach ($profHasCourses as $profHasCourse) {
+            $this->addProfHasCourse($profHasCourse);
+        }
+
+        $this->collProfHasCourses = $profHasCourses;
+        $this->collProfHasCoursesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related ProfHasCourse objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related ProfHasCourse objects.
+     * @throws PropelException
+     */
+    public function countProfHasCourses(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collProfHasCoursesPartial && !$this->isNew();
+        if (null === $this->collProfHasCourses || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collProfHasCourses) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getProfHasCourses());
+            }
+
+            $query = ChildProfHasCourseQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByUsers($this)
+                ->count($con);
+        }
+
+        return count($this->collProfHasCourses);
+    }
+
+    /**
+     * Method called to associate a ChildProfHasCourse object to this object
+     * through the ChildProfHasCourse foreign key attribute.
+     *
+     * @param  ChildProfHasCourse $l ChildProfHasCourse
+     * @return $this|\Users The current object (for fluent API support)
+     */
+    public function addProfHasCourse(ChildProfHasCourse $l)
+    {
+        if ($this->collProfHasCourses === null) {
+            $this->initProfHasCourses();
+            $this->collProfHasCoursesPartial = true;
+        }
+
+        if (!$this->collProfHasCourses->contains($l)) {
+            $this->doAddProfHasCourse($l);
+
+            if ($this->profHasCoursesScheduledForDeletion and $this->profHasCoursesScheduledForDeletion->contains($l)) {
+                $this->profHasCoursesScheduledForDeletion->remove($this->profHasCoursesScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildProfHasCourse $profHasCourse The ChildProfHasCourse object to add.
+     */
+    protected function doAddProfHasCourse(ChildProfHasCourse $profHasCourse)
+    {
+        $this->collProfHasCourses[]= $profHasCourse;
+        $profHasCourse->setUsers($this);
+    }
+
+    /**
+     * @param  ChildProfHasCourse $profHasCourse The ChildProfHasCourse object to remove.
+     * @return $this|ChildUsers The current object (for fluent API support)
+     */
+    public function removeProfHasCourse(ChildProfHasCourse $profHasCourse)
+    {
+        if ($this->getProfHasCourses()->contains($profHasCourse)) {
+            $pos = $this->collProfHasCourses->search($profHasCourse);
+            $this->collProfHasCourses->remove($pos);
+            if (null === $this->profHasCoursesScheduledForDeletion) {
+                $this->profHasCoursesScheduledForDeletion = clone $this->collProfHasCourses;
+                $this->profHasCoursesScheduledForDeletion->clear();
+            }
+            $this->profHasCoursesScheduledForDeletion[]= clone $profHasCourse;
+            $profHasCourse->setUsers(null);
+        }
+
+        return $this;
+    }
+
 
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Quality is new, it will return
-     * an empty collection; or if this Quality has previously
-     * been saved, it will retrieve related FinalVotess from storage.
+     * Otherwise if this Users is new, it will return
+     * an empty collection; or if this Users has previously
+     * been saved, it will retrieve related ProfHasCourses from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Quality.
+     * actually need in Users.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildFinalVotes[] List of ChildFinalVotes objects
+     * @return ObjectCollection|ChildProfHasCourse[] List of ChildProfHasCourse objects
      */
-    public function getFinalVotessJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getProfHasCoursesJoinCourses(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        $query = ChildFinalVotesQuery::create(null, $criteria);
-        $query->joinWith('Users', $joinBehavior);
+        $query = ChildProfHasCourseQuery::create(null, $criteria);
+        $query->joinWith('Courses', $joinBehavior);
 
-        return $this->getFinalVotess($query, $con);
+        return $this->getProfHasCourses($query, $con);
+    }
+
+    /**
+     * Clears out the collUserHasPwds collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addUserHasPwds()
+     */
+    public function clearUserHasPwds()
+    {
+        $this->collUserHasPwds = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collUserHasPwds collection loaded partially.
+     */
+    public function resetPartialUserHasPwds($v = true)
+    {
+        $this->collUserHasPwdsPartial = $v;
+    }
+
+    /**
+     * Initializes the collUserHasPwds collection.
+     *
+     * By default this just sets the collUserHasPwds collection to an empty array (like clearcollUserHasPwds());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initUserHasPwds($overrideExisting = true)
+    {
+        if (null !== $this->collUserHasPwds && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = UserHasPwdTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collUserHasPwds = new $collectionClassName;
+        $this->collUserHasPwds->setModel('\UserHasPwd');
+    }
+
+    /**
+     * Gets an array of ChildUserHasPwd objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildUsers is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildUserHasPwd[] List of ChildUserHasPwd objects
+     * @throws PropelException
+     */
+    public function getUserHasPwds(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collUserHasPwdsPartial && !$this->isNew();
+        if (null === $this->collUserHasPwds || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collUserHasPwds) {
+                // return empty collection
+                $this->initUserHasPwds();
+            } else {
+                $collUserHasPwds = ChildUserHasPwdQuery::create(null, $criteria)
+                    ->filterByUsers($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collUserHasPwdsPartial && count($collUserHasPwds)) {
+                        $this->initUserHasPwds(false);
+
+                        foreach ($collUserHasPwds as $obj) {
+                            if (false == $this->collUserHasPwds->contains($obj)) {
+                                $this->collUserHasPwds->append($obj);
+                            }
+                        }
+
+                        $this->collUserHasPwdsPartial = true;
+                    }
+
+                    return $collUserHasPwds;
+                }
+
+                if ($partial && $this->collUserHasPwds) {
+                    foreach ($this->collUserHasPwds as $obj) {
+                        if ($obj->isNew()) {
+                            $collUserHasPwds[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collUserHasPwds = $collUserHasPwds;
+                $this->collUserHasPwdsPartial = false;
+            }
+        }
+
+        return $this->collUserHasPwds;
+    }
+
+    /**
+     * Sets a collection of ChildUserHasPwd objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $userHasPwds A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildUsers The current object (for fluent API support)
+     */
+    public function setUserHasPwds(Collection $userHasPwds, ConnectionInterface $con = null)
+    {
+        /** @var ChildUserHasPwd[] $userHasPwdsToDelete */
+        $userHasPwdsToDelete = $this->getUserHasPwds(new Criteria(), $con)->diff($userHasPwds);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->userHasPwdsScheduledForDeletion = clone $userHasPwdsToDelete;
+
+        foreach ($userHasPwdsToDelete as $userHasPwdRemoved) {
+            $userHasPwdRemoved->setUsers(null);
+        }
+
+        $this->collUserHasPwds = null;
+        foreach ($userHasPwds as $userHasPwd) {
+            $this->addUserHasPwd($userHasPwd);
+        }
+
+        $this->collUserHasPwds = $userHasPwds;
+        $this->collUserHasPwdsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related UserHasPwd objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related UserHasPwd objects.
+     * @throws PropelException
+     */
+    public function countUserHasPwds(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collUserHasPwdsPartial && !$this->isNew();
+        if (null === $this->collUserHasPwds || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collUserHasPwds) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getUserHasPwds());
+            }
+
+            $query = ChildUserHasPwdQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByUsers($this)
+                ->count($con);
+        }
+
+        return count($this->collUserHasPwds);
+    }
+
+    /**
+     * Method called to associate a ChildUserHasPwd object to this object
+     * through the ChildUserHasPwd foreign key attribute.
+     *
+     * @param  ChildUserHasPwd $l ChildUserHasPwd
+     * @return $this|\Users The current object (for fluent API support)
+     */
+    public function addUserHasPwd(ChildUserHasPwd $l)
+    {
+        if ($this->collUserHasPwds === null) {
+            $this->initUserHasPwds();
+            $this->collUserHasPwdsPartial = true;
+        }
+
+        if (!$this->collUserHasPwds->contains($l)) {
+            $this->doAddUserHasPwd($l);
+
+            if ($this->userHasPwdsScheduledForDeletion and $this->userHasPwdsScheduledForDeletion->contains($l)) {
+                $this->userHasPwdsScheduledForDeletion->remove($this->userHasPwdsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildUserHasPwd $userHasPwd The ChildUserHasPwd object to add.
+     */
+    protected function doAddUserHasPwd(ChildUserHasPwd $userHasPwd)
+    {
+        $this->collUserHasPwds[]= $userHasPwd;
+        $userHasPwd->setUsers($this);
+    }
+
+    /**
+     * @param  ChildUserHasPwd $userHasPwd The ChildUserHasPwd object to remove.
+     * @return $this|ChildUsers The current object (for fluent API support)
+     */
+    public function removeUserHasPwd(ChildUserHasPwd $userHasPwd)
+    {
+        if ($this->getUserHasPwds()->contains($userHasPwd)) {
+            $pos = $this->collUserHasPwds->search($userHasPwd);
+            $this->collUserHasPwds->remove($pos);
+            if (null === $this->userHasPwdsScheduledForDeletion) {
+                $this->userHasPwdsScheduledForDeletion = clone $this->collUserHasPwds;
+                $this->userHasPwdsScheduledForDeletion->clear();
+            }
+            $this->userHasPwdsScheduledForDeletion[]= clone $userHasPwd;
+            $userHasPwd->setUsers(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Users is new, it will return
+     * an empty collection; or if this Users has previously
+     * been saved, it will retrieve related UserHasPwds from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Users.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildUserHasPwd[] List of ChildUserHasPwd objects
+     */
+    public function getUserHasPwdsJoinPwds(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildUserHasPwdQuery::create(null, $criteria);
+        $query->joinWith('Pwds', $joinBehavior);
+
+        return $this->getUserHasPwds($query, $con);
     }
 
     /**
@@ -1502,7 +2337,7 @@ abstract class Quality implements ActiveRecordInterface
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildQuality is new, it will return
+     * If this ChildUsers is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
@@ -1519,7 +2354,7 @@ abstract class Quality implements ActiveRecordInterface
                 $this->initVotess();
             } else {
                 $collVotess = ChildVotesQuery::create(null, $criteria)
-                    ->filterByQuality($this)
+                    ->filterByUsers($this)
                     ->find($con);
 
                 if (null !== $criteria) {
@@ -1562,7 +2397,7 @@ abstract class Quality implements ActiveRecordInterface
      *
      * @param      Collection $votess A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildQuality The current object (for fluent API support)
+     * @return $this|ChildUsers The current object (for fluent API support)
      */
     public function setVotess(Collection $votess, ConnectionInterface $con = null)
     {
@@ -1573,7 +2408,7 @@ abstract class Quality implements ActiveRecordInterface
         $this->votessScheduledForDeletion = $votessToDelete;
 
         foreach ($votessToDelete as $votesRemoved) {
-            $votesRemoved->setQuality(null);
+            $votesRemoved->setUsers(null);
         }
 
         $this->collVotess = null;
@@ -1614,7 +2449,7 @@ abstract class Quality implements ActiveRecordInterface
             }
 
             return $query
-                ->filterByQuality($this)
+                ->filterByUsers($this)
                 ->count($con);
         }
 
@@ -1626,7 +2461,7 @@ abstract class Quality implements ActiveRecordInterface
      * through the ChildVotes foreign key attribute.
      *
      * @param  ChildVotes $l ChildVotes
-     * @return $this|\Quality The current object (for fluent API support)
+     * @return $this|\Users The current object (for fluent API support)
      */
     public function addVotes(ChildVotes $l)
     {
@@ -1652,12 +2487,12 @@ abstract class Quality implements ActiveRecordInterface
     protected function doAddVotes(ChildVotes $votes)
     {
         $this->collVotess[]= $votes;
-        $votes->setQuality($this);
+        $votes->setUsers($this);
     }
 
     /**
      * @param  ChildVotes $votes The ChildVotes object to remove.
-     * @return $this|ChildQuality The current object (for fluent API support)
+     * @return $this|ChildUsers The current object (for fluent API support)
      */
     public function removeVotes(ChildVotes $votes)
     {
@@ -1669,7 +2504,7 @@ abstract class Quality implements ActiveRecordInterface
                 $this->votessScheduledForDeletion->clear();
             }
             $this->votessScheduledForDeletion[]= clone $votes;
-            $votes->setQuality(null);
+            $votes->setUsers(null);
         }
 
         return $this;
@@ -1679,23 +2514,23 @@ abstract class Quality implements ActiveRecordInterface
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Quality is new, it will return
-     * an empty collection; or if this Quality has previously
+     * Otherwise if this Users is new, it will return
+     * an empty collection; or if this Users has previously
      * been saved, it will retrieve related Votess from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Quality.
+     * actually need in Users.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildVotes[] List of ChildVotes objects
      */
-    public function getVotessJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getVotessJoinQuality(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildVotesQuery::create(null, $criteria);
-        $query->joinWith('Users', $joinBehavior);
+        $query->joinWith('Quality', $joinBehavior);
 
         return $this->getVotess($query, $con);
     }
@@ -1704,13 +2539,13 @@ abstract class Quality implements ActiveRecordInterface
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Quality is new, it will return
-     * an empty collection; or if this Quality has previously
+     * Otherwise if this Users is new, it will return
+     * an empty collection; or if this Users has previously
      * been saved, it will retrieve related Votess from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Quality.
+     * actually need in Users.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
@@ -1732,9 +2567,14 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aUserType) {
+            $this->aUserType->removeUsers($this);
+        }
         $this->id = null;
-        $this->vote = null;
-        $this->description = null;
+        $this->user_type_id = null;
+        $this->name = null;
+        $this->surname = null;
+        $this->email = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1758,6 +2598,16 @@ abstract class Quality implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collProfHasCourses) {
+                foreach ($this->collProfHasCourses as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collUserHasPwds) {
+                foreach ($this->collUserHasPwds as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collVotess) {
                 foreach ($this->collVotess as $o) {
                     $o->clearAllReferences($deep);
@@ -1766,7 +2616,10 @@ abstract class Quality implements ActiveRecordInterface
         } // if ($deep)
 
         $this->collFinalVotess = null;
+        $this->collProfHasCourses = null;
+        $this->collUserHasPwds = null;
         $this->collVotess = null;
+        $this->aUserType = null;
     }
 
     /**
@@ -1776,7 +2629,7 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(QualityTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(UsersTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

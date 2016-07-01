@@ -1,9 +1,9 @@
 <?php
 
-use Base\QualityQuery as BaseQualityQuery;
+use Base\PollsQuery as BasePollsQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'quality' table.
+ * Skeleton subclass for performing query and update operations on the 'polls' table.
  *
  *
  *
@@ -12,7 +12,7 @@ use Base\QualityQuery as BaseQualityQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class QualityQuery extends BaseQualityQuery
+class PollsQuery extends BasePollsQuery
 {
 
 }

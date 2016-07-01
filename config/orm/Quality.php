@@ -3,7 +3,7 @@
 use Base\Quality as BaseQuality;
 
 /**
- * Skeleton subclass for representing a row from the 'Quality' table.
+ * Skeleton subclass for representing a row from the 'quality' table.
  *
  *
  *

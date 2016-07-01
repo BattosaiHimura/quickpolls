@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'Quality' table.
+ * This class defines the structure of the 'quality' table.
  *
  *
  *
@@ -44,7 +44,7 @@ class QualityTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'Quality';
+    const TABLE_NAME = 'quality';
 
     /**
      * The related Propel class for this table
@@ -72,19 +72,19 @@ class QualityTableMap extends TableMap
     const NUM_HYDRATE_COLUMNS = 3;
 
     /**
-     * the column name for the idquality field
+     * the column name for the id field
      */
-    const COL_IDQUALITY = 'Quality.idquality';
+    const COL_ID = 'quality.id';
 
     /**
      * the column name for the vote field
      */
-    const COL_VOTE = 'Quality.vote';
+    const COL_VOTE = 'quality.vote';
 
     /**
      * the column name for the description field
      */
-    const COL_DESCRIPTION = 'Quality.description';
+    const COL_DESCRIPTION = 'quality.description';
 
     /**
      * The default string format for model objects of the related table
@@ -98,10 +98,10 @@ class QualityTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Idquality', 'Vote', 'Description', ),
-        self::TYPE_CAMELNAME     => array('idquality', 'vote', 'description', ),
-        self::TYPE_COLNAME       => array(QualityTableMap::COL_IDQUALITY, QualityTableMap::COL_VOTE, QualityTableMap::COL_DESCRIPTION, ),
-        self::TYPE_FIELDNAME     => array('idquality', 'vote', 'description', ),
+        self::TYPE_PHPNAME       => array('Id', 'Vote', 'Description', ),
+        self::TYPE_CAMELNAME     => array('id', 'vote', 'description', ),
+        self::TYPE_COLNAME       => array(QualityTableMap::COL_ID, QualityTableMap::COL_VOTE, QualityTableMap::COL_DESCRIPTION, ),
+        self::TYPE_FIELDNAME     => array('id', 'vote', 'description', ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
 
@@ -112,10 +112,10 @@ class QualityTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Idquality' => 0, 'Vote' => 1, 'Description' => 2, ),
-        self::TYPE_CAMELNAME     => array('idquality' => 0, 'vote' => 1, 'description' => 2, ),
-        self::TYPE_COLNAME       => array(QualityTableMap::COL_IDQUALITY => 0, QualityTableMap::COL_VOTE => 1, QualityTableMap::COL_DESCRIPTION => 2, ),
-        self::TYPE_FIELDNAME     => array('idquality' => 0, 'vote' => 1, 'description' => 2, ),
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Vote' => 1, 'Description' => 2, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'vote' => 1, 'description' => 2, ),
+        self::TYPE_COLNAME       => array(QualityTableMap::COL_ID => 0, QualityTableMap::COL_VOTE => 1, QualityTableMap::COL_DESCRIPTION => 2, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'vote' => 1, 'description' => 2, ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
 
@@ -129,15 +129,15 @@ class QualityTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('Quality');
+        $this->setName('quality');
         $this->setPhpName('Quality');
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\Quality');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('idquality', 'Idquality', 'INTEGER', true, null, null);
-        $this->addColumn('vote', 'Vote', 'DECIMAL', true, null, null);
+        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
+        $this->addColumn('vote', 'Vote', 'INTEGER', true, null, null);
         $this->addColumn('description', 'Description', 'VARCHAR', true, 45, null);
     } // initialize()
 
@@ -146,20 +146,20 @@ class QualityTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('DailylessonHasUser', '\\DailylessonHasUser', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('FinalVotes', '\\FinalVotes', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':Quality_idquality',
-    1 => ':idquality',
+    0 => ':quality_id',
+    1 => ':id',
   ),
-), null, null, 'DailylessonHasUsers', false);
-        $this->addRelation('FinalVote', '\\FinalVote', RelationMap::ONE_TO_MANY, array (
+), null, null, 'FinalVotess', false);
+        $this->addRelation('Votes', '\\Votes', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':Quality_idquality',
-    1 => ':idquality',
+    0 => ':quality_id',
+    1 => ':id',
   ),
-), null, null, 'FinalVotes', false);
+), null, null, 'Votess', false);
     } // buildRelations()
 
     /**
@@ -178,11 +178,11 @@ class QualityTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idquality', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idquality', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idquality', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idquality', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idquality', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idquality', TableMap::TYPE_PHPNAME, $indexType)];
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -202,7 +202,7 @@ class QualityTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('Idquality', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -303,11 +303,11 @@ class QualityTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(QualityTableMap::COL_IDQUALITY);
+            $criteria->addSelectColumn(QualityTableMap::COL_ID);
             $criteria->addSelectColumn(QualityTableMap::COL_VOTE);
             $criteria->addSelectColumn(QualityTableMap::COL_DESCRIPTION);
         } else {
-            $criteria->addSelectColumn($alias . '.idquality');
+            $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.vote');
             $criteria->addSelectColumn($alias . '.description');
         }
@@ -361,7 +361,7 @@ class QualityTableMap extends TableMap
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(QualityTableMap::DATABASE_NAME);
-            $criteria->add(QualityTableMap::COL_IDQUALITY, (array) $values, Criteria::IN);
+            $criteria->add(QualityTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
         $query = QualityQuery::create()->mergeWith($criteria);
@@ -378,7 +378,7 @@ class QualityTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the Quality table.
+     * Deletes all rows from the quality table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -409,8 +409,8 @@ class QualityTableMap extends TableMap
             $criteria = $criteria->buildCriteria(); // build Criteria from Quality object
         }
 
-        if ($criteria->containsKey(QualityTableMap::COL_IDQUALITY) && $criteria->keyContainsValue(QualityTableMap::COL_IDQUALITY) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.QualityTableMap::COL_IDQUALITY.')');
+        if ($criteria->containsKey(QualityTableMap::COL_ID) && $criteria->keyContainsValue(QualityTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.QualityTableMap::COL_ID.')');
         }
 
 

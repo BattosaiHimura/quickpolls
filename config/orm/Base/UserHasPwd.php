@@ -2,11 +2,11 @@
 
 namespace Base;
 
-use \Pwd as ChildPwd;
-use \PwdQuery as ChildPwdQuery;
-use \User as ChildUser;
+use \Pwds as ChildPwds;
+use \PwdsQuery as ChildPwdsQuery;
 use \UserHasPwdQuery as ChildUserHasPwdQuery;
-use \UserQuery as ChildUserQuery;
+use \Users as ChildUsers;
+use \UsersQuery as ChildUsersQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -25,12 +25,12 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'User_has_Pwd' table.
+ * Base class that represents a row from the 'user_has_pwd' table.
  *
  *
  *
-* @package    propel.generator..Base
-*/
+ * @package    propel.generator..Base
+ */
 abstract class UserHasPwd implements ActiveRecordInterface
 {
     /**
@@ -66,42 +66,42 @@ abstract class UserHasPwd implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the user_iduser field.
+     * The value for the user_id field.
      *
      * @var        int
      */
-    protected $user_iduser;
+    protected $user_id;
 
     /**
-     * The value for the pwd_idpwd field.
+     * The value for the pwd_id field.
      *
      * @var        int
      */
-    protected $pwd_idpwd;
+    protected $pwd_id;
 
     /**
-     * The value for the datefrom field.
+     * The value for the date_from field.
      *
      * @var        DateTime
      */
-    protected $datefrom;
+    protected $date_from;
 
     /**
-     * The value for the dateto field.
+     * The value for the date_to field.
      *
      * @var        DateTime
      */
-    protected $dateto;
+    protected $date_to;
 
     /**
-     * @var        ChildPwd
+     * @var        ChildUsers
      */
-    protected $aPwd;
+    protected $aUsers;
 
     /**
-     * @var        ChildUser
+     * @var        ChildPwds
      */
-    protected $aUser;
+    protected $aPwds;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -337,27 +337,27 @@ abstract class UserHasPwd implements ActiveRecordInterface
     }
 
     /**
-     * Get the [user_iduser] column value.
+     * Get the [user_id] column value.
      *
      * @return int
      */
-    public function getUserIduser()
+    public function getUserId()
     {
-        return $this->user_iduser;
+        return $this->user_id;
     }
 
     /**
-     * Get the [pwd_idpwd] column value.
+     * Get the [pwd_id] column value.
      *
      * @return int
      */
-    public function getPwdIdpwd()
+    public function getPwdId()
     {
-        return $this->pwd_idpwd;
+        return $this->pwd_id;
     }
 
     /**
-     * Get the [optionally formatted] temporal [datefrom] column value.
+     * Get the [optionally formatted] temporal [date_from] column value.
      *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -367,17 +367,17 @@ abstract class UserHasPwd implements ActiveRecordInterface
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatefrom($format = NULL)
+    public function getDateFrom($format = NULL)
     {
         if ($format === null) {
-            return $this->datefrom;
+            return $this->date_from;
         } else {
-            return $this->datefrom instanceof \DateTimeInterface ? $this->datefrom->format($format) : null;
+            return $this->date_from instanceof \DateTimeInterface ? $this->date_from->format($format) : null;
         }
     }
 
     /**
-     * Get the [optionally formatted] temporal [dateto] column value.
+     * Get the [optionally formatted] temporal [date_to] column value.
      *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -387,102 +387,102 @@ abstract class UserHasPwd implements ActiveRecordInterface
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDateto($format = NULL)
+    public function getDateTo($format = NULL)
     {
         if ($format === null) {
-            return $this->dateto;
+            return $this->date_to;
         } else {
-            return $this->dateto instanceof \DateTimeInterface ? $this->dateto->format($format) : null;
+            return $this->date_to instanceof \DateTimeInterface ? $this->date_to->format($format) : null;
         }
     }
 
     /**
-     * Set the value of [user_iduser] column.
+     * Set the value of [user_id] column.
      *
      * @param int $v new value
      * @return $this|\UserHasPwd The current object (for fluent API support)
      */
-    public function setUserIduser($v)
+    public function setUserId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->user_iduser !== $v) {
-            $this->user_iduser = $v;
-            $this->modifiedColumns[UserHasPwdTableMap::COL_USER_IDUSER] = true;
+        if ($this->user_id !== $v) {
+            $this->user_id = $v;
+            $this->modifiedColumns[UserHasPwdTableMap::COL_USER_ID] = true;
         }
 
-        if ($this->aUser !== null && $this->aUser->getIduser() !== $v) {
-            $this->aUser = null;
+        if ($this->aUsers !== null && $this->aUsers->getId() !== $v) {
+            $this->aUsers = null;
         }
 
         return $this;
-    } // setUserIduser()
+    } // setUserId()
 
     /**
-     * Set the value of [pwd_idpwd] column.
+     * Set the value of [pwd_id] column.
      *
      * @param int $v new value
      * @return $this|\UserHasPwd The current object (for fluent API support)
      */
-    public function setPwdIdpwd($v)
+    public function setPwdId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->pwd_idpwd !== $v) {
-            $this->pwd_idpwd = $v;
-            $this->modifiedColumns[UserHasPwdTableMap::COL_PWD_IDPWD] = true;
+        if ($this->pwd_id !== $v) {
+            $this->pwd_id = $v;
+            $this->modifiedColumns[UserHasPwdTableMap::COL_PWD_ID] = true;
         }
 
-        if ($this->aPwd !== null && $this->aPwd->getIdpwd() !== $v) {
-            $this->aPwd = null;
+        if ($this->aPwds !== null && $this->aPwds->getId() !== $v) {
+            $this->aPwds = null;
         }
 
         return $this;
-    } // setPwdIdpwd()
+    } // setPwdId()
 
     /**
-     * Sets the value of [datefrom] column to a normalized version of the date/time value specified.
+     * Sets the value of [date_from] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\UserHasPwd The current object (for fluent API support)
      */
-    public function setDatefrom($v)
+    public function setDateFrom($v)
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->datefrom !== null || $dt !== null) {
-            if ($this->datefrom === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->datefrom->format("Y-m-d H:i:s")) {
-                $this->datefrom = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[UserHasPwdTableMap::COL_DATEFROM] = true;
+        if ($this->date_from !== null || $dt !== null) {
+            if ($this->date_from === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->date_from->format("Y-m-d H:i:s.u")) {
+                $this->date_from = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserHasPwdTableMap::COL_DATE_FROM] = true;
             }
         } // if either are not null
 
         return $this;
-    } // setDatefrom()
+    } // setDateFrom()
 
     /**
-     * Sets the value of [dateto] column to a normalized version of the date/time value specified.
+     * Sets the value of [date_to] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\UserHasPwd The current object (for fluent API support)
      */
-    public function setDateto($v)
+    public function setDateTo($v)
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->dateto !== null || $dt !== null) {
-            if ($this->dateto === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->dateto->format("Y-m-d H:i:s")) {
-                $this->dateto = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[UserHasPwdTableMap::COL_DATETO] = true;
+        if ($this->date_to !== null || $dt !== null) {
+            if ($this->date_to === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->date_to->format("Y-m-d H:i:s.u")) {
+                $this->date_to = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserHasPwdTableMap::COL_DATE_TO] = true;
             }
         } // if either are not null
 
         return $this;
-    } // setDateto()
+    } // setDateTo()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -520,23 +520,23 @@ abstract class UserHasPwd implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserHasPwdTableMap::translateFieldName('UserIduser', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user_iduser = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserHasPwdTableMap::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->user_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserHasPwdTableMap::translateFieldName('PwdIdpwd', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->pwd_idpwd = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserHasPwdTableMap::translateFieldName('PwdId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->pwd_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserHasPwdTableMap::translateFieldName('Datefrom', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserHasPwdTableMap::translateFieldName('DateFrom', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
-            $this->datefrom = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+            $this->date_from = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserHasPwdTableMap::translateFieldName('Dateto', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserHasPwdTableMap::translateFieldName('DateTo', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
-            $this->dateto = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+            $this->date_to = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -567,11 +567,11 @@ abstract class UserHasPwd implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aUser !== null && $this->user_iduser !== $this->aUser->getIduser()) {
-            $this->aUser = null;
+        if ($this->aUsers !== null && $this->user_id !== $this->aUsers->getId()) {
+            $this->aUsers = null;
         }
-        if ($this->aPwd !== null && $this->pwd_idpwd !== $this->aPwd->getIdpwd()) {
-            $this->aPwd = null;
+        if ($this->aPwds !== null && $this->pwd_id !== $this->aPwds->getId()) {
+            $this->aPwds = null;
         }
     } // ensureConsistency
 
@@ -612,8 +612,8 @@ abstract class UserHasPwd implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aPwd = null;
-            $this->aUser = null;
+            $this->aUsers = null;
+            $this->aPwds = null;
         } // if (deep)
     }
 
@@ -718,18 +718,18 @@ abstract class UserHasPwd implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aPwd !== null) {
-                if ($this->aPwd->isModified() || $this->aPwd->isNew()) {
-                    $affectedRows += $this->aPwd->save($con);
+            if ($this->aUsers !== null) {
+                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
+                    $affectedRows += $this->aUsers->save($con);
                 }
-                $this->setPwd($this->aPwd);
+                $this->setUsers($this->aUsers);
             }
 
-            if ($this->aUser !== null) {
-                if ($this->aUser->isModified() || $this->aUser->isNew()) {
-                    $affectedRows += $this->aUser->save($con);
+            if ($this->aPwds !== null) {
+                if ($this->aPwds->isModified() || $this->aPwds->isNew()) {
+                    $affectedRows += $this->aPwds->save($con);
                 }
-                $this->setUser($this->aUser);
+                $this->setPwds($this->aPwds);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -765,21 +765,21 @@ abstract class UserHasPwd implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(UserHasPwdTableMap::COL_USER_IDUSER)) {
-            $modifiedColumns[':p' . $index++]  = 'User_idUser';
+        if ($this->isColumnModified(UserHasPwdTableMap::COL_USER_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'user_id';
         }
-        if ($this->isColumnModified(UserHasPwdTableMap::COL_PWD_IDPWD)) {
-            $modifiedColumns[':p' . $index++]  = 'Pwd_idPwd';
+        if ($this->isColumnModified(UserHasPwdTableMap::COL_PWD_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'pwd_id';
         }
-        if ($this->isColumnModified(UserHasPwdTableMap::COL_DATEFROM)) {
-            $modifiedColumns[':p' . $index++]  = 'dateFrom';
+        if ($this->isColumnModified(UserHasPwdTableMap::COL_DATE_FROM)) {
+            $modifiedColumns[':p' . $index++]  = 'date_from';
         }
-        if ($this->isColumnModified(UserHasPwdTableMap::COL_DATETO)) {
-            $modifiedColumns[':p' . $index++]  = 'dateTo';
+        if ($this->isColumnModified(UserHasPwdTableMap::COL_DATE_TO)) {
+            $modifiedColumns[':p' . $index++]  = 'date_to';
         }
 
         $sql = sprintf(
-            'INSERT INTO User_has_Pwd (%s) VALUES (%s)',
+            'INSERT INTO user_has_pwd (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -788,17 +788,17 @@ abstract class UserHasPwd implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'User_idUser':
-                        $stmt->bindValue($identifier, $this->user_iduser, PDO::PARAM_INT);
+                    case 'user_id':
+                        $stmt->bindValue($identifier, $this->user_id, PDO::PARAM_INT);
                         break;
-                    case 'Pwd_idPwd':
-                        $stmt->bindValue($identifier, $this->pwd_idpwd, PDO::PARAM_INT);
+                    case 'pwd_id':
+                        $stmt->bindValue($identifier, $this->pwd_id, PDO::PARAM_INT);
                         break;
-                    case 'dateFrom':
-                        $stmt->bindValue($identifier, $this->datefrom ? $this->datefrom->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                    case 'date_from':
+                        $stmt->bindValue($identifier, $this->date_from ? $this->date_from->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
                         break;
-                    case 'dateTo':
-                        $stmt->bindValue($identifier, $this->dateto ? $this->dateto->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                    case 'date_to':
+                        $stmt->bindValue($identifier, $this->date_to ? $this->date_to->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -856,16 +856,16 @@ abstract class UserHasPwd implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getUserIduser();
+                return $this->getUserId();
                 break;
             case 1:
-                return $this->getPwdIdpwd();
+                return $this->getPwdId();
                 break;
             case 2:
-                return $this->getDatefrom();
+                return $this->getDateFrom();
                 break;
             case 3:
-                return $this->getDateto();
+                return $this->getDateTo();
                 break;
             default:
                 return null;
@@ -897,10 +897,10 @@ abstract class UserHasPwd implements ActiveRecordInterface
         $alreadyDumpedObjects['UserHasPwd'][$this->hashCode()] = true;
         $keys = UserHasPwdTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getUserIduser(),
-            $keys[1] => $this->getPwdIdpwd(),
-            $keys[2] => $this->getDatefrom(),
-            $keys[3] => $this->getDateto(),
+            $keys[0] => $this->getUserId(),
+            $keys[1] => $this->getPwdId(),
+            $keys[2] => $this->getDateFrom(),
+            $keys[3] => $this->getDateTo(),
         );
         if ($result[$keys[2]] instanceof \DateTime) {
             $result[$keys[2]] = $result[$keys[2]]->format('c');
@@ -916,35 +916,35 @@ abstract class UserHasPwd implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aPwd) {
+            if (null !== $this->aUsers) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'pwd';
+                        $key = 'users';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'Pwd';
+                        $key = 'users';
                         break;
                     default:
-                        $key = 'Pwd';
+                        $key = 'Users';
                 }
 
-                $result[$key] = $this->aPwd->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->aUser) {
+            if (null !== $this->aPwds) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'user';
+                        $key = 'pwds';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'User';
+                        $key = 'pwds';
                         break;
                     default:
-                        $key = 'User';
+                        $key = 'Pwds';
                 }
 
-                $result[$key] = $this->aUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aPwds->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -981,16 +981,16 @@ abstract class UserHasPwd implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                $this->setUserIduser($value);
+                $this->setUserId($value);
                 break;
             case 1:
-                $this->setPwdIdpwd($value);
+                $this->setPwdId($value);
                 break;
             case 2:
-                $this->setDatefrom($value);
+                $this->setDateFrom($value);
                 break;
             case 3:
-                $this->setDateto($value);
+                $this->setDateTo($value);
                 break;
         } // switch()
 
@@ -1019,16 +1019,16 @@ abstract class UserHasPwd implements ActiveRecordInterface
         $keys = UserHasPwdTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setUserIduser($arr[$keys[0]]);
+            $this->setUserId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setPwdIdpwd($arr[$keys[1]]);
+            $this->setPwdId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setDatefrom($arr[$keys[2]]);
+            $this->setDateFrom($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setDateto($arr[$keys[3]]);
+            $this->setDateTo($arr[$keys[3]]);
         }
     }
 
@@ -1071,17 +1071,17 @@ abstract class UserHasPwd implements ActiveRecordInterface
     {
         $criteria = new Criteria(UserHasPwdTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(UserHasPwdTableMap::COL_USER_IDUSER)) {
-            $criteria->add(UserHasPwdTableMap::COL_USER_IDUSER, $this->user_iduser);
+        if ($this->isColumnModified(UserHasPwdTableMap::COL_USER_ID)) {
+            $criteria->add(UserHasPwdTableMap::COL_USER_ID, $this->user_id);
         }
-        if ($this->isColumnModified(UserHasPwdTableMap::COL_PWD_IDPWD)) {
-            $criteria->add(UserHasPwdTableMap::COL_PWD_IDPWD, $this->pwd_idpwd);
+        if ($this->isColumnModified(UserHasPwdTableMap::COL_PWD_ID)) {
+            $criteria->add(UserHasPwdTableMap::COL_PWD_ID, $this->pwd_id);
         }
-        if ($this->isColumnModified(UserHasPwdTableMap::COL_DATEFROM)) {
-            $criteria->add(UserHasPwdTableMap::COL_DATEFROM, $this->datefrom);
+        if ($this->isColumnModified(UserHasPwdTableMap::COL_DATE_FROM)) {
+            $criteria->add(UserHasPwdTableMap::COL_DATE_FROM, $this->date_from);
         }
-        if ($this->isColumnModified(UserHasPwdTableMap::COL_DATETO)) {
-            $criteria->add(UserHasPwdTableMap::COL_DATETO, $this->dateto);
+        if ($this->isColumnModified(UserHasPwdTableMap::COL_DATE_TO)) {
+            $criteria->add(UserHasPwdTableMap::COL_DATE_TO, $this->date_to);
         }
 
         return $criteria;
@@ -1100,8 +1100,8 @@ abstract class UserHasPwd implements ActiveRecordInterface
     public function buildPkeyCriteria()
     {
         $criteria = ChildUserHasPwdQuery::create();
-        $criteria->add(UserHasPwdTableMap::COL_USER_IDUSER, $this->user_iduser);
-        $criteria->add(UserHasPwdTableMap::COL_PWD_IDPWD, $this->pwd_idpwd);
+        $criteria->add(UserHasPwdTableMap::COL_USER_ID, $this->user_id);
+        $criteria->add(UserHasPwdTableMap::COL_PWD_ID, $this->pwd_id);
 
         return $criteria;
     }
@@ -1114,21 +1114,21 @@ abstract class UserHasPwd implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getUserIduser() &&
-            null !== $this->getPwdIdpwd();
+        $validPk = null !== $this->getUserId() &&
+            null !== $this->getPwdId();
 
         $validPrimaryKeyFKs = 2;
         $primaryKeyFKs = [];
 
-        //relation fk_User_has_Pwd_Pwd1 to table Pwd
-        if ($this->aPwd && $hash = spl_object_hash($this->aPwd)) {
+        //relation fk_user_has_pwd_user1 to table users
+        if ($this->aUsers && $hash = spl_object_hash($this->aUsers)) {
             $primaryKeyFKs[] = $hash;
         } else {
             $validPrimaryKeyFKs = false;
         }
 
-        //relation fk_User_has_Pwd_User1 to table User
-        if ($this->aUser && $hash = spl_object_hash($this->aUser)) {
+        //relation fk_user_has_pwd_pwd1 to table pwds
+        if ($this->aPwds && $hash = spl_object_hash($this->aPwds)) {
             $primaryKeyFKs[] = $hash;
         } else {
             $validPrimaryKeyFKs = false;
@@ -1151,8 +1151,8 @@ abstract class UserHasPwd implements ActiveRecordInterface
     public function getPrimaryKey()
     {
         $pks = array();
-        $pks[0] = $this->getUserIduser();
-        $pks[1] = $this->getPwdIdpwd();
+        $pks[0] = $this->getUserId();
+        $pks[1] = $this->getPwdId();
 
         return $pks;
     }
@@ -1165,8 +1165,8 @@ abstract class UserHasPwd implements ActiveRecordInterface
      */
     public function setPrimaryKey($keys)
     {
-        $this->setUserIduser($keys[0]);
-        $this->setPwdIdpwd($keys[1]);
+        $this->setUserId($keys[0]);
+        $this->setPwdId($keys[1]);
     }
 
     /**
@@ -1175,7 +1175,7 @@ abstract class UserHasPwd implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return (null === $this->getUserIduser()) && (null === $this->getPwdIdpwd());
+        return (null === $this->getUserId()) && (null === $this->getPwdId());
     }
 
     /**
@@ -1191,10 +1191,10 @@ abstract class UserHasPwd implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setUserIduser($this->getUserIduser());
-        $copyObj->setPwdIdpwd($this->getPwdIdpwd());
-        $copyObj->setDatefrom($this->getDatefrom());
-        $copyObj->setDateto($this->getDateto());
+        $copyObj->setUserId($this->getUserId());
+        $copyObj->setPwdId($this->getPwdId());
+        $copyObj->setDateFrom($this->getDateFrom());
+        $copyObj->setDateTo($this->getDateTo());
         if ($makeNew) {
             $copyObj->setNew(true);
         }
@@ -1223,24 +1223,24 @@ abstract class UserHasPwd implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildPwd object.
+     * Declares an association between this object and a ChildUsers object.
      *
-     * @param  ChildPwd $v
+     * @param  ChildUsers $v
      * @return $this|\UserHasPwd The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setPwd(ChildPwd $v = null)
+    public function setUsers(ChildUsers $v = null)
     {
         if ($v === null) {
-            $this->setPwdIdpwd(NULL);
+            $this->setUserId(NULL);
         } else {
-            $this->setPwdIdpwd($v->getIdpwd());
+            $this->setUserId($v->getId());
         }
 
-        $this->aPwd = $v;
+        $this->aUsers = $v;
 
         // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildPwd object, it will not be re-added.
+        // If this object has already been added to the ChildUsers object, it will not be re-added.
         if ($v !== null) {
             $v->addUserHasPwd($this);
         }
@@ -1251,47 +1251,47 @@ abstract class UserHasPwd implements ActiveRecordInterface
 
 
     /**
-     * Get the associated ChildPwd object
+     * Get the associated ChildUsers object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildPwd The associated ChildPwd object.
+     * @return ChildUsers The associated ChildUsers object.
      * @throws PropelException
      */
-    public function getPwd(ConnectionInterface $con = null)
+    public function getUsers(ConnectionInterface $con = null)
     {
-        if ($this->aPwd === null && ($this->pwd_idpwd !== null)) {
-            $this->aPwd = ChildPwdQuery::create()->findPk($this->pwd_idpwd, $con);
+        if ($this->aUsers === null && ($this->user_id !== null)) {
+            $this->aUsers = ChildUsersQuery::create()->findPk($this->user_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aPwd->addUserHasPwds($this);
+                $this->aUsers->addUserHasPwds($this);
              */
         }
 
-        return $this->aPwd;
+        return $this->aUsers;
     }
 
     /**
-     * Declares an association between this object and a ChildUser object.
+     * Declares an association between this object and a ChildPwds object.
      *
-     * @param  ChildUser $v
+     * @param  ChildPwds $v
      * @return $this|\UserHasPwd The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setUser(ChildUser $v = null)
+    public function setPwds(ChildPwds $v = null)
     {
         if ($v === null) {
-            $this->setUserIduser(NULL);
+            $this->setPwdId(NULL);
         } else {
-            $this->setUserIduser($v->getIduser());
+            $this->setPwdId($v->getId());
         }
 
-        $this->aUser = $v;
+        $this->aPwds = $v;
 
         // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildUser object, it will not be re-added.
+        // If this object has already been added to the ChildPwds object, it will not be re-added.
         if ($v !== null) {
             $v->addUserHasPwd($this);
         }
@@ -1302,26 +1302,26 @@ abstract class UserHasPwd implements ActiveRecordInterface
 
 
     /**
-     * Get the associated ChildUser object
+     * Get the associated ChildPwds object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildUser The associated ChildUser object.
+     * @return ChildPwds The associated ChildPwds object.
      * @throws PropelException
      */
-    public function getUser(ConnectionInterface $con = null)
+    public function getPwds(ConnectionInterface $con = null)
     {
-        if ($this->aUser === null && ($this->user_iduser !== null)) {
-            $this->aUser = ChildUserQuery::create()->findPk($this->user_iduser, $con);
+        if ($this->aPwds === null && ($this->pwd_id !== null)) {
+            $this->aPwds = ChildPwdsQuery::create()->findPk($this->pwd_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aUser->addUserHasPwds($this);
+                $this->aPwds->addUserHasPwds($this);
              */
         }
 
-        return $this->aUser;
+        return $this->aPwds;
     }
 
     /**
@@ -1331,16 +1331,16 @@ abstract class UserHasPwd implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aPwd) {
-            $this->aPwd->removeUserHasPwd($this);
+        if (null !== $this->aUsers) {
+            $this->aUsers->removeUserHasPwd($this);
         }
-        if (null !== $this->aUser) {
-            $this->aUser->removeUserHasPwd($this);
+        if (null !== $this->aPwds) {
+            $this->aPwds->removeUserHasPwd($this);
         }
-        $this->user_iduser = null;
-        $this->pwd_idpwd = null;
-        $this->datefrom = null;
-        $this->dateto = null;
+        $this->user_id = null;
+        $this->pwd_id = null;
+        $this->date_from = null;
+        $this->date_to = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1361,8 +1361,8 @@ abstract class UserHasPwd implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aPwd = null;
-        $this->aUser = null;
+        $this->aUsers = null;
+        $this->aPwds = null;
     }
 
     /**

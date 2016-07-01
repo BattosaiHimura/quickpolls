@@ -4,226 +4,259 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ---------------------------------------------------------------------
--- Argument
+-- arguments
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Argument`;
+DROP TABLE IF EXISTS `arguments`;
 
-CREATE TABLE `Argument`
+CREATE TABLE `arguments`
 (
-    `idArgument` INTEGER NOT NULL AUTO_INCREMENT,
-    `Course_idCourse` INTEGER NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `course_id` INTEGER NOT NULL,
     `description` VARCHAR(300) NOT NULL,
     `date` DATETIME NOT NULL,
-    PRIMARY KEY (`idArgument`,`Course_idCourse`),
-    INDEX `fk_Argument_Course1_idx` (`Course_idCourse`),
-    CONSTRAINT `fk_Argument_Course1`
-        FOREIGN KEY (`Course_idCourse`)
-        REFERENCES `Course` (`idCourse`)
+    PRIMARY KEY (`id`),
+    INDEX `fk_arguments_courses1_idx` (`course_id`),
+    CONSTRAINT `fk_arguments_courses1`
+        FOREIGN KEY (`course_id`)
+        REFERENCES `courses` (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- Course
+-- comments
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Course`;
+DROP TABLE IF EXISTS `comments`;
 
-CREATE TABLE `Course`
+CREATE TABLE `comments`
 (
-    `idCourse` INTEGER NOT NULL AUTO_INCREMENT,
-    `dateFrom` DATETIME NOT NULL,
-    `dateTo` DATETIME NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `vote_id` INTEGER NOT NULL,
+    `comment` VARCHAR(300) NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_comments_votes1_idx` (`vote_id`),
+    CONSTRAINT `fk_comments_votes1`
+        FOREIGN KEY (`vote_id`)
+        REFERENCES `votes` (`id`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- courses
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `courses`;
+
+CREATE TABLE `courses`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(45) NOT NULL,
-    `description` VARCHAR(300) NOT NULL,
-    `session` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`idCourse`)
+    `description` VARCHAR(45) NOT NULL,
+    `semester` VARCHAR(45) NOT NULL,
+    `date_from` DATETIME NOT NULL,
+    `date_to` DATETIME NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- DailyLesson
+-- final_votes
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `DailyLesson`;
+DROP TABLE IF EXISTS `final_votes`;
 
-CREATE TABLE `DailyLesson`
+CREATE TABLE `final_votes`
 (
-    `idPoll` INTEGER NOT NULL AUTO_INCREMENT,
-    `comment` VARCHAR(300),
-    `Argument_idArgument` INTEGER NOT NULL,
-    `Argument_Course_idCourse` INTEGER NOT NULL,
-    `date` DATETIME NOT NULL,
-    PRIMARY KEY (`idPoll`),
-    INDEX `fk_DailyLesson_Argument1_idx` (`Argument_idArgument`, `Argument_Course_idCourse`),
-    CONSTRAINT `fk_DailyLesson_Argument1`
-        FOREIGN KEY (`Argument_idArgument`,`Argument_Course_idCourse`)
-        REFERENCES `Argument` (`idArgument`,`Course_idCourse`)
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `quality_id` INTEGER NOT NULL,
+    `courses_id` INTEGER NOT NULL,
+    `users_id` INTEGER NOT NULL,
+    `comment` LONGTEXT,
+    PRIMARY KEY (`id`),
+    INDEX `fk_final_votes_quality1_idx` (`quality_id`),
+    INDEX `fk_final_votes_courses1_idx` (`courses_id`),
+    INDEX `fk_final_votes_users1_idx` (`users_id`),
+    CONSTRAINT `fk_final_votes_quality1`
+        FOREIGN KEY (`quality_id`)
+        REFERENCES `quality` (`id`),
+    CONSTRAINT `fk_final_votes_courses1`
+        FOREIGN KEY (`courses_id`)
+        REFERENCES `courses` (`id`),
+    CONSTRAINT `fk_final_votes_users1`
+        FOREIGN KEY (`users_id`)
+        REFERENCES `users` (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- DailyLesson_has_User
+-- polls
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `DailyLesson_has_User`;
+DROP TABLE IF EXISTS `polls`;
 
-CREATE TABLE `DailyLesson_has_User`
+CREATE TABLE `polls`
 (
-    `DailyLesson_idPoll` INTEGER NOT NULL,
-    `User_idUser` INTEGER NOT NULL,
-    `date` DATETIME NOT NULL,
-    `comments` VARCHAR(300),
-    `Quality_idquality` INTEGER NOT NULL,
-    PRIMARY KEY (`DailyLesson_idPoll`,`User_idUser`,`Quality_idquality`),
-    INDEX `fk_DailyLesson_has_User_User1_idx` (`User_idUser`),
-    INDEX `fk_DailyLesson_has_User_DailyLesson1_idx` (`DailyLesson_idPoll`),
-    INDEX `fk_DailyLesson_has_User_Quality1_idx` (`Quality_idquality`),
-    CONSTRAINT `fk_DailyLesson_has_User_DailyLesson1`
-        FOREIGN KEY (`DailyLesson_idPoll`)
-        REFERENCES `DailyLesson` (`idPoll`),
-    CONSTRAINT `fk_DailyLesson_has_User_Quality1`
-        FOREIGN KEY (`Quality_idquality`)
-        REFERENCES `Quality` (`idquality`),
-    CONSTRAINT `fk_DailyLesson_has_User_User1`
-        FOREIGN KEY (`User_idUser`)
-        REFERENCES `User` (`idUser`)
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `course_id` INTEGER NOT NULL,
+    `name` VARCHAR(90),
+    `date_from` DATETIME NOT NULL,
+    `date_to` DATETIME,
+    PRIMARY KEY (`id`),
+    INDEX `fk_polls_courses1_idx` (`course_id`),
+    CONSTRAINT `fk_polls_courses1`
+        FOREIGN KEY (`course_id`)
+        REFERENCES `courses` (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- Final_vote
+-- polls_has_arguments
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Final_vote`;
+DROP TABLE IF EXISTS `polls_has_arguments`;
 
-CREATE TABLE `Final_vote`
+CREATE TABLE `polls_has_arguments`
 (
-    `idFinal_vote` INTEGER NOT NULL AUTO_INCREMENT,
-    `comment` VARCHAR(300),
-    `tips` VARCHAR(300),
-    `slidesPresent` TINYINT(1),
-    `Quality_idquality` INTEGER NOT NULL,
-    `Course_idCourse` INTEGER NOT NULL,
-    `User_idUser` INTEGER NOT NULL,
-    PRIMARY KEY (`idFinal_vote`),
-    INDEX `fk_Final_vote_quality1_idx` (`Quality_idquality`),
-    INDEX `fk_Final_vote_Course1_idx` (`Course_idCourse`),
-    INDEX `fk_Final_vote_User1_idx` (`User_idUser`),
-    CONSTRAINT `fk_Final_vote_Course1`
-        FOREIGN KEY (`Course_idCourse`)
-        REFERENCES `Course` (`idCourse`),
-    CONSTRAINT `fk_Final_vote_quality1`
-        FOREIGN KEY (`Quality_idquality`)
-        REFERENCES `Quality` (`idquality`),
-    CONSTRAINT `fk_Final_vote_User1`
-        FOREIGN KEY (`User_idUser`)
-        REFERENCES `User` (`idUser`)
+    `polls_id` INTEGER NOT NULL,
+    `arguments_id` INTEGER NOT NULL,
+    PRIMARY KEY (`polls_id`,`arguments_id`),
+    INDEX `fk_polls_has_arguments_arguments1_idx` (`arguments_id`),
+    INDEX `fk_polls_has_arguments_polls1_idx` (`polls_id`),
+    CONSTRAINT `fk_polls_has_arguments_polls1`
+        FOREIGN KEY (`polls_id`)
+        REFERENCES `polls` (`id`),
+    CONSTRAINT `fk_polls_has_arguments_arguments1`
+        FOREIGN KEY (`arguments_id`)
+        REFERENCES `arguments` (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- Prof_has_Course
+-- prof_has_course
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Prof_has_Course`;
+DROP TABLE IF EXISTS `prof_has_course`;
 
-CREATE TABLE `Prof_has_Course`
+CREATE TABLE `prof_has_course`
 (
-    `User_idUser` INTEGER NOT NULL,
-    `Course_idCourse` INTEGER NOT NULL,
-    `isLab` TINYINT(1) NOT NULL,
+    `users_id` INTEGER NOT NULL,
+    `courses_id` INTEGER NOT NULL,
+    `is_lab` TINYINT(1) NOT NULL,
     `presence` INTEGER NOT NULL,
-    PRIMARY KEY (`User_idUser`,`Course_idCourse`),
-    INDEX `fk_User_has_Course_Course1_idx` (`Course_idCourse`),
-    INDEX `fk_User_has_Course_User1_idx` (`User_idUser`),
-    CONSTRAINT `fk_User_has_Course_Course1`
-        FOREIGN KEY (`Course_idCourse`)
-        REFERENCES `Course` (`idCourse`),
-    CONSTRAINT `fk_User_has_Course_User1`
-        FOREIGN KEY (`User_idUser`)
-        REFERENCES `User` (`idUser`)
+    PRIMARY KEY (`users_id`,`courses_id`),
+    INDEX `fk_users_has_courses_courses1_idx` (`courses_id`),
+    INDEX `fk_users_has_courses_users1_idx` (`users_id`),
+    CONSTRAINT `fk_users_has_courses_users1`
+        FOREIGN KEY (`users_id`)
+        REFERENCES `users` (`id`),
+    CONSTRAINT `fk_users_has_courses_courses1`
+        FOREIGN KEY (`courses_id`)
+        REFERENCES `courses` (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- Pwd
+-- pwds
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Pwd`;
+DROP TABLE IF EXISTS `pwds`;
 
-CREATE TABLE `Pwd`
+CREATE TABLE `pwds`
 (
-    `idPwd` INTEGER NOT NULL AUTO_INCREMENT,
-    `pwd` CHAR(64) NOT NULL,
-    PRIMARY KEY (`idPwd`)
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `salt` VARCHAR(8) NOT NULL,
+    `password` VARCHAR(64) NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- Quality
+-- quality
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Quality`;
+DROP TABLE IF EXISTS `quality`;
 
-CREATE TABLE `Quality`
+CREATE TABLE `quality`
 (
-    `idquality` INTEGER NOT NULL AUTO_INCREMENT,
-    `vote` DECIMAL NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `vote` INTEGER NOT NULL,
     `description` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`idquality`)
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- User
+-- user_has_pwd
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `User`;
+DROP TABLE IF EXISTS `user_has_pwd`;
 
-CREATE TABLE `User`
+CREATE TABLE `user_has_pwd`
 (
-    `idUser` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(45) NOT NULL,
-    `surname` VARCHAR(45) NOT NULL,
-    `matricola` VARCHAR(10),
-    `UserType_idUserType` INTEGER NOT NULL,
-    `email` VARCHAR(100),
-    PRIMARY KEY (`idUser`),
-    INDEX `fk_User_UserType_idx` (`UserType_idUserType`),
-    CONSTRAINT `fk_User_UserType`
-        FOREIGN KEY (`UserType_idUserType`)
-        REFERENCES `User_type` (`idUserType`)
+    `user_id` INTEGER NOT NULL,
+    `pwd_id` INTEGER NOT NULL,
+    `date_from` DATETIME NOT NULL,
+    `date_to` DATETIME NOT NULL,
+    PRIMARY KEY (`user_id`,`pwd_id`),
+    INDEX `fk_user_has_pwd_pwd1_idx` (`pwd_id`),
+    INDEX `fk_user_has_pwd_user1_idx` (`user_id`),
+    CONSTRAINT `fk_user_has_pwd_user1`
+        FOREIGN KEY (`user_id`)
+        REFERENCES `users` (`id`),
+    CONSTRAINT `fk_user_has_pwd_pwd1`
+        FOREIGN KEY (`pwd_id`)
+        REFERENCES `pwds` (`id`)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
--- User_has_Pwd
+-- user_type
 -- ---------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `User_has_Pwd`;
+DROP TABLE IF EXISTS `user_type`;
 
-CREATE TABLE `User_has_Pwd`
+CREATE TABLE `user_type`
 (
-    `User_idUser` INTEGER NOT NULL,
-    `Pwd_idPwd` INTEGER NOT NULL,
-    `dateFrom` DATETIME NOT NULL,
-    `dateTo` DATETIME NOT NULL,
-    PRIMARY KEY (`User_idUser`,`Pwd_idPwd`),
-    INDEX `fk_User_has_Pwd_Pwd1_idx` (`Pwd_idPwd`),
-    INDEX `fk_User_has_Pwd_User1_idx` (`User_idUser`),
-    CONSTRAINT `fk_User_has_Pwd_Pwd1`
-        FOREIGN KEY (`Pwd_idPwd`)
-        REFERENCES `Pwd` (`idPwd`),
-    CONSTRAINT `fk_User_has_Pwd_User1`
-        FOREIGN KEY (`User_idUser`)
-        REFERENCES `User` (`idUser`)
-) ENGINE=InnoDB;
-
--- ---------------------------------------------------------------------
--- User_type
--- ---------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `User_type`;
-
-CREATE TABLE `User_type`
-(
-    `idUserType` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `description` VARCHAR(45) NOT NULL,
-    `dateFrom` DATETIME NOT NULL,
-    `dateTo` DATETIME NOT NULL,
-    PRIMARY KEY (`idUserType`)
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- users
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(90) NOT NULL,
+    `user_type_id` INTEGER NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_users_user_type1_idx` (`user_type_id`),
+    CONSTRAINT `fk_users_user_type1`
+        FOREIGN KEY (`user_type_id`)
+        REFERENCES `user_type` (`id`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- votes
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `votes`;
+
+CREATE TABLE `votes`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `users_id` INTEGER NOT NULL,
+    `quality_id` INTEGER NOT NULL,
+    `poll_id` INTEGER NOT NULL,
+    `argument_id` INTEGER NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_votes_users1_idx` (`users_id`),
+    INDEX `fk_votes_quality1_idx` (`quality_id`),
+    INDEX `fk_votes_polls_has_arguments1_idx` (`poll_id`, `argument_id`),
+    CONSTRAINT `fk_votes_users1`
+        FOREIGN KEY (`users_id`)
+        REFERENCES `users` (`id`),
+    CONSTRAINT `fk_votes_quality1`
+        FOREIGN KEY (`quality_id`)
+        REFERENCES `quality` (`id`),
+    CONSTRAINT `fk_votes_polls_has_arguments1`
+        FOREIGN KEY (`poll_id`,`argument_id`)
+        REFERENCES `polls_has_arguments` (`polls_id`,`arguments_id`)
 ) ENGINE=InnoDB;
 
 # This restores the fkey checks, after having unset them earlier

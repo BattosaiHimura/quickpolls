@@ -2,11 +2,11 @@
 
 namespace Base;
 
-use \UserType as ChildUserType;
-use \UserTypeQuery as ChildUserTypeQuery;
+use \Pwds as ChildPwds;
+use \PwdsQuery as ChildPwdsQuery;
 use \Exception;
 use \PDO;
-use Map\UserTypeTableMap;
+use Map\PwdsTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -16,84 +16,89 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'user_type' table.
+ * Base class that represents a query for the 'pwds' table.
  *
  *
  *
- * @method     ChildUserTypeQuery orderById($order = Criteria::ASC) Order by the id column
- * @method     ChildUserTypeQuery orderByDescription($order = Criteria::ASC) Order by the description column
+ * @method     ChildPwdsQuery orderById($order = Criteria::ASC) Order by the id column
+ * @method     ChildPwdsQuery orderBySalt($order = Criteria::ASC) Order by the salt column
+ * @method     ChildPwdsQuery orderByPassword($order = Criteria::ASC) Order by the password column
  *
- * @method     ChildUserTypeQuery groupById() Group by the id column
- * @method     ChildUserTypeQuery groupByDescription() Group by the description column
+ * @method     ChildPwdsQuery groupById() Group by the id column
+ * @method     ChildPwdsQuery groupBySalt() Group by the salt column
+ * @method     ChildPwdsQuery groupByPassword() Group by the password column
  *
- * @method     ChildUserTypeQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildUserTypeQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildUserTypeQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ChildPwdsQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ChildPwdsQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ChildPwdsQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildUserTypeQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
- * @method     ChildUserTypeQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
- * @method     ChildUserTypeQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ * @method     ChildPwdsQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
+ * @method     ChildPwdsQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
+ * @method     ChildPwdsQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildUserTypeQuery leftJoinUsers($relationAlias = null) Adds a LEFT JOIN clause to the query using the Users relation
- * @method     ChildUserTypeQuery rightJoinUsers($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Users relation
- * @method     ChildUserTypeQuery innerJoinUsers($relationAlias = null) Adds a INNER JOIN clause to the query using the Users relation
+ * @method     ChildPwdsQuery leftJoinUserHasPwd($relationAlias = null) Adds a LEFT JOIN clause to the query using the UserHasPwd relation
+ * @method     ChildPwdsQuery rightJoinUserHasPwd($relationAlias = null) Adds a RIGHT JOIN clause to the query using the UserHasPwd relation
+ * @method     ChildPwdsQuery innerJoinUserHasPwd($relationAlias = null) Adds a INNER JOIN clause to the query using the UserHasPwd relation
  *
- * @method     ChildUserTypeQuery joinWithUsers($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Users relation
+ * @method     ChildPwdsQuery joinWithUserHasPwd($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the UserHasPwd relation
  *
- * @method     ChildUserTypeQuery leftJoinWithUsers() Adds a LEFT JOIN clause and with to the query using the Users relation
- * @method     ChildUserTypeQuery rightJoinWithUsers() Adds a RIGHT JOIN clause and with to the query using the Users relation
- * @method     ChildUserTypeQuery innerJoinWithUsers() Adds a INNER JOIN clause and with to the query using the Users relation
+ * @method     ChildPwdsQuery leftJoinWithUserHasPwd() Adds a LEFT JOIN clause and with to the query using the UserHasPwd relation
+ * @method     ChildPwdsQuery rightJoinWithUserHasPwd() Adds a RIGHT JOIN clause and with to the query using the UserHasPwd relation
+ * @method     ChildPwdsQuery innerJoinWithUserHasPwd() Adds a INNER JOIN clause and with to the query using the UserHasPwd relation
  *
- * @method     \UsersQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \UserHasPwdQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
- * @method     ChildUserType findOne(ConnectionInterface $con = null) Return the first ChildUserType matching the query
- * @method     ChildUserType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUserType matching the query, or a new ChildUserType object populated from the query conditions when no match is found
+ * @method     ChildPwds findOne(ConnectionInterface $con = null) Return the first ChildPwds matching the query
+ * @method     ChildPwds findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPwds matching the query, or a new ChildPwds object populated from the query conditions when no match is found
  *
- * @method     ChildUserType findOneById(int $id) Return the first ChildUserType filtered by the id column
- * @method     ChildUserType findOneByDescription(string $description) Return the first ChildUserType filtered by the description column *
+ * @method     ChildPwds findOneById(int $id) Return the first ChildPwds filtered by the id column
+ * @method     ChildPwds findOneBySalt(string $salt) Return the first ChildPwds filtered by the salt column
+ * @method     ChildPwds findOneByPassword(string $password) Return the first ChildPwds filtered by the password column *
 
- * @method     ChildUserType requirePk($key, ConnectionInterface $con = null) Return the ChildUserType by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUserType requireOne(ConnectionInterface $con = null) Return the first ChildUserType matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPwds requirePk($key, ConnectionInterface $con = null) Return the ChildPwds by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPwds requireOne(ConnectionInterface $con = null) Return the first ChildPwds matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildUserType requireOneById(int $id) Return the first ChildUserType filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUserType requireOneByDescription(string $description) Return the first ChildUserType filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPwds requireOneById(int $id) Return the first ChildPwds filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPwds requireOneBySalt(string $salt) Return the first ChildPwds filtered by the salt column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPwds requireOneByPassword(string $password) Return the first ChildPwds filtered by the password column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildUserType[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUserType objects based on current ModelCriteria
- * @method     ChildUserType[]|ObjectCollection findById(int $id) Return ChildUserType objects filtered by the id column
- * @method     ChildUserType[]|ObjectCollection findByDescription(string $description) Return ChildUserType objects filtered by the description column
- * @method     ChildUserType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildPwds[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPwds objects based on current ModelCriteria
+ * @method     ChildPwds[]|ObjectCollection findById(int $id) Return ChildPwds objects filtered by the id column
+ * @method     ChildPwds[]|ObjectCollection findBySalt(string $salt) Return ChildPwds objects filtered by the salt column
+ * @method     ChildPwds[]|ObjectCollection findByPassword(string $password) Return ChildPwds objects filtered by the password column
+ * @method     ChildPwds[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
-abstract class UserTypeQuery extends ModelCriteria
+abstract class PwdsQuery extends ModelCriteria
 {
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \Base\UserTypeQuery object.
+     * Initializes internal state of \Base\PwdsQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\UserType', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\Pwds', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
 
     /**
-     * Returns a new ChildUserTypeQuery object.
+     * Returns a new ChildPwdsQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
      * @param     Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildUserTypeQuery
+     * @return ChildPwdsQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
-        if ($criteria instanceof ChildUserTypeQuery) {
+        if ($criteria instanceof ChildPwdsQuery) {
             return $criteria;
         }
-        $query = new ChildUserTypeQuery();
+        $query = new ChildPwdsQuery();
         if (null !== $modelAlias) {
             $query->setModelAlias($modelAlias);
         }
@@ -116,7 +121,7 @@ abstract class UserTypeQuery extends ModelCriteria
      * @param mixed $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
-     * @return ChildUserType|array|mixed the result, formatted by the current formatter
+     * @return ChildPwds|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
@@ -125,7 +130,7 @@ abstract class UserTypeQuery extends ModelCriteria
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(UserTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(PwdsTableMap::DATABASE_NAME);
         }
 
         $this->basePreSelect($con);
@@ -138,7 +143,7 @@ abstract class UserTypeQuery extends ModelCriteria
             return $this->findPkComplex($key, $con);
         }
 
-        if ((null !== ($obj = UserTypeTableMap::getInstanceFromPool(null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key)))) {
+        if ((null !== ($obj = PwdsTableMap::getInstanceFromPool(null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key)))) {
             // the object is already in the instance pool
             return $obj;
         }
@@ -155,11 +160,11 @@ abstract class UserTypeQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildUserType A model object, or null if the key is not found
+     * @return ChildPwds A model object, or null if the key is not found
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, description FROM user_type WHERE id = :p0';
+        $sql = 'SELECT id, salt, password FROM pwds WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -170,10 +175,10 @@ abstract class UserTypeQuery extends ModelCriteria
         }
         $obj = null;
         if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
-            /** @var ChildUserType $obj */
-            $obj = new ChildUserType();
+            /** @var ChildPwds $obj */
+            $obj = new ChildPwds();
             $obj->hydrate($row);
-            UserTypeTableMap::addInstanceToPool($obj, null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key);
+            PwdsTableMap::addInstanceToPool($obj, null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key);
         }
         $stmt->closeCursor();
 
@@ -186,7 +191,7 @@ abstract class UserTypeQuery extends ModelCriteria
      * @param     mixed $key Primary key to use for the query
      * @param     ConnectionInterface $con A connection object
      *
-     * @return ChildUserType|array|mixed the result, formatted by the current formatter
+     * @return ChildPwds|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -228,12 +233,12 @@ abstract class UserTypeQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildUserTypeQuery The current query, for fluid interface
+     * @return $this|ChildPwdsQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(UserTypeTableMap::COL_ID, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(PwdsTableMap::COL_ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -241,12 +246,12 @@ abstract class UserTypeQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildUserTypeQuery The current query, for fluid interface
+     * @return $this|ChildPwdsQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(UserTypeTableMap::COL_ID, $keys, Criteria::IN);
+        return $this->addUsingAlias(PwdsTableMap::COL_ID, $keys, Criteria::IN);
     }
 
     /**
@@ -265,18 +270,18 @@ abstract class UserTypeQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildUserTypeQuery The current query, for fluid interface
+     * @return $this|ChildPwdsQuery The current query, for fluid interface
      */
     public function filterById($id = null, $comparison = null)
     {
         if (is_array($id)) {
             $useMinMax = false;
             if (isset($id['min'])) {
-                $this->addUsingAlias(UserTypeTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(PwdsTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($id['max'])) {
-                $this->addUsingAlias(UserTypeTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(PwdsTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -287,73 +292,102 @@ abstract class UserTypeQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(UserTypeTableMap::COL_ID, $id, $comparison);
+        return $this->addUsingAlias(PwdsTableMap::COL_ID, $id, $comparison);
     }
 
     /**
-     * Filter the query on the description column
+     * Filter the query on the salt column
      *
      * Example usage:
      * <code>
-     * $query->filterByDescription('fooValue');   // WHERE description = 'fooValue'
-     * $query->filterByDescription('%fooValue%'); // WHERE description LIKE '%fooValue%'
+     * $query->filterBySalt('fooValue');   // WHERE salt = 'fooValue'
+     * $query->filterBySalt('%fooValue%'); // WHERE salt LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $description The value to use as filter.
+     * @param     string $salt The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildUserTypeQuery The current query, for fluid interface
+     * @return $this|ChildPwdsQuery The current query, for fluid interface
      */
-    public function filterByDescription($description = null, $comparison = null)
+    public function filterBySalt($salt = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($description)) {
+            if (is_array($salt)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $description)) {
-                $description = str_replace('*', '%', $description);
+            } elseif (preg_match('/[\%\*]/', $salt)) {
+                $salt = str_replace('*', '%', $salt);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(UserTypeTableMap::COL_DESCRIPTION, $description, $comparison);
+        return $this->addUsingAlias(PwdsTableMap::COL_SALT, $salt, $comparison);
     }
 
     /**
-     * Filter the query by a related \Users object
+     * Filter the query on the password column
      *
-     * @param \Users|ObjectCollection $users the related object to use as filter
+     * Example usage:
+     * <code>
+     * $query->filterByPassword('fooValue');   // WHERE password = 'fooValue'
+     * $query->filterByPassword('%fooValue%'); // WHERE password LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $password The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPwdsQuery The current query, for fluid interface
+     */
+    public function filterByPassword($password = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($password)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $password)) {
+                $password = str_replace('*', '%', $password);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(PwdsTableMap::COL_PASSWORD, $password, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \UserHasPwd object
+     *
+     * @param \UserHasPwd|ObjectCollection $userHasPwd the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return ChildUserTypeQuery The current query, for fluid interface
+     * @return ChildPwdsQuery The current query, for fluid interface
      */
-    public function filterByUsers($users, $comparison = null)
+    public function filterByUserHasPwd($userHasPwd, $comparison = null)
     {
-        if ($users instanceof \Users) {
+        if ($userHasPwd instanceof \UserHasPwd) {
             return $this
-                ->addUsingAlias(UserTypeTableMap::COL_ID, $users->getUserTypeId(), $comparison);
-        } elseif ($users instanceof ObjectCollection) {
+                ->addUsingAlias(PwdsTableMap::COL_ID, $userHasPwd->getPwdId(), $comparison);
+        } elseif ($userHasPwd instanceof ObjectCollection) {
             return $this
-                ->useUsersQuery()
-                ->filterByPrimaryKeys($users->getPrimaryKeys())
+                ->useUserHasPwdQuery()
+                ->filterByPrimaryKeys($userHasPwd->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByUsers() only accepts arguments of type \Users or Collection');
+            throw new PropelException('filterByUserHasPwd() only accepts arguments of type \UserHasPwd or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Users relation
+     * Adds a JOIN clause to the query using the UserHasPwd relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildUserTypeQuery The current query, for fluid interface
+     * @return $this|ChildPwdsQuery The current query, for fluid interface
      */
-    public function joinUsers($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinUserHasPwd($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Users');
+        $relationMap = $tableMap->getRelation('UserHasPwd');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -368,14 +402,14 @@ abstract class UserTypeQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Users');
+            $this->addJoinObject($join, 'UserHasPwd');
         }
 
         return $this;
     }
 
     /**
-     * Use the Users relation Users object
+     * Use the UserHasPwd relation UserHasPwd object
      *
      * @see useQuery()
      *
@@ -383,33 +417,33 @@ abstract class UserTypeQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \UsersQuery A secondary query class using the current class as primary query
+     * @return \UserHasPwdQuery A secondary query class using the current class as primary query
      */
-    public function useUsersQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useUserHasPwdQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinUsers($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Users', '\UsersQuery');
+            ->joinUserHasPwd($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'UserHasPwd', '\UserHasPwdQuery');
     }
 
     /**
      * Exclude object from result
      *
-     * @param   ChildUserType $userType Object to remove from the list of results
+     * @param   ChildPwds $pwds Object to remove from the list of results
      *
-     * @return $this|ChildUserTypeQuery The current query, for fluid interface
+     * @return $this|ChildPwdsQuery The current query, for fluid interface
      */
-    public function prune($userType = null)
+    public function prune($pwds = null)
     {
-        if ($userType) {
-            $this->addUsingAlias(UserTypeTableMap::COL_ID, $userType->getId(), Criteria::NOT_EQUAL);
+        if ($pwds) {
+            $this->addUsingAlias(PwdsTableMap::COL_ID, $pwds->getId(), Criteria::NOT_EQUAL);
         }
 
         return $this;
     }
 
     /**
-     * Deletes all rows from the user_type table.
+     * Deletes all rows from the pwds table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -417,7 +451,7 @@ abstract class UserTypeQuery extends ModelCriteria
     public function doDeleteAll(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(PwdsTableMap::DATABASE_NAME);
         }
 
         // use transaction because $criteria could contain info
@@ -428,8 +462,8 @@ abstract class UserTypeQuery extends ModelCriteria
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            UserTypeTableMap::clearInstancePool();
-            UserTypeTableMap::clearRelatedInstancePool();
+            PwdsTableMap::clearInstancePool();
+            PwdsTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -447,26 +481,26 @@ abstract class UserTypeQuery extends ModelCriteria
     public function delete(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(PwdsTableMap::DATABASE_NAME);
         }
 
         $criteria = $this;
 
         // Set the correct dbName
-        $criteria->setDbName(UserTypeTableMap::DATABASE_NAME);
+        $criteria->setDbName(PwdsTableMap::DATABASE_NAME);
 
         // use transaction because $criteria could contain info
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
 
-            UserTypeTableMap::removeInstanceFromPool($criteria);
+            PwdsTableMap::removeInstanceFromPool($criteria);
 
             $affectedRows += ModelCriteria::delete($con);
-            UserTypeTableMap::clearRelatedInstancePool();
+            PwdsTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
     }
 
-} // UserTypeQuery
+} // PwdsQuery

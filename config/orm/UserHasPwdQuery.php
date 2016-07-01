@@ -3,7 +3,7 @@
 use Base\UserHasPwdQuery as BaseUserHasPwdQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'User_has_Pwd' table.
+ * Skeleton subclass for performing query and update operations on the 'user_has_pwd' table.
  *
  *
  *

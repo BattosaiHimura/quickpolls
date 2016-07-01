@@ -16,15 +16,15 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'Quality' table.
+ * Base class that represents a query for the 'quality' table.
  *
  *
  *
- * @method     ChildQualityQuery orderByIdquality($order = Criteria::ASC) Order by the idquality column
+ * @method     ChildQualityQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildQualityQuery orderByVote($order = Criteria::ASC) Order by the vote column
  * @method     ChildQualityQuery orderByDescription($order = Criteria::ASC) Order by the description column
  *
- * @method     ChildQualityQuery groupByIdquality() Group by the idquality column
+ * @method     ChildQualityQuery groupById() Group by the id column
  * @method     ChildQualityQuery groupByVote() Group by the vote column
  * @method     ChildQualityQuery groupByDescription() Group by the description column
  *
@@ -36,45 +36,45 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildQualityQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildQualityQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildQualityQuery leftJoinDailylessonHasUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the DailylessonHasUser relation
- * @method     ChildQualityQuery rightJoinDailylessonHasUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the DailylessonHasUser relation
- * @method     ChildQualityQuery innerJoinDailylessonHasUser($relationAlias = null) Adds a INNER JOIN clause to the query using the DailylessonHasUser relation
+ * @method     ChildQualityQuery leftJoinFinalVotes($relationAlias = null) Adds a LEFT JOIN clause to the query using the FinalVotes relation
+ * @method     ChildQualityQuery rightJoinFinalVotes($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FinalVotes relation
+ * @method     ChildQualityQuery innerJoinFinalVotes($relationAlias = null) Adds a INNER JOIN clause to the query using the FinalVotes relation
  *
- * @method     ChildQualityQuery joinWithDailylessonHasUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the DailylessonHasUser relation
+ * @method     ChildQualityQuery joinWithFinalVotes($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the FinalVotes relation
  *
- * @method     ChildQualityQuery leftJoinWithDailylessonHasUser() Adds a LEFT JOIN clause and with to the query using the DailylessonHasUser relation
- * @method     ChildQualityQuery rightJoinWithDailylessonHasUser() Adds a RIGHT JOIN clause and with to the query using the DailylessonHasUser relation
- * @method     ChildQualityQuery innerJoinWithDailylessonHasUser() Adds a INNER JOIN clause and with to the query using the DailylessonHasUser relation
+ * @method     ChildQualityQuery leftJoinWithFinalVotes() Adds a LEFT JOIN clause and with to the query using the FinalVotes relation
+ * @method     ChildQualityQuery rightJoinWithFinalVotes() Adds a RIGHT JOIN clause and with to the query using the FinalVotes relation
+ * @method     ChildQualityQuery innerJoinWithFinalVotes() Adds a INNER JOIN clause and with to the query using the FinalVotes relation
  *
- * @method     ChildQualityQuery leftJoinFinalVote($relationAlias = null) Adds a LEFT JOIN clause to the query using the FinalVote relation
- * @method     ChildQualityQuery rightJoinFinalVote($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FinalVote relation
- * @method     ChildQualityQuery innerJoinFinalVote($relationAlias = null) Adds a INNER JOIN clause to the query using the FinalVote relation
+ * @method     ChildQualityQuery leftJoinVotes($relationAlias = null) Adds a LEFT JOIN clause to the query using the Votes relation
+ * @method     ChildQualityQuery rightJoinVotes($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Votes relation
+ * @method     ChildQualityQuery innerJoinVotes($relationAlias = null) Adds a INNER JOIN clause to the query using the Votes relation
  *
- * @method     ChildQualityQuery joinWithFinalVote($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the FinalVote relation
+ * @method     ChildQualityQuery joinWithVotes($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Votes relation
  *
- * @method     ChildQualityQuery leftJoinWithFinalVote() Adds a LEFT JOIN clause and with to the query using the FinalVote relation
- * @method     ChildQualityQuery rightJoinWithFinalVote() Adds a RIGHT JOIN clause and with to the query using the FinalVote relation
- * @method     ChildQualityQuery innerJoinWithFinalVote() Adds a INNER JOIN clause and with to the query using the FinalVote relation
+ * @method     ChildQualityQuery leftJoinWithVotes() Adds a LEFT JOIN clause and with to the query using the Votes relation
+ * @method     ChildQualityQuery rightJoinWithVotes() Adds a RIGHT JOIN clause and with to the query using the Votes relation
+ * @method     ChildQualityQuery innerJoinWithVotes() Adds a INNER JOIN clause and with to the query using the Votes relation
  *
- * @method     \DailylessonHasUserQuery|\FinalVoteQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \FinalVotesQuery|\VotesQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildQuality findOne(ConnectionInterface $con = null) Return the first ChildQuality matching the query
  * @method     ChildQuality findOneOrCreate(ConnectionInterface $con = null) Return the first ChildQuality matching the query, or a new ChildQuality object populated from the query conditions when no match is found
  *
- * @method     ChildQuality findOneByIdquality(int $idquality) Return the first ChildQuality filtered by the idquality column
- * @method     ChildQuality findOneByVote(string $vote) Return the first ChildQuality filtered by the vote column
+ * @method     ChildQuality findOneById(int $id) Return the first ChildQuality filtered by the id column
+ * @method     ChildQuality findOneByVote(int $vote) Return the first ChildQuality filtered by the vote column
  * @method     ChildQuality findOneByDescription(string $description) Return the first ChildQuality filtered by the description column *
 
  * @method     ChildQuality requirePk($key, ConnectionInterface $con = null) Return the ChildQuality by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildQuality requireOne(ConnectionInterface $con = null) Return the first ChildQuality matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildQuality requireOneByIdquality(int $idquality) Return the first ChildQuality filtered by the idquality column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildQuality requireOneByVote(string $vote) Return the first ChildQuality filtered by the vote column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildQuality requireOneById(int $id) Return the first ChildQuality filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildQuality requireOneByVote(int $vote) Return the first ChildQuality filtered by the vote column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildQuality requireOneByDescription(string $description) Return the first ChildQuality filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildQuality[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildQuality objects based on current ModelCriteria
- * @method     ChildQuality[]|ObjectCollection findByIdquality(int $idquality) Return ChildQuality objects filtered by the idquality column
- * @method     ChildQuality[]|ObjectCollection findByVote(string $vote) Return ChildQuality objects filtered by the vote column
+ * @method     ChildQuality[]|ObjectCollection findById(int $id) Return ChildQuality objects filtered by the id column
+ * @method     ChildQuality[]|ObjectCollection findByVote(int $vote) Return ChildQuality objects filtered by the vote column
  * @method     ChildQuality[]|ObjectCollection findByDescription(string $description) Return ChildQuality objects filtered by the description column
  * @method     ChildQuality[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -174,7 +174,7 @@ abstract class QualityQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT idquality, vote, description FROM Quality WHERE idquality = :p0';
+        $sql = 'SELECT id, vote, description FROM quality WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -248,7 +248,7 @@ abstract class QualityQuery extends ModelCriteria
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(QualityTableMap::COL_IDQUALITY, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(QualityTableMap::COL_ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -261,20 +261,20 @@ abstract class QualityQuery extends ModelCriteria
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(QualityTableMap::COL_IDQUALITY, $keys, Criteria::IN);
+        return $this->addUsingAlias(QualityTableMap::COL_ID, $keys, Criteria::IN);
     }
 
     /**
-     * Filter the query on the idquality column
+     * Filter the query on the id column
      *
      * Example usage:
      * <code>
-     * $query->filterByIdquality(1234); // WHERE idquality = 1234
-     * $query->filterByIdquality(array(12, 34)); // WHERE idquality IN (12, 34)
-     * $query->filterByIdquality(array('min' => 12)); // WHERE idquality > 12
+     * $query->filterById(1234); // WHERE id = 1234
+     * $query->filterById(array(12, 34)); // WHERE id IN (12, 34)
+     * $query->filterById(array('min' => 12)); // WHERE id > 12
      * </code>
      *
-     * @param     mixed $idquality The value to use as filter.
+     * @param     mixed $id The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -282,16 +282,16 @@ abstract class QualityQuery extends ModelCriteria
      *
      * @return $this|ChildQualityQuery The current query, for fluid interface
      */
-    public function filterByIdquality($idquality = null, $comparison = null)
+    public function filterById($id = null, $comparison = null)
     {
-        if (is_array($idquality)) {
+        if (is_array($id)) {
             $useMinMax = false;
-            if (isset($idquality['min'])) {
-                $this->addUsingAlias(QualityTableMap::COL_IDQUALITY, $idquality['min'], Criteria::GREATER_EQUAL);
+            if (isset($id['min'])) {
+                $this->addUsingAlias(QualityTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($idquality['max'])) {
-                $this->addUsingAlias(QualityTableMap::COL_IDQUALITY, $idquality['max'], Criteria::LESS_EQUAL);
+            if (isset($id['max'])) {
+                $this->addUsingAlias(QualityTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -302,7 +302,7 @@ abstract class QualityQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(QualityTableMap::COL_IDQUALITY, $idquality, $comparison);
+        return $this->addUsingAlias(QualityTableMap::COL_ID, $id, $comparison);
     }
 
     /**
@@ -376,40 +376,40 @@ abstract class QualityQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \DailylessonHasUser object
+     * Filter the query by a related \FinalVotes object
      *
-     * @param \DailylessonHasUser|ObjectCollection $dailylessonHasUser the related object to use as filter
+     * @param \FinalVotes|ObjectCollection $finalVotes the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildQualityQuery The current query, for fluid interface
      */
-    public function filterByDailylessonHasUser($dailylessonHasUser, $comparison = null)
+    public function filterByFinalVotes($finalVotes, $comparison = null)
     {
-        if ($dailylessonHasUser instanceof \DailylessonHasUser) {
+        if ($finalVotes instanceof \FinalVotes) {
             return $this
-                ->addUsingAlias(QualityTableMap::COL_IDQUALITY, $dailylessonHasUser->getQualityIdquality(), $comparison);
-        } elseif ($dailylessonHasUser instanceof ObjectCollection) {
+                ->addUsingAlias(QualityTableMap::COL_ID, $finalVotes->getQualityId(), $comparison);
+        } elseif ($finalVotes instanceof ObjectCollection) {
             return $this
-                ->useDailylessonHasUserQuery()
-                ->filterByPrimaryKeys($dailylessonHasUser->getPrimaryKeys())
+                ->useFinalVotesQuery()
+                ->filterByPrimaryKeys($finalVotes->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByDailylessonHasUser() only accepts arguments of type \DailylessonHasUser or Collection');
+            throw new PropelException('filterByFinalVotes() only accepts arguments of type \FinalVotes or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the DailylessonHasUser relation
+     * Adds a JOIN clause to the query using the FinalVotes relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildQualityQuery The current query, for fluid interface
      */
-    public function joinDailylessonHasUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinFinalVotes($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('DailylessonHasUser');
+        $relationMap = $tableMap->getRelation('FinalVotes');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -424,14 +424,14 @@ abstract class QualityQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'DailylessonHasUser');
+            $this->addJoinObject($join, 'FinalVotes');
         }
 
         return $this;
     }
 
     /**
-     * Use the DailylessonHasUser relation DailylessonHasUser object
+     * Use the FinalVotes relation FinalVotes object
      *
      * @see useQuery()
      *
@@ -439,50 +439,50 @@ abstract class QualityQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \DailylessonHasUserQuery A secondary query class using the current class as primary query
+     * @return \FinalVotesQuery A secondary query class using the current class as primary query
      */
-    public function useDailylessonHasUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useFinalVotesQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinDailylessonHasUser($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'DailylessonHasUser', '\DailylessonHasUserQuery');
+            ->joinFinalVotes($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'FinalVotes', '\FinalVotesQuery');
     }
 
     /**
-     * Filter the query by a related \FinalVote object
+     * Filter the query by a related \Votes object
      *
-     * @param \FinalVote|ObjectCollection $finalVote the related object to use as filter
+     * @param \Votes|ObjectCollection $votes the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildQualityQuery The current query, for fluid interface
      */
-    public function filterByFinalVote($finalVote, $comparison = null)
+    public function filterByVotes($votes, $comparison = null)
     {
-        if ($finalVote instanceof \FinalVote) {
+        if ($votes instanceof \Votes) {
             return $this
-                ->addUsingAlias(QualityTableMap::COL_IDQUALITY, $finalVote->getQualityIdquality(), $comparison);
-        } elseif ($finalVote instanceof ObjectCollection) {
+                ->addUsingAlias(QualityTableMap::COL_ID, $votes->getQualityId(), $comparison);
+        } elseif ($votes instanceof ObjectCollection) {
             return $this
-                ->useFinalVoteQuery()
-                ->filterByPrimaryKeys($finalVote->getPrimaryKeys())
+                ->useVotesQuery()
+                ->filterByPrimaryKeys($votes->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByFinalVote() only accepts arguments of type \FinalVote or Collection');
+            throw new PropelException('filterByVotes() only accepts arguments of type \Votes or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the FinalVote relation
+     * Adds a JOIN clause to the query using the Votes relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildQualityQuery The current query, for fluid interface
      */
-    public function joinFinalVote($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinVotes($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('FinalVote');
+        $relationMap = $tableMap->getRelation('Votes');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -497,14 +497,14 @@ abstract class QualityQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'FinalVote');
+            $this->addJoinObject($join, 'Votes');
         }
 
         return $this;
     }
 
     /**
-     * Use the FinalVote relation FinalVote object
+     * Use the Votes relation Votes object
      *
      * @see useQuery()
      *
@@ -512,13 +512,13 @@ abstract class QualityQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \FinalVoteQuery A secondary query class using the current class as primary query
+     * @return \VotesQuery A secondary query class using the current class as primary query
      */
-    public function useFinalVoteQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useVotesQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinFinalVote($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'FinalVote', '\FinalVoteQuery');
+            ->joinVotes($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Votes', '\VotesQuery');
     }
 
     /**
@@ -531,14 +531,14 @@ abstract class QualityQuery extends ModelCriteria
     public function prune($quality = null)
     {
         if ($quality) {
-            $this->addUsingAlias(QualityTableMap::COL_IDQUALITY, $quality->getIdquality(), Criteria::NOT_EQUAL);
+            $this->addUsingAlias(QualityTableMap::COL_ID, $quality->getId(), Criteria::NOT_EQUAL);
         }
 
         return $this;
     }
 
     /**
-     * Deletes all rows from the Quality table.
+     * Deletes all rows from the quality table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).

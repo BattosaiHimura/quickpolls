@@ -2,15 +2,14 @@
 
 namespace Base;
 
-use \User as ChildUser;
-use \UserQuery as ChildUserQuery;
 use \UserType as ChildUserType;
 use \UserTypeQuery as ChildUserTypeQuery;
-use \DateTime;
+use \Users as ChildUsers;
+use \UsersQuery as ChildUsersQuery;
 use \Exception;
 use \PDO;
-use Map\UserTableMap;
 use Map\UserTypeTableMap;
+use Map\UsersTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -23,15 +22,14 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'User_type' table.
+ * Base class that represents a row from the 'user_type' table.
  *
  *
  *
-* @package    propel.generator..Base
-*/
+ * @package    propel.generator..Base
+ */
 abstract class UserType implements ActiveRecordInterface
 {
     /**
@@ -67,11 +65,11 @@ abstract class UserType implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the idusertype field.
+     * The value for the id field.
      *
      * @var        int
      */
-    protected $idusertype;
+    protected $id;
 
     /**
      * The value for the description field.
@@ -81,24 +79,10 @@ abstract class UserType implements ActiveRecordInterface
     protected $description;
 
     /**
-     * The value for the datefrom field.
-     *
-     * @var        DateTime
+     * @var        ObjectCollection|ChildUsers[] Collection to store aggregation of ChildUsers objects.
      */
-    protected $datefrom;
-
-    /**
-     * The value for the dateto field.
-     *
-     * @var        DateTime
-     */
-    protected $dateto;
-
-    /**
-     * @var        ObjectCollection|ChildUser[] Collection to store aggregation of ChildUser objects.
-     */
-    protected $collUsers;
-    protected $collUsersPartial;
+    protected $collUserss;
+    protected $collUserssPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -110,9 +94,9 @@ abstract class UserType implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildUser[]
+     * @var ObjectCollection|ChildUsers[]
      */
-    protected $usersScheduledForDeletion = null;
+    protected $userssScheduledForDeletion = null;
 
     /**
      * Initializes internal state of Base\UserType object.
@@ -340,13 +324,13 @@ abstract class UserType implements ActiveRecordInterface
     }
 
     /**
-     * Get the [idusertype] column value.
+     * Get the [id] column value.
      *
      * @return int
      */
-    public function getIdusertype()
+    public function getId()
     {
-        return $this->idusertype;
+        return $this->id;
     }
 
     /**
@@ -360,64 +344,24 @@ abstract class UserType implements ActiveRecordInterface
     }
 
     /**
-     * Get the [optionally formatted] temporal [datefrom] column value.
-     *
-     *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getDatefrom($format = NULL)
-    {
-        if ($format === null) {
-            return $this->datefrom;
-        } else {
-            return $this->datefrom instanceof \DateTimeInterface ? $this->datefrom->format($format) : null;
-        }
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [dateto] column value.
-     *
-     *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getDateto($format = NULL)
-    {
-        if ($format === null) {
-            return $this->dateto;
-        } else {
-            return $this->dateto instanceof \DateTimeInterface ? $this->dateto->format($format) : null;
-        }
-    }
-
-    /**
-     * Set the value of [idusertype] column.
+     * Set the value of [id] column.
      *
      * @param int $v new value
      * @return $this|\UserType The current object (for fluent API support)
      */
-    public function setIdusertype($v)
+    public function setId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->idusertype !== $v) {
-            $this->idusertype = $v;
-            $this->modifiedColumns[UserTypeTableMap::COL_IDUSERTYPE] = true;
+        if ($this->id !== $v) {
+            $this->id = $v;
+            $this->modifiedColumns[UserTypeTableMap::COL_ID] = true;
         }
 
         return $this;
-    } // setIdusertype()
+    } // setId()
 
     /**
      * Set the value of [description] column.
@@ -438,46 +382,6 @@ abstract class UserType implements ActiveRecordInterface
 
         return $this;
     } // setDescription()
-
-    /**
-     * Sets the value of [datefrom] column to a normalized version of the date/time value specified.
-     *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\UserType The current object (for fluent API support)
-     */
-    public function setDatefrom($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->datefrom !== null || $dt !== null) {
-            if ($this->datefrom === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->datefrom->format("Y-m-d H:i:s")) {
-                $this->datefrom = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[UserTypeTableMap::COL_DATEFROM] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setDatefrom()
-
-    /**
-     * Sets the value of [dateto] column to a normalized version of the date/time value specified.
-     *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\UserType The current object (for fluent API support)
-     */
-    public function setDateto($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->dateto !== null || $dt !== null) {
-            if ($this->dateto === null || $dt === null || $dt->format("Y-m-d H:i:s") !== $this->dateto->format("Y-m-d H:i:s")) {
-                $this->dateto = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[UserTypeTableMap::COL_DATETO] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setDateto()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -515,23 +419,11 @@ abstract class UserType implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserTypeTableMap::translateFieldName('Idusertype', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->idusertype = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserTypeTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTypeTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTypeTableMap::translateFieldName('Datefrom', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
-            $this->datefrom = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTypeTableMap::translateFieldName('Dateto', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
-            $this->dateto = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -540,7 +432,7 @@ abstract class UserType implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 4; // 4 = UserTypeTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 2; // 2 = UserTypeTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\UserType'), 0, $e);
@@ -601,7 +493,7 @@ abstract class UserType implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collUsers = null;
+            $this->collUserss = null;
 
         } // if (deep)
     }
@@ -713,17 +605,17 @@ abstract class UserType implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->usersScheduledForDeletion !== null) {
-                if (!$this->usersScheduledForDeletion->isEmpty()) {
-                    \UserQuery::create()
-                        ->filterByPrimaryKeys($this->usersScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->userssScheduledForDeletion !== null) {
+                if (!$this->userssScheduledForDeletion->isEmpty()) {
+                    \UsersQuery::create()
+                        ->filterByPrimaryKeys($this->userssScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->usersScheduledForDeletion = null;
+                    $this->userssScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collUsers !== null) {
-                foreach ($this->collUsers as $referrerFK) {
+            if ($this->collUserss !== null) {
+                foreach ($this->collUserss as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -750,27 +642,21 @@ abstract class UserType implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[UserTypeTableMap::COL_IDUSERTYPE] = true;
-        if (null !== $this->idusertype) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UserTypeTableMap::COL_IDUSERTYPE . ')');
+        $this->modifiedColumns[UserTypeTableMap::COL_ID] = true;
+        if (null !== $this->id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UserTypeTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(UserTypeTableMap::COL_IDUSERTYPE)) {
-            $modifiedColumns[':p' . $index++]  = 'idUserType';
+        if ($this->isColumnModified(UserTypeTableMap::COL_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'id';
         }
         if ($this->isColumnModified(UserTypeTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
-        if ($this->isColumnModified(UserTypeTableMap::COL_DATEFROM)) {
-            $modifiedColumns[':p' . $index++]  = 'dateFrom';
-        }
-        if ($this->isColumnModified(UserTypeTableMap::COL_DATETO)) {
-            $modifiedColumns[':p' . $index++]  = 'dateTo';
-        }
 
         $sql = sprintf(
-            'INSERT INTO User_type (%s) VALUES (%s)',
+            'INSERT INTO user_type (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -779,17 +665,11 @@ abstract class UserType implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'idUserType':
-                        $stmt->bindValue($identifier, $this->idusertype, PDO::PARAM_INT);
+                    case 'id':
+                        $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
-                        break;
-                    case 'dateFrom':
-                        $stmt->bindValue($identifier, $this->datefrom ? $this->datefrom->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
-                        break;
-                    case 'dateTo':
-                        $stmt->bindValue($identifier, $this->dateto ? $this->dateto->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -804,7 +684,7 @@ abstract class UserType implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setIdusertype($pk);
+        $this->setId($pk);
 
         $this->setNew(false);
     }
@@ -854,16 +734,10 @@ abstract class UserType implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getIdusertype();
+                return $this->getId();
                 break;
             case 1:
                 return $this->getDescription();
-                break;
-            case 2:
-                return $this->getDatefrom();
-                break;
-            case 3:
-                return $this->getDateto();
                 break;
             default:
                 return null;
@@ -895,39 +769,29 @@ abstract class UserType implements ActiveRecordInterface
         $alreadyDumpedObjects['UserType'][$this->hashCode()] = true;
         $keys = UserTypeTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getIdusertype(),
+            $keys[0] => $this->getId(),
             $keys[1] => $this->getDescription(),
-            $keys[2] => $this->getDatefrom(),
-            $keys[3] => $this->getDateto(),
         );
-        if ($result[$keys[2]] instanceof \DateTime) {
-            $result[$keys[2]] = $result[$keys[2]]->format('c');
-        }
-
-        if ($result[$keys[3]] instanceof \DateTime) {
-            $result[$keys[3]] = $result[$keys[3]]->format('c');
-        }
-
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collUsers) {
+            if (null !== $this->collUserss) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'users';
+                        $key = 'userss';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'Users';
+                        $key = 'userss';
                         break;
                     default:
-                        $key = 'Users';
+                        $key = 'Userss';
                 }
 
-                $result[$key] = $this->collUsers->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->collUserss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -964,16 +828,10 @@ abstract class UserType implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                $this->setIdusertype($value);
+                $this->setId($value);
                 break;
             case 1:
                 $this->setDescription($value);
-                break;
-            case 2:
-                $this->setDatefrom($value);
-                break;
-            case 3:
-                $this->setDateto($value);
                 break;
         } // switch()
 
@@ -1002,16 +860,10 @@ abstract class UserType implements ActiveRecordInterface
         $keys = UserTypeTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setIdusertype($arr[$keys[0]]);
+            $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
             $this->setDescription($arr[$keys[1]]);
-        }
-        if (array_key_exists($keys[2], $arr)) {
-            $this->setDatefrom($arr[$keys[2]]);
-        }
-        if (array_key_exists($keys[3], $arr)) {
-            $this->setDateto($arr[$keys[3]]);
         }
     }
 
@@ -1054,17 +906,11 @@ abstract class UserType implements ActiveRecordInterface
     {
         $criteria = new Criteria(UserTypeTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(UserTypeTableMap::COL_IDUSERTYPE)) {
-            $criteria->add(UserTypeTableMap::COL_IDUSERTYPE, $this->idusertype);
+        if ($this->isColumnModified(UserTypeTableMap::COL_ID)) {
+            $criteria->add(UserTypeTableMap::COL_ID, $this->id);
         }
         if ($this->isColumnModified(UserTypeTableMap::COL_DESCRIPTION)) {
             $criteria->add(UserTypeTableMap::COL_DESCRIPTION, $this->description);
-        }
-        if ($this->isColumnModified(UserTypeTableMap::COL_DATEFROM)) {
-            $criteria->add(UserTypeTableMap::COL_DATEFROM, $this->datefrom);
-        }
-        if ($this->isColumnModified(UserTypeTableMap::COL_DATETO)) {
-            $criteria->add(UserTypeTableMap::COL_DATETO, $this->dateto);
         }
 
         return $criteria;
@@ -1083,7 +929,7 @@ abstract class UserType implements ActiveRecordInterface
     public function buildPkeyCriteria()
     {
         $criteria = ChildUserTypeQuery::create();
-        $criteria->add(UserTypeTableMap::COL_IDUSERTYPE, $this->idusertype);
+        $criteria->add(UserTypeTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1096,7 +942,7 @@ abstract class UserType implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getIdusertype();
+        $validPk = null !== $this->getId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1116,18 +962,18 @@ abstract class UserType implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getIdusertype();
+        return $this->getId();
     }
 
     /**
-     * Generic method to set the primary key (idusertype column).
+     * Generic method to set the primary key (id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setIdusertype($key);
+        $this->setId($key);
     }
 
     /**
@@ -1136,7 +982,7 @@ abstract class UserType implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getIdusertype();
+        return null === $this->getId();
     }
 
     /**
@@ -1153,17 +999,15 @@ abstract class UserType implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setDescription($this->getDescription());
-        $copyObj->setDatefrom($this->getDatefrom());
-        $copyObj->setDateto($this->getDateto());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getUsers() as $relObj) {
+            foreach ($this->getUserss() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addUser($relObj->copy($deepCopy));
+                    $copyObj->addUsers($relObj->copy($deepCopy));
                 }
             }
 
@@ -1171,7 +1015,7 @@ abstract class UserType implements ActiveRecordInterface
 
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setIdusertype(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1208,37 +1052,37 @@ abstract class UserType implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('User' == $relationName) {
-            return $this->initUsers();
+        if ('Users' == $relationName) {
+            return $this->initUserss();
         }
     }
 
     /**
-     * Clears out the collUsers collection
+     * Clears out the collUserss collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addUsers()
+     * @see        addUserss()
      */
-    public function clearUsers()
+    public function clearUserss()
     {
-        $this->collUsers = null; // important to set this to NULL since that means it is uninitialized
+        $this->collUserss = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Reset is the collUsers collection loaded partially.
+     * Reset is the collUserss collection loaded partially.
      */
-    public function resetPartialUsers($v = true)
+    public function resetPartialUserss($v = true)
     {
-        $this->collUsersPartial = $v;
+        $this->collUserssPartial = $v;
     }
 
     /**
-     * Initializes the collUsers collection.
+     * Initializes the collUserss collection.
      *
-     * By default this just sets the collUsers collection to an empty array (like clearcollUsers());
+     * By default this just sets the collUserss collection to an empty array (like clearcollUserss());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1247,20 +1091,20 @@ abstract class UserType implements ActiveRecordInterface
      *
      * @return void
      */
-    public function initUsers($overrideExisting = true)
+    public function initUserss($overrideExisting = true)
     {
-        if (null !== $this->collUsers && !$overrideExisting) {
+        if (null !== $this->collUserss && !$overrideExisting) {
             return;
         }
 
-        $collectionClassName = UserTableMap::getTableMap()->getCollectionClassName();
+        $collectionClassName = UsersTableMap::getTableMap()->getCollectionClassName();
 
-        $this->collUsers = new $collectionClassName;
-        $this->collUsers->setModel('\User');
+        $this->collUserss = new $collectionClassName;
+        $this->collUserss->setModel('\Users');
     }
 
     /**
-     * Gets an array of ChildUser objects which contain a foreign key that references this object.
+     * Gets an array of ChildUsers objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
@@ -1270,108 +1114,108 @@ abstract class UserType implements ActiveRecordInterface
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildUser[] List of ChildUser objects
+     * @return ObjectCollection|ChildUsers[] List of ChildUsers objects
      * @throws PropelException
      */
-    public function getUsers(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getUserss(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collUsersPartial && !$this->isNew();
-        if (null === $this->collUsers || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collUsers) {
+        $partial = $this->collUserssPartial && !$this->isNew();
+        if (null === $this->collUserss || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collUserss) {
                 // return empty collection
-                $this->initUsers();
+                $this->initUserss();
             } else {
-                $collUsers = ChildUserQuery::create(null, $criteria)
+                $collUserss = ChildUsersQuery::create(null, $criteria)
                     ->filterByUserType($this)
                     ->find($con);
 
                 if (null !== $criteria) {
-                    if (false !== $this->collUsersPartial && count($collUsers)) {
-                        $this->initUsers(false);
+                    if (false !== $this->collUserssPartial && count($collUserss)) {
+                        $this->initUserss(false);
 
-                        foreach ($collUsers as $obj) {
-                            if (false == $this->collUsers->contains($obj)) {
-                                $this->collUsers->append($obj);
+                        foreach ($collUserss as $obj) {
+                            if (false == $this->collUserss->contains($obj)) {
+                                $this->collUserss->append($obj);
                             }
                         }
 
-                        $this->collUsersPartial = true;
+                        $this->collUserssPartial = true;
                     }
 
-                    return $collUsers;
+                    return $collUserss;
                 }
 
-                if ($partial && $this->collUsers) {
-                    foreach ($this->collUsers as $obj) {
+                if ($partial && $this->collUserss) {
+                    foreach ($this->collUserss as $obj) {
                         if ($obj->isNew()) {
-                            $collUsers[] = $obj;
+                            $collUserss[] = $obj;
                         }
                     }
                 }
 
-                $this->collUsers = $collUsers;
-                $this->collUsersPartial = false;
+                $this->collUserss = $collUserss;
+                $this->collUserssPartial = false;
             }
         }
 
-        return $this->collUsers;
+        return $this->collUserss;
     }
 
     /**
-     * Sets a collection of ChildUser objects related by a one-to-many relationship
+     * Sets a collection of ChildUsers objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $users A Propel collection.
+     * @param      Collection $userss A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
      * @return $this|ChildUserType The current object (for fluent API support)
      */
-    public function setUsers(Collection $users, ConnectionInterface $con = null)
+    public function setUserss(Collection $userss, ConnectionInterface $con = null)
     {
-        /** @var ChildUser[] $usersToDelete */
-        $usersToDelete = $this->getUsers(new Criteria(), $con)->diff($users);
+        /** @var ChildUsers[] $userssToDelete */
+        $userssToDelete = $this->getUserss(new Criteria(), $con)->diff($userss);
 
 
-        $this->usersScheduledForDeletion = $usersToDelete;
+        $this->userssScheduledForDeletion = $userssToDelete;
 
-        foreach ($usersToDelete as $userRemoved) {
-            $userRemoved->setUserType(null);
+        foreach ($userssToDelete as $usersRemoved) {
+            $usersRemoved->setUserType(null);
         }
 
-        $this->collUsers = null;
-        foreach ($users as $user) {
-            $this->addUser($user);
+        $this->collUserss = null;
+        foreach ($userss as $users) {
+            $this->addUsers($users);
         }
 
-        $this->collUsers = $users;
-        $this->collUsersPartial = false;
+        $this->collUserss = $userss;
+        $this->collUserssPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related User objects.
+     * Returns the number of related Users objects.
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct
      * @param      ConnectionInterface $con
-     * @return int             Count of related User objects.
+     * @return int             Count of related Users objects.
      * @throws PropelException
      */
-    public function countUsers(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countUserss(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collUsersPartial && !$this->isNew();
-        if (null === $this->collUsers || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collUsers) {
+        $partial = $this->collUserssPartial && !$this->isNew();
+        if (null === $this->collUserss || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collUserss) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getUsers());
+                return count($this->getUserss());
             }
 
-            $query = ChildUserQuery::create(null, $criteria);
+            $query = ChildUsersQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
@@ -1381,28 +1225,28 @@ abstract class UserType implements ActiveRecordInterface
                 ->count($con);
         }
 
-        return count($this->collUsers);
+        return count($this->collUserss);
     }
 
     /**
-     * Method called to associate a ChildUser object to this object
-     * through the ChildUser foreign key attribute.
+     * Method called to associate a ChildUsers object to this object
+     * through the ChildUsers foreign key attribute.
      *
-     * @param  ChildUser $l ChildUser
+     * @param  ChildUsers $l ChildUsers
      * @return $this|\UserType The current object (for fluent API support)
      */
-    public function addUser(ChildUser $l)
+    public function addUsers(ChildUsers $l)
     {
-        if ($this->collUsers === null) {
-            $this->initUsers();
-            $this->collUsersPartial = true;
+        if ($this->collUserss === null) {
+            $this->initUserss();
+            $this->collUserssPartial = true;
         }
 
-        if (!$this->collUsers->contains($l)) {
-            $this->doAddUser($l);
+        if (!$this->collUserss->contains($l)) {
+            $this->doAddUsers($l);
 
-            if ($this->usersScheduledForDeletion and $this->usersScheduledForDeletion->contains($l)) {
-                $this->usersScheduledForDeletion->remove($this->usersScheduledForDeletion->search($l));
+            if ($this->userssScheduledForDeletion and $this->userssScheduledForDeletion->contains($l)) {
+                $this->userssScheduledForDeletion->remove($this->userssScheduledForDeletion->search($l));
             }
         }
 
@@ -1410,29 +1254,29 @@ abstract class UserType implements ActiveRecordInterface
     }
 
     /**
-     * @param ChildUser $user The ChildUser object to add.
+     * @param ChildUsers $users The ChildUsers object to add.
      */
-    protected function doAddUser(ChildUser $user)
+    protected function doAddUsers(ChildUsers $users)
     {
-        $this->collUsers[]= $user;
-        $user->setUserType($this);
+        $this->collUserss[]= $users;
+        $users->setUserType($this);
     }
 
     /**
-     * @param  ChildUser $user The ChildUser object to remove.
+     * @param  ChildUsers $users The ChildUsers object to remove.
      * @return $this|ChildUserType The current object (for fluent API support)
      */
-    public function removeUser(ChildUser $user)
+    public function removeUsers(ChildUsers $users)
     {
-        if ($this->getUsers()->contains($user)) {
-            $pos = $this->collUsers->search($user);
-            $this->collUsers->remove($pos);
-            if (null === $this->usersScheduledForDeletion) {
-                $this->usersScheduledForDeletion = clone $this->collUsers;
-                $this->usersScheduledForDeletion->clear();
+        if ($this->getUserss()->contains($users)) {
+            $pos = $this->collUserss->search($users);
+            $this->collUserss->remove($pos);
+            if (null === $this->userssScheduledForDeletion) {
+                $this->userssScheduledForDeletion = clone $this->collUserss;
+                $this->userssScheduledForDeletion->clear();
             }
-            $this->usersScheduledForDeletion[]= clone $user;
-            $user->setUserType(null);
+            $this->userssScheduledForDeletion[]= clone $users;
+            $users->setUserType(null);
         }
 
         return $this;
@@ -1445,10 +1289,8 @@ abstract class UserType implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->idusertype = null;
+        $this->id = null;
         $this->description = null;
-        $this->datefrom = null;
-        $this->dateto = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1467,14 +1309,14 @@ abstract class UserType implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collUsers) {
-                foreach ($this->collUsers as $o) {
+            if ($this->collUserss) {
+                foreach ($this->collUserss as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
         } // if ($deep)
 
-        $this->collUsers = null;
+        $this->collUserss = null;
     }
 
     /**

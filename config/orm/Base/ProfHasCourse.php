@@ -2,11 +2,11 @@
 
 namespace Base;
 
-use \Course as ChildCourse;
-use \CourseQuery as ChildCourseQuery;
+use \Courses as ChildCourses;
+use \CoursesQuery as ChildCoursesQuery;
 use \ProfHasCourseQuery as ChildProfHasCourseQuery;
-use \User as ChildUser;
-use \UserQuery as ChildUserQuery;
+use \Users as ChildUsers;
+use \UsersQuery as ChildUsersQuery;
 use \Exception;
 use \PDO;
 use Map\ProfHasCourseTableMap;
@@ -23,12 +23,12 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'Prof_has_Course' table.
+ * Base class that represents a row from the 'prof_has_course' table.
  *
  *
  *
-* @package    propel.generator..Base
-*/
+ * @package    propel.generator..Base
+ */
 abstract class ProfHasCourse implements ActiveRecordInterface
 {
     /**
@@ -64,25 +64,25 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the user_iduser field.
+     * The value for the users_id field.
      *
      * @var        int
      */
-    protected $user_iduser;
+    protected $users_id;
 
     /**
-     * The value for the course_idcourse field.
+     * The value for the courses_id field.
      *
      * @var        int
      */
-    protected $course_idcourse;
+    protected $courses_id;
 
     /**
-     * The value for the islab field.
+     * The value for the is_lab field.
      *
      * @var        boolean
      */
-    protected $islab;
+    protected $is_lab;
 
     /**
      * The value for the presence field.
@@ -92,14 +92,14 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     protected $presence;
 
     /**
-     * @var        ChildCourse
+     * @var        ChildUsers
      */
-    protected $aCourse;
+    protected $aUsers;
 
     /**
-     * @var        ChildUser
+     * @var        ChildCourses
      */
-    protected $aUser;
+    protected $aCourses;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -335,43 +335,43 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     }
 
     /**
-     * Get the [user_iduser] column value.
+     * Get the [users_id] column value.
      *
      * @return int
      */
-    public function getUserIduser()
+    public function getUsersId()
     {
-        return $this->user_iduser;
+        return $this->users_id;
     }
 
     /**
-     * Get the [course_idcourse] column value.
+     * Get the [courses_id] column value.
      *
      * @return int
      */
-    public function getCourseIdcourse()
+    public function getCoursesId()
     {
-        return $this->course_idcourse;
+        return $this->courses_id;
     }
 
     /**
-     * Get the [islab] column value.
+     * Get the [is_lab] column value.
      *
      * @return boolean
      */
-    public function getIslab()
+    public function getIsLab()
     {
-        return $this->islab;
+        return $this->is_lab;
     }
 
     /**
-     * Get the [islab] column value.
+     * Get the [is_lab] column value.
      *
      * @return boolean
      */
-    public function isIslab()
+    public function isLab()
     {
-        return $this->getIslab();
+        return $this->getIsLab();
     }
 
     /**
@@ -385,55 +385,55 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [user_iduser] column.
+     * Set the value of [users_id] column.
      *
      * @param int $v new value
      * @return $this|\ProfHasCourse The current object (for fluent API support)
      */
-    public function setUserIduser($v)
+    public function setUsersId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->user_iduser !== $v) {
-            $this->user_iduser = $v;
-            $this->modifiedColumns[ProfHasCourseTableMap::COL_USER_IDUSER] = true;
+        if ($this->users_id !== $v) {
+            $this->users_id = $v;
+            $this->modifiedColumns[ProfHasCourseTableMap::COL_USERS_ID] = true;
         }
 
-        if ($this->aUser !== null && $this->aUser->getIduser() !== $v) {
-            $this->aUser = null;
+        if ($this->aUsers !== null && $this->aUsers->getId() !== $v) {
+            $this->aUsers = null;
         }
 
         return $this;
-    } // setUserIduser()
+    } // setUsersId()
 
     /**
-     * Set the value of [course_idcourse] column.
+     * Set the value of [courses_id] column.
      *
      * @param int $v new value
      * @return $this|\ProfHasCourse The current object (for fluent API support)
      */
-    public function setCourseIdcourse($v)
+    public function setCoursesId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->course_idcourse !== $v) {
-            $this->course_idcourse = $v;
-            $this->modifiedColumns[ProfHasCourseTableMap::COL_COURSE_IDCOURSE] = true;
+        if ($this->courses_id !== $v) {
+            $this->courses_id = $v;
+            $this->modifiedColumns[ProfHasCourseTableMap::COL_COURSES_ID] = true;
         }
 
-        if ($this->aCourse !== null && $this->aCourse->getIdcourse() !== $v) {
-            $this->aCourse = null;
+        if ($this->aCourses !== null && $this->aCourses->getId() !== $v) {
+            $this->aCourses = null;
         }
 
         return $this;
-    } // setCourseIdcourse()
+    } // setCoursesId()
 
     /**
-     * Sets the value of the [islab] column.
+     * Sets the value of the [is_lab] column.
      * Non-boolean arguments are converted using the following rules:
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
@@ -442,7 +442,7 @@ abstract class ProfHasCourse implements ActiveRecordInterface
      * @param  boolean|integer|string $v The new value
      * @return $this|\ProfHasCourse The current object (for fluent API support)
      */
-    public function setIslab($v)
+    public function setIsLab($v)
     {
         if ($v !== null) {
             if (is_string($v)) {
@@ -452,13 +452,13 @@ abstract class ProfHasCourse implements ActiveRecordInterface
             }
         }
 
-        if ($this->islab !== $v) {
-            $this->islab = $v;
-            $this->modifiedColumns[ProfHasCourseTableMap::COL_ISLAB] = true;
+        if ($this->is_lab !== $v) {
+            $this->is_lab = $v;
+            $this->modifiedColumns[ProfHasCourseTableMap::COL_IS_LAB] = true;
         }
 
         return $this;
-    } // setIslab()
+    } // setIsLab()
 
     /**
      * Set the value of [presence] column.
@@ -516,14 +516,14 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ProfHasCourseTableMap::translateFieldName('UserIduser', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user_iduser = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ProfHasCourseTableMap::translateFieldName('UsersId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->users_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ProfHasCourseTableMap::translateFieldName('CourseIdcourse', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->course_idcourse = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ProfHasCourseTableMap::translateFieldName('CoursesId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->courses_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ProfHasCourseTableMap::translateFieldName('Islab', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->islab = (null !== $col) ? (boolean) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ProfHasCourseTableMap::translateFieldName('IsLab', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->is_lab = (null !== $col) ? (boolean) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ProfHasCourseTableMap::translateFieldName('Presence', TableMap::TYPE_PHPNAME, $indexType)];
             $this->presence = (null !== $col) ? (int) $col : null;
@@ -557,11 +557,11 @@ abstract class ProfHasCourse implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aUser !== null && $this->user_iduser !== $this->aUser->getIduser()) {
-            $this->aUser = null;
+        if ($this->aUsers !== null && $this->users_id !== $this->aUsers->getId()) {
+            $this->aUsers = null;
         }
-        if ($this->aCourse !== null && $this->course_idcourse !== $this->aCourse->getIdcourse()) {
-            $this->aCourse = null;
+        if ($this->aCourses !== null && $this->courses_id !== $this->aCourses->getId()) {
+            $this->aCourses = null;
         }
     } // ensureConsistency
 
@@ -602,8 +602,8 @@ abstract class ProfHasCourse implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aCourse = null;
-            $this->aUser = null;
+            $this->aUsers = null;
+            $this->aCourses = null;
         } // if (deep)
     }
 
@@ -708,18 +708,18 @@ abstract class ProfHasCourse implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aCourse !== null) {
-                if ($this->aCourse->isModified() || $this->aCourse->isNew()) {
-                    $affectedRows += $this->aCourse->save($con);
+            if ($this->aUsers !== null) {
+                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
+                    $affectedRows += $this->aUsers->save($con);
                 }
-                $this->setCourse($this->aCourse);
+                $this->setUsers($this->aUsers);
             }
 
-            if ($this->aUser !== null) {
-                if ($this->aUser->isModified() || $this->aUser->isNew()) {
-                    $affectedRows += $this->aUser->save($con);
+            if ($this->aCourses !== null) {
+                if ($this->aCourses->isModified() || $this->aCourses->isNew()) {
+                    $affectedRows += $this->aCourses->save($con);
                 }
-                $this->setUser($this->aUser);
+                $this->setCourses($this->aCourses);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -755,21 +755,21 @@ abstract class ProfHasCourse implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(ProfHasCourseTableMap::COL_USER_IDUSER)) {
-            $modifiedColumns[':p' . $index++]  = 'User_idUser';
+        if ($this->isColumnModified(ProfHasCourseTableMap::COL_USERS_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'users_id';
         }
-        if ($this->isColumnModified(ProfHasCourseTableMap::COL_COURSE_IDCOURSE)) {
-            $modifiedColumns[':p' . $index++]  = 'Course_idCourse';
+        if ($this->isColumnModified(ProfHasCourseTableMap::COL_COURSES_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'courses_id';
         }
-        if ($this->isColumnModified(ProfHasCourseTableMap::COL_ISLAB)) {
-            $modifiedColumns[':p' . $index++]  = 'isLab';
+        if ($this->isColumnModified(ProfHasCourseTableMap::COL_IS_LAB)) {
+            $modifiedColumns[':p' . $index++]  = 'is_lab';
         }
         if ($this->isColumnModified(ProfHasCourseTableMap::COL_PRESENCE)) {
             $modifiedColumns[':p' . $index++]  = 'presence';
         }
 
         $sql = sprintf(
-            'INSERT INTO Prof_has_Course (%s) VALUES (%s)',
+            'INSERT INTO prof_has_course (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -778,14 +778,14 @@ abstract class ProfHasCourse implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'User_idUser':
-                        $stmt->bindValue($identifier, $this->user_iduser, PDO::PARAM_INT);
+                    case 'users_id':
+                        $stmt->bindValue($identifier, $this->users_id, PDO::PARAM_INT);
                         break;
-                    case 'Course_idCourse':
-                        $stmt->bindValue($identifier, $this->course_idcourse, PDO::PARAM_INT);
+                    case 'courses_id':
+                        $stmt->bindValue($identifier, $this->courses_id, PDO::PARAM_INT);
                         break;
-                    case 'isLab':
-                        $stmt->bindValue($identifier, (int) $this->islab, PDO::PARAM_INT);
+                    case 'is_lab':
+                        $stmt->bindValue($identifier, (int) $this->is_lab, PDO::PARAM_INT);
                         break;
                     case 'presence':
                         $stmt->bindValue($identifier, $this->presence, PDO::PARAM_INT);
@@ -846,13 +846,13 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getUserIduser();
+                return $this->getUsersId();
                 break;
             case 1:
-                return $this->getCourseIdcourse();
+                return $this->getCoursesId();
                 break;
             case 2:
-                return $this->getIslab();
+                return $this->getIsLab();
                 break;
             case 3:
                 return $this->getPresence();
@@ -887,9 +887,9 @@ abstract class ProfHasCourse implements ActiveRecordInterface
         $alreadyDumpedObjects['ProfHasCourse'][$this->hashCode()] = true;
         $keys = ProfHasCourseTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getUserIduser(),
-            $keys[1] => $this->getCourseIdcourse(),
-            $keys[2] => $this->getIslab(),
+            $keys[0] => $this->getUsersId(),
+            $keys[1] => $this->getCoursesId(),
+            $keys[2] => $this->getIsLab(),
             $keys[3] => $this->getPresence(),
         );
         $virtualColumns = $this->virtualColumns;
@@ -898,35 +898,35 @@ abstract class ProfHasCourse implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aCourse) {
+            if (null !== $this->aUsers) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'course';
+                        $key = 'users';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'Course';
+                        $key = 'users';
                         break;
                     default:
-                        $key = 'Course';
+                        $key = 'Users';
                 }
 
-                $result[$key] = $this->aCourse->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->aUser) {
+            if (null !== $this->aCourses) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'user';
+                        $key = 'courses';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'User';
+                        $key = 'courses';
                         break;
                     default:
-                        $key = 'User';
+                        $key = 'Courses';
                 }
 
-                $result[$key] = $this->aUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aCourses->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -963,13 +963,13 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                $this->setUserIduser($value);
+                $this->setUsersId($value);
                 break;
             case 1:
-                $this->setCourseIdcourse($value);
+                $this->setCoursesId($value);
                 break;
             case 2:
-                $this->setIslab($value);
+                $this->setIsLab($value);
                 break;
             case 3:
                 $this->setPresence($value);
@@ -1001,13 +1001,13 @@ abstract class ProfHasCourse implements ActiveRecordInterface
         $keys = ProfHasCourseTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setUserIduser($arr[$keys[0]]);
+            $this->setUsersId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setCourseIdcourse($arr[$keys[1]]);
+            $this->setCoursesId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setIslab($arr[$keys[2]]);
+            $this->setIsLab($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setPresence($arr[$keys[3]]);
@@ -1053,14 +1053,14 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     {
         $criteria = new Criteria(ProfHasCourseTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(ProfHasCourseTableMap::COL_USER_IDUSER)) {
-            $criteria->add(ProfHasCourseTableMap::COL_USER_IDUSER, $this->user_iduser);
+        if ($this->isColumnModified(ProfHasCourseTableMap::COL_USERS_ID)) {
+            $criteria->add(ProfHasCourseTableMap::COL_USERS_ID, $this->users_id);
         }
-        if ($this->isColumnModified(ProfHasCourseTableMap::COL_COURSE_IDCOURSE)) {
-            $criteria->add(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $this->course_idcourse);
+        if ($this->isColumnModified(ProfHasCourseTableMap::COL_COURSES_ID)) {
+            $criteria->add(ProfHasCourseTableMap::COL_COURSES_ID, $this->courses_id);
         }
-        if ($this->isColumnModified(ProfHasCourseTableMap::COL_ISLAB)) {
-            $criteria->add(ProfHasCourseTableMap::COL_ISLAB, $this->islab);
+        if ($this->isColumnModified(ProfHasCourseTableMap::COL_IS_LAB)) {
+            $criteria->add(ProfHasCourseTableMap::COL_IS_LAB, $this->is_lab);
         }
         if ($this->isColumnModified(ProfHasCourseTableMap::COL_PRESENCE)) {
             $criteria->add(ProfHasCourseTableMap::COL_PRESENCE, $this->presence);
@@ -1082,8 +1082,8 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     public function buildPkeyCriteria()
     {
         $criteria = ChildProfHasCourseQuery::create();
-        $criteria->add(ProfHasCourseTableMap::COL_USER_IDUSER, $this->user_iduser);
-        $criteria->add(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $this->course_idcourse);
+        $criteria->add(ProfHasCourseTableMap::COL_USERS_ID, $this->users_id);
+        $criteria->add(ProfHasCourseTableMap::COL_COURSES_ID, $this->courses_id);
 
         return $criteria;
     }
@@ -1096,21 +1096,21 @@ abstract class ProfHasCourse implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getUserIduser() &&
-            null !== $this->getCourseIdcourse();
+        $validPk = null !== $this->getUsersId() &&
+            null !== $this->getCoursesId();
 
         $validPrimaryKeyFKs = 2;
         $primaryKeyFKs = [];
 
-        //relation fk_User_has_Course_Course1 to table Course
-        if ($this->aCourse && $hash = spl_object_hash($this->aCourse)) {
+        //relation fk_users_has_courses_users1 to table users
+        if ($this->aUsers && $hash = spl_object_hash($this->aUsers)) {
             $primaryKeyFKs[] = $hash;
         } else {
             $validPrimaryKeyFKs = false;
         }
 
-        //relation fk_User_has_Course_User1 to table User
-        if ($this->aUser && $hash = spl_object_hash($this->aUser)) {
+        //relation fk_users_has_courses_courses1 to table courses
+        if ($this->aCourses && $hash = spl_object_hash($this->aCourses)) {
             $primaryKeyFKs[] = $hash;
         } else {
             $validPrimaryKeyFKs = false;
@@ -1133,8 +1133,8 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     public function getPrimaryKey()
     {
         $pks = array();
-        $pks[0] = $this->getUserIduser();
-        $pks[1] = $this->getCourseIdcourse();
+        $pks[0] = $this->getUsersId();
+        $pks[1] = $this->getCoursesId();
 
         return $pks;
     }
@@ -1147,8 +1147,8 @@ abstract class ProfHasCourse implements ActiveRecordInterface
      */
     public function setPrimaryKey($keys)
     {
-        $this->setUserIduser($keys[0]);
-        $this->setCourseIdcourse($keys[1]);
+        $this->setUsersId($keys[0]);
+        $this->setCoursesId($keys[1]);
     }
 
     /**
@@ -1157,7 +1157,7 @@ abstract class ProfHasCourse implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return (null === $this->getUserIduser()) && (null === $this->getCourseIdcourse());
+        return (null === $this->getUsersId()) && (null === $this->getCoursesId());
     }
 
     /**
@@ -1173,9 +1173,9 @@ abstract class ProfHasCourse implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setUserIduser($this->getUserIduser());
-        $copyObj->setCourseIdcourse($this->getCourseIdcourse());
-        $copyObj->setIslab($this->getIslab());
+        $copyObj->setUsersId($this->getUsersId());
+        $copyObj->setCoursesId($this->getCoursesId());
+        $copyObj->setIsLab($this->getIsLab());
         $copyObj->setPresence($this->getPresence());
         if ($makeNew) {
             $copyObj->setNew(true);
@@ -1205,24 +1205,24 @@ abstract class ProfHasCourse implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildCourse object.
+     * Declares an association between this object and a ChildUsers object.
      *
-     * @param  ChildCourse $v
+     * @param  ChildUsers $v
      * @return $this|\ProfHasCourse The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setCourse(ChildCourse $v = null)
+    public function setUsers(ChildUsers $v = null)
     {
         if ($v === null) {
-            $this->setCourseIdcourse(NULL);
+            $this->setUsersId(NULL);
         } else {
-            $this->setCourseIdcourse($v->getIdcourse());
+            $this->setUsersId($v->getId());
         }
 
-        $this->aCourse = $v;
+        $this->aUsers = $v;
 
         // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildCourse object, it will not be re-added.
+        // If this object has already been added to the ChildUsers object, it will not be re-added.
         if ($v !== null) {
             $v->addProfHasCourse($this);
         }
@@ -1233,47 +1233,47 @@ abstract class ProfHasCourse implements ActiveRecordInterface
 
 
     /**
-     * Get the associated ChildCourse object
+     * Get the associated ChildUsers object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildCourse The associated ChildCourse object.
+     * @return ChildUsers The associated ChildUsers object.
      * @throws PropelException
      */
-    public function getCourse(ConnectionInterface $con = null)
+    public function getUsers(ConnectionInterface $con = null)
     {
-        if ($this->aCourse === null && ($this->course_idcourse !== null)) {
-            $this->aCourse = ChildCourseQuery::create()->findPk($this->course_idcourse, $con);
+        if ($this->aUsers === null && ($this->users_id !== null)) {
+            $this->aUsers = ChildUsersQuery::create()->findPk($this->users_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aCourse->addProfHasCourses($this);
+                $this->aUsers->addProfHasCourses($this);
              */
         }
 
-        return $this->aCourse;
+        return $this->aUsers;
     }
 
     /**
-     * Declares an association between this object and a ChildUser object.
+     * Declares an association between this object and a ChildCourses object.
      *
-     * @param  ChildUser $v
+     * @param  ChildCourses $v
      * @return $this|\ProfHasCourse The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setUser(ChildUser $v = null)
+    public function setCourses(ChildCourses $v = null)
     {
         if ($v === null) {
-            $this->setUserIduser(NULL);
+            $this->setCoursesId(NULL);
         } else {
-            $this->setUserIduser($v->getIduser());
+            $this->setCoursesId($v->getId());
         }
 
-        $this->aUser = $v;
+        $this->aCourses = $v;
 
         // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildUser object, it will not be re-added.
+        // If this object has already been added to the ChildCourses object, it will not be re-added.
         if ($v !== null) {
             $v->addProfHasCourse($this);
         }
@@ -1284,26 +1284,26 @@ abstract class ProfHasCourse implements ActiveRecordInterface
 
 
     /**
-     * Get the associated ChildUser object
+     * Get the associated ChildCourses object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildUser The associated ChildUser object.
+     * @return ChildCourses The associated ChildCourses object.
      * @throws PropelException
      */
-    public function getUser(ConnectionInterface $con = null)
+    public function getCourses(ConnectionInterface $con = null)
     {
-        if ($this->aUser === null && ($this->user_iduser !== null)) {
-            $this->aUser = ChildUserQuery::create()->findPk($this->user_iduser, $con);
+        if ($this->aCourses === null && ($this->courses_id !== null)) {
+            $this->aCourses = ChildCoursesQuery::create()->findPk($this->courses_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aUser->addProfHasCourses($this);
+                $this->aCourses->addProfHasCourses($this);
              */
         }
 
-        return $this->aUser;
+        return $this->aCourses;
     }
 
     /**
@@ -1313,15 +1313,15 @@ abstract class ProfHasCourse implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aCourse) {
-            $this->aCourse->removeProfHasCourse($this);
+        if (null !== $this->aUsers) {
+            $this->aUsers->removeProfHasCourse($this);
         }
-        if (null !== $this->aUser) {
-            $this->aUser->removeProfHasCourse($this);
+        if (null !== $this->aCourses) {
+            $this->aCourses->removeProfHasCourse($this);
         }
-        $this->user_iduser = null;
-        $this->course_idcourse = null;
-        $this->islab = null;
+        $this->users_id = null;
+        $this->courses_id = null;
+        $this->is_lab = null;
         $this->presence = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
@@ -1343,8 +1343,8 @@ abstract class ProfHasCourse implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aCourse = null;
-        $this->aUser = null;
+        $this->aUsers = null;
+        $this->aCourses = null;
     }
 
     /**

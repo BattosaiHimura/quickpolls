@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \UserHasPwd;
-use \UserHasPwdQuery;
+use \Courses;
+use \CoursesQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'user_has_pwd' table.
+ * This class defines the structure of the 'courses' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class UserHasPwdTableMap extends TableMap
+class CoursesTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class UserHasPwdTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.UserHasPwdTableMap';
+    const CLASS_NAME = '.Map.CoursesTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class UserHasPwdTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'user_has_pwd';
+    const TABLE_NAME = 'courses';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\UserHasPwd';
+    const OM_CLASS = '\\Courses';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'UserHasPwd';
+    const CLASS_DEFAULT = 'Courses';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 4;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,27 +69,37 @@ class UserHasPwdTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 4;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
-     * the column name for the user_id field
+     * the column name for the id field
      */
-    const COL_USER_ID = 'user_has_pwd.user_id';
+    const COL_ID = 'courses.id';
 
     /**
-     * the column name for the pwd_id field
+     * the column name for the name field
      */
-    const COL_PWD_ID = 'user_has_pwd.pwd_id';
+    const COL_NAME = 'courses.name';
+
+    /**
+     * the column name for the description field
+     */
+    const COL_DESCRIPTION = 'courses.description';
+
+    /**
+     * the column name for the semester field
+     */
+    const COL_SEMESTER = 'courses.semester';
 
     /**
      * the column name for the date_from field
      */
-    const COL_DATE_FROM = 'user_has_pwd.date_from';
+    const COL_DATE_FROM = 'courses.date_from';
 
     /**
      * the column name for the date_to field
      */
-    const COL_DATE_TO = 'user_has_pwd.date_to';
+    const COL_DATE_TO = 'courses.date_to';
 
     /**
      * The default string format for model objects of the related table
@@ -103,11 +113,11 @@ class UserHasPwdTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('UserId', 'PwdId', 'DateFrom', 'DateTo', ),
-        self::TYPE_CAMELNAME     => array('userId', 'pwdId', 'dateFrom', 'dateTo', ),
-        self::TYPE_COLNAME       => array(UserHasPwdTableMap::COL_USER_ID, UserHasPwdTableMap::COL_PWD_ID, UserHasPwdTableMap::COL_DATE_FROM, UserHasPwdTableMap::COL_DATE_TO, ),
-        self::TYPE_FIELDNAME     => array('user_id', 'pwd_id', 'date_from', 'date_to', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, )
+        self::TYPE_PHPNAME       => array('Id', 'Name', 'Description', 'Semester', 'DateFrom', 'DateTo', ),
+        self::TYPE_CAMELNAME     => array('id', 'name', 'description', 'semester', 'dateFrom', 'dateTo', ),
+        self::TYPE_COLNAME       => array(CoursesTableMap::COL_ID, CoursesTableMap::COL_NAME, CoursesTableMap::COL_DESCRIPTION, CoursesTableMap::COL_SEMESTER, CoursesTableMap::COL_DATE_FROM, CoursesTableMap::COL_DATE_TO, ),
+        self::TYPE_FIELDNAME     => array('id', 'name', 'description', 'semester', 'date_from', 'date_to', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -117,11 +127,11 @@ class UserHasPwdTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('UserId' => 0, 'PwdId' => 1, 'DateFrom' => 2, 'DateTo' => 3, ),
-        self::TYPE_CAMELNAME     => array('userId' => 0, 'pwdId' => 1, 'dateFrom' => 2, 'dateTo' => 3, ),
-        self::TYPE_COLNAME       => array(UserHasPwdTableMap::COL_USER_ID => 0, UserHasPwdTableMap::COL_PWD_ID => 1, UserHasPwdTableMap::COL_DATE_FROM => 2, UserHasPwdTableMap::COL_DATE_TO => 3, ),
-        self::TYPE_FIELDNAME     => array('user_id' => 0, 'pwd_id' => 1, 'date_from' => 2, 'date_to' => 3, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, 'Description' => 2, 'Semester' => 3, 'DateFrom' => 4, 'DateTo' => 5, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, 'description' => 2, 'semester' => 3, 'dateFrom' => 4, 'dateTo' => 5, ),
+        self::TYPE_COLNAME       => array(CoursesTableMap::COL_ID => 0, CoursesTableMap::COL_NAME => 1, CoursesTableMap::COL_DESCRIPTION => 2, CoursesTableMap::COL_SEMESTER => 3, CoursesTableMap::COL_DATE_FROM => 4, CoursesTableMap::COL_DATE_TO => 5, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, 'description' => 2, 'semester' => 3, 'date_from' => 4, 'date_to' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -134,15 +144,17 @@ class UserHasPwdTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('user_has_pwd');
-        $this->setPhpName('UserHasPwd');
+        $this->setName('courses');
+        $this->setPhpName('Courses');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\UserHasPwd');
+        $this->setClassName('\\Courses');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
-        $this->addForeignPrimaryKey('user_id', 'UserId', 'INTEGER' , 'users', 'id', true, null, null);
-        $this->addForeignPrimaryKey('pwd_id', 'PwdId', 'INTEGER' , 'pwds', 'id', true, null, null);
+        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 45, null);
+        $this->addColumn('description', 'Description', 'VARCHAR', true, 45, null);
+        $this->addColumn('semester', 'Semester', 'VARCHAR', true, 45, null);
         $this->addColumn('date_from', 'DateFrom', 'TIMESTAMP', true, null, null);
         $this->addColumn('date_to', 'DateTo', 'TIMESTAMP', true, null, null);
     } // initialize()
@@ -152,74 +164,35 @@ class UserHasPwdTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Users', '\\Users', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Arguments', '\\Arguments', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':user_id',
+    0 => ':course_id',
     1 => ':id',
   ),
-), null, null, null, false);
-        $this->addRelation('Pwds', '\\Pwds', RelationMap::MANY_TO_ONE, array (
+), null, null, 'Argumentss', false);
+        $this->addRelation('FinalVotes', '\\FinalVotes', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':pwd_id',
+    0 => ':courses_id',
     1 => ':id',
   ),
-), null, null, null, false);
+), null, null, 'FinalVotess', false);
+        $this->addRelation('Polls', '\\Polls', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':course_id',
+    1 => ':id',
+  ),
+), null, null, 'Pollss', false);
+        $this->addRelation('ProfHasCourse', '\\ProfHasCourse', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':courses_id',
+    1 => ':id',
+  ),
+), null, null, 'ProfHasCourses', false);
     } // buildRelations()
-
-    /**
-     * Adds an object to the instance pool.
-     *
-     * Propel keeps cached copies of objects in an instance pool when they are retrieved
-     * from the database. In some cases you may need to explicitly add objects
-     * to the cache in order to ensure that the same objects are always returned by find*()
-     * and findPk*() calls.
-     *
-     * @param \UserHasPwd $obj A \UserHasPwd object.
-     * @param string $key             (optional) key to use for instance map (for performance boost if key was already calculated externally).
-     */
-    public static function addInstanceToPool($obj, $key = null)
-    {
-        if (Propel::isInstancePoolingEnabled()) {
-            if (null === $key) {
-                $key = serialize([(null === $obj->getUserId() || is_scalar($obj->getUserId()) || is_callable([$obj->getUserId(), '__toString']) ? (string) $obj->getUserId() : $obj->getUserId()), (null === $obj->getPwdId() || is_scalar($obj->getPwdId()) || is_callable([$obj->getPwdId(), '__toString']) ? (string) $obj->getPwdId() : $obj->getPwdId())]);
-            } // if key === null
-            self::$instances[$key] = $obj;
-        }
-    }
-
-    /**
-     * Removes an object from the instance pool.
-     *
-     * Propel keeps cached copies of objects in an instance pool when they are retrieved
-     * from the database.  In some cases -- especially when you override doDelete
-     * methods in your stub classes -- you may need to explicitly remove objects
-     * from the cache in order to prevent returning objects that no longer exist.
-     *
-     * @param mixed $value A \UserHasPwd object or a primary key value.
-     */
-    public static function removeInstanceFromPool($value)
-    {
-        if (Propel::isInstancePoolingEnabled() && null !== $value) {
-            if (is_object($value) && $value instanceof \UserHasPwd) {
-                $key = serialize([(null === $value->getUserId() || is_scalar($value->getUserId()) || is_callable([$value->getUserId(), '__toString']) ? (string) $value->getUserId() : $value->getUserId()), (null === $value->getPwdId() || is_scalar($value->getPwdId()) || is_callable([$value->getPwdId(), '__toString']) ? (string) $value->getPwdId() : $value->getPwdId())]);
-
-            } elseif (is_array($value) && count($value) === 2) {
-                // assume we've been passed a primary key";
-                $key = serialize([(null === $value[0] || is_scalar($value[0]) || is_callable([$value[0], '__toString']) ? (string) $value[0] : $value[0]), (null === $value[1] || is_scalar($value[1]) || is_callable([$value[1], '__toString']) ? (string) $value[1] : $value[1])]);
-            } elseif ($value instanceof Criteria) {
-                self::$instances = [];
-
-                return;
-            } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \UserHasPwd object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
-                throw $e;
-            }
-
-            unset(self::$instances[$key]);
-        }
-    }
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -237,11 +210,11 @@ class UserHasPwdTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PwdId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize([(null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)]), (null === $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PwdId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PwdId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PwdId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PwdId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PwdId', TableMap::TYPE_PHPNAME, $indexType)])]);
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -258,20 +231,11 @@ class UserHasPwdTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-            $pks = [];
-
-        $pks[] = (int) $row[
+        return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
-        $pks[] = (int) $row[
-            $indexType == TableMap::TYPE_NUM
-                ? 1 + $offset
-                : self::translateFieldName('PwdId', TableMap::TYPE_PHPNAME, $indexType)
-        ];
-
-        return $pks;
     }
 
     /**
@@ -287,7 +251,7 @@ class UserHasPwdTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? UserHasPwdTableMap::CLASS_DEFAULT : UserHasPwdTableMap::OM_CLASS;
+        return $withPrefix ? CoursesTableMap::CLASS_DEFAULT : CoursesTableMap::OM_CLASS;
     }
 
     /**
@@ -301,22 +265,22 @@ class UserHasPwdTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (UserHasPwd object, last column rank)
+     * @return array           (Courses object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = UserHasPwdTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = UserHasPwdTableMap::getInstanceFromPool($key))) {
+        $key = CoursesTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = CoursesTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + UserHasPwdTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + CoursesTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = UserHasPwdTableMap::OM_CLASS;
-            /** @var UserHasPwd $obj */
+            $cls = CoursesTableMap::OM_CLASS;
+            /** @var Courses $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            UserHasPwdTableMap::addInstanceToPool($obj, $key);
+            CoursesTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -339,18 +303,18 @@ class UserHasPwdTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = UserHasPwdTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = UserHasPwdTableMap::getInstanceFromPool($key))) {
+            $key = CoursesTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = CoursesTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var UserHasPwd $obj */
+                /** @var Courses $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                UserHasPwdTableMap::addInstanceToPool($obj, $key);
+                CoursesTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -371,13 +335,17 @@ class UserHasPwdTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(UserHasPwdTableMap::COL_USER_ID);
-            $criteria->addSelectColumn(UserHasPwdTableMap::COL_PWD_ID);
-            $criteria->addSelectColumn(UserHasPwdTableMap::COL_DATE_FROM);
-            $criteria->addSelectColumn(UserHasPwdTableMap::COL_DATE_TO);
+            $criteria->addSelectColumn(CoursesTableMap::COL_ID);
+            $criteria->addSelectColumn(CoursesTableMap::COL_NAME);
+            $criteria->addSelectColumn(CoursesTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(CoursesTableMap::COL_SEMESTER);
+            $criteria->addSelectColumn(CoursesTableMap::COL_DATE_FROM);
+            $criteria->addSelectColumn(CoursesTableMap::COL_DATE_TO);
         } else {
-            $criteria->addSelectColumn($alias . '.user_id');
-            $criteria->addSelectColumn($alias . '.pwd_id');
+            $criteria->addSelectColumn($alias . '.id');
+            $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.semester');
             $criteria->addSelectColumn($alias . '.date_from');
             $criteria->addSelectColumn($alias . '.date_to');
         }
@@ -392,7 +360,7 @@ class UserHasPwdTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(UserHasPwdTableMap::DATABASE_NAME)->getTable(UserHasPwdTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(CoursesTableMap::DATABASE_NAME)->getTable(CoursesTableMap::TABLE_NAME);
     }
 
     /**
@@ -400,16 +368,16 @@ class UserHasPwdTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(UserHasPwdTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(UserHasPwdTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new UserHasPwdTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(CoursesTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(CoursesTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new CoursesTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a UserHasPwd or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Courses or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or UserHasPwd object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Courses object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -420,37 +388,27 @@ class UserHasPwdTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserHasPwdTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CoursesTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \UserHasPwd) { // it's a model object
+        } elseif ($values instanceof \Courses) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(UserHasPwdTableMap::DATABASE_NAME);
-            // primary key is composite; we therefore, expect
-            // the primary key passed to be an array of pkey values
-            if (count($values) == count($values, COUNT_RECURSIVE)) {
-                // array is not multi-dimensional
-                $values = array($values);
-            }
-            foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(UserHasPwdTableMap::COL_USER_ID, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(UserHasPwdTableMap::COL_PWD_ID, $value[1]));
-                $criteria->addOr($criterion);
-            }
+            $criteria = new Criteria(CoursesTableMap::DATABASE_NAME);
+            $criteria->add(CoursesTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = UserHasPwdQuery::create()->mergeWith($criteria);
+        $query = CoursesQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            UserHasPwdTableMap::clearInstancePool();
+            CoursesTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                UserHasPwdTableMap::removeInstanceFromPool($singleval);
+                CoursesTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -458,20 +416,20 @@ class UserHasPwdTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the user_has_pwd table.
+     * Deletes all rows from the courses table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return UserHasPwdQuery::create()->doDeleteAll($con);
+        return CoursesQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a UserHasPwd or Criteria object.
+     * Performs an INSERT on the database, given a Courses or Criteria object.
      *
-     * @param mixed               $criteria Criteria or UserHasPwd object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Courses object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -480,18 +438,22 @@ class UserHasPwdTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserHasPwdTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CoursesTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from UserHasPwd object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Courses object
+        }
+
+        if ($criteria->containsKey(CoursesTableMap::COL_ID) && $criteria->keyContainsValue(CoursesTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.CoursesTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = UserHasPwdQuery::create()->mergeWith($criteria);
+        $query = CoursesQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -500,7 +462,7 @@ class UserHasPwdTableMap extends TableMap
         });
     }
 
-} // UserHasPwdTableMap
+} // CoursesTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-UserHasPwdTableMap::buildTableMap();
+CoursesTableMap::buildTableMap();
