@@ -11,18 +11,26 @@
 	<link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css">
 	<link rel="stylesheet" href="<?php echo URL; ?>public/css/font-awesome.min.css">
 	<link rel="stylesheet" href="<?php echo URL; ?>public/plugins/starRating/css/star-rating.min.css">
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 	<link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
 
-	<script type="text/javascript" src="public/js/jquery-1.12.3.min.js"></script>
-	<script type="text/javascript" src="public/js/jquery-ui.min.js"></script>
-	
-	<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+	<!-- JQUERY -->
+	<script type="text/javascript" src="<?php echo URL; ?>public/js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="<?php echo URL; ?>public/js/jquery-ui.min.js"></script>
 
+	<!-- BOOTSTRAP -->
+	<script type="text/javascript" src="<?php echo URL; ?>public/js/bootstrap.min.js"></script>
+
+	<!-- QRCODES -->
+	<script src="<?php echo URL; ?>public/js/jquery.qrcode.min.js"></script>
+	
+	
+	<!--CHART.JS-->
+	<script src="<?php echo URL; ?>public/plugins/chartjs/dist/Chart.bundle.js"></script>
 
 	<!--CUSTOM SCRIPTS-->
-	<script type="text/javascript" src="public/js/custom.js"></script>
-	<script src="public/js/popup.js"></script>
+	<script type="text/javascript" src="<?php echo URL; ?>public/js/custom.js"></script>
+	<script src="<?php echo URL; ?>public/js/popup.js"></script>
+	<script src="<?php echo URL; ?>public/js/gamification.js"></script>
 </head>
 <body>
 
@@ -46,7 +54,23 @@
 						<?php
 							if (Session::get("loggedAs") == 1) { //logged as Professor
 								$user = UsersQuery::create()->findById(Session::get("user"))->getData();
+
+								//Get Total Polls Submitted for Gamification Badge
+								$courses = ProfHasCourseQuery::create()->findByUsersId(Session::get("user"))->getData();
+
+								$totpolls = 0;
+								foreach ($courses as $c) {
+									$polls = PollsQuery::create()->findByCourseId($c->getCoursesId())->getData();
+									$totpolls += count($polls);
+								}
+
+								$badge = "";
+								if ($totpolls >= rookie) $badge = "rookie.png";
+								if ($totpolls >= senior) $badge = "senior.png";
+								if ($totpolls >= master) $badge = "master.png";
+								if ($totpolls >= topvoter) $badge = "topprof.png";
 						?>
+							<img id="badge" src="<?echo URL?>images/badges/<?echo $badge?>" alt="Badge"/>
 							<li class="dropdown">
 								<a href="dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $user[0]->getName() . " " . $user[0]->getSurname()?></a>
 								<ul class="dropdown-menu dropdown-menu-left">
@@ -80,7 +104,23 @@
 						<?php
 							} else if (Session::get("loggedAs") == 2) { //logged as Student
 								$user = UsersQuery::create()->findById(Session::get("user"))->getData();
+
+								//Get Total Polls Voted for Gamification Badge
+								$votes = VotesQuery::create()->findByUsersId(Session::get("user"))->getData();
+
+								$polls = array();
+								foreach ($votes as $v) {
+									$polls[] = $v->getPollId();
+								}
+								$polls = count(array_unique($polls));
+
+								$badge = "";
+								if ($polls >= rookie) $badge = "rookie.png";
+								if ($polls >= senior) $badge = "senior.png";
+								if ($polls >= master) $badge = "master.png";
+								if ($polls >= topvoter) $badge = "topstudent.png";
 						?>
+							<img id="badge" src="<?echo URL?>images/badges/<?echo $badge?>" alt="Badge"/>
 							<li class="dropdown">
 								<a href="dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $user[0]->getName() . " " . $user[0]->getSurname()?><span class="caret"></span></a>
 								<ul class="dropdown-menu dropdown-menu-left">
@@ -100,32 +140,36 @@
 		</nav>
 	</header>
 
-	<?php
-	if (isset($_GET["okmsg"]) || isset($_GET["msg"])) {
-		$msg = (isset($_GET["okmsg"])) ? strip_tags($_GET["okmsg"]) : strip_tags($_GET["msg"]);
-	?>
-		<!-- MESSAGE MODAL -->
-		<div id="msgModal" class="modal fade" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Avviso</h4>
-					</div>
+	<!-- MODALS MODAL -->
+	<div id="msgModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Avviso</h4>
+				</div>
 
-					<div class="modal-body">
-						<p><?php echo $msg; ?></p>
-					</div>
+				<div class="modal-body" id="msgModalMessage">
+				</div>
 
-					<div class="modal-footer">
-						<button data-dismiss="modal" class="btn btn-primary">ok</button>
-					</div>
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-primary">ok</button>
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<?php
+	$msg = "";
+	if (isset($_GET["okmsg"]) || isset($_GET["msg"])) {
+		$msg = (isset($_GET["okmsg"])) ? strip_tags($_GET["okmsg"]) : strip_tags($_GET["msg"]);
+	?>
 		<script>
-			$('#msgModal').modal("show");
+			$(function() {
+				$('#msgModalMessage').append("<p><?php echo $msg?></p>");
+				$('#msgModal').modal("show");
+			});
 		</script>
 	<?php
 	}

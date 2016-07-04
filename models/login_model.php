@@ -27,6 +27,13 @@ class Login_Model extends Model
 				Session::set('loggedIn', true);
 				Session::set('loggedAs', $user[0]->getUserTypeId());
 				Session::set('user', $user[0]->getId());
+
+				//setCookie
+//				if(isset($_POST["remember-me"]) && $_POST["remember-me"] == true) {
+//					$value = implode(";", $_SESSION);
+//					setcookie("quickpolls", $value, time() + 60*60*24*30, "/", URL);
+//				}
+
 				header("Location: ".URL."dashboard");
 				exit;
 			} else {

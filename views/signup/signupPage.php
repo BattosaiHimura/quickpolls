@@ -23,8 +23,8 @@
 
 				<div class="form-group">
 					<label class="sr-only" for="type">Tipo Utente</label>
-					<select  class="form-control" id="type" name="type" >
-						<option value="studente" selected="selected">Studente </option>
+					<select class="form-control" id="type" name="type" >
+						<option value="studente" selected="selected">Studente</option>
 						<option value="professore">Professore</option>
 					</select>
 				</div>
@@ -49,12 +49,6 @@
 					<div class="classHolder">
 						<input type="password" class="form-control" id="pwd2" name="pwd2" placeholder="Confirm password" />
 					</div>
-				</div>
-
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" value="remember-me"> Remember me
-					</label>
 				</div>
 				<div class="classHolder">
 					<button class="btn btn-lg btn-primary btn-block col-md-3" type="submit">Sign up</button>

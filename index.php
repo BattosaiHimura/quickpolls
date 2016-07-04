@@ -8,6 +8,7 @@ require 'libs/View.php';
 require 'libs/Session.php';
 
 require 'config/paths.php';
+require 'config/gamification.php';
 
 // setup the autoloading
 require_once 'vendor/autoload.php';

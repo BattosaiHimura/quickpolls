@@ -19,11 +19,11 @@ var configCourse = {
                     randomScalingFactor(),
                 ],
                 backgroundColor: [
-                    "#F7464A",
-                    "#46BFBD",
-                    "#FDB45C",
-                    "#949FB1",
-                    "#4D5360",
+                    "#D9534F",
+                    "#F0AD4E",
+                    "#5BC0DE",
+                    "#337AB7",
+                    "#5CB85C",
                 ],
                 label: 'Risultati sondaggio ' // for legend
             }],
@@ -45,7 +45,7 @@ var configCourse = {
             }, 
             title: {
                 display: false,
-                text: 'Dati Generali per Sicurezza delle Reti'
+                text: 'Dati Generali Corso'
             },
             scale: {
               ticks: {
@@ -64,17 +64,17 @@ var configPoll = {
             datasets: [{
                 data: [
                     randomScalingFactor(), //get data
-                    randomScalingFactor(), 
+                    randomScalingFactor(),
                     randomScalingFactor(),
                     randomScalingFactor(),
                     randomScalingFactor(),
                 ],
                 backgroundColor: [
-                    "#F7464A",
-                    "#46BFBD",
-                    "#FDB45C",
-                    "#949FB1",
-                    "#4D5360",
+					"#D9534F",
+					"#F0AD4E",
+					"#5BC0DE",
+					"#337AB7",
+					"#5CB85C",
                 ],
                 //label: 'Risultati sondaggio ' // for legend
             }],
@@ -93,7 +93,7 @@ var configPoll = {
             },
             title: {
                 display: false,
-                text: 'Dati Generali per Sicurezza delle Reti'
+                text: 'Dati Generali Sondaggio'
             },
             scale: {
               ticks: {
@@ -108,13 +108,6 @@ var configPoll = {
         }
     };
 
-
-    window.onload = function() {
-        var ctx = document.getElementById("chart-area");
-        window.myPolarArea = Chart.PolarArea(ctx, configCourse);
-        var ctxA = document.getElementById("chart-areaA");
-        window.myPolarAreaA = Chart.PolarArea(ctxA, configPoll);
-    };
 /*
 * La seguente funzione prendeva un button chiamato #randomize e sostanzialmente aggiorna dei valori
 */
@@ -131,3 +124,31 @@ var configPoll = {
         });
         window.myPolarAreaA.update();
     });
+
+
+//LINK ALLA TABELLA SONDAGGI
+$(function(){
+	
+//	$totalData = $('#totalData').val();
+//	configCourse.data.datasets[0].data = JSON.parse($totalData);
+//	window.myPolarArea.update();
+
+
+	//Torta del sondaggio
+	$('.pollData').on('click', function(){
+
+		$pollID = $(this).attr("poll");
+        $total = $('#'+$pollID+"-total").val();
+
+		$('#lesson-chart-title').html($(this).html());
+
+		$.each(configPoll.data.datasets, function(a, piece) {
+			$.each(piece.data, function(b, value) {
+				$value = $('#'+$pollID+'-vote-'+(b+1)+'-star').val();
+				configPoll.data.datasets[a].data[b] = Math.round(($value * 100) /$total);
+			});
+		});
+	});
+
+	$('#first').trigger('click');
+});

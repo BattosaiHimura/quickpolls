@@ -452,3 +452,45 @@ fieldset[disabled] .btn-primary.focus {
 	background-color:
 			#ffeded;
 }
+
+/*BADGE*/
+#badge {
+	height: 50px;
+	width: auto;
+	cursor: pointer;
+}
+
+#badgeModal {
+	max-height: 500px;
+	width: auto;
+	cursor: pointer;
+}
+
+#badgeMessage {
+	text-align: center;
+}
+
+/*QR CODES */
+.qr {
+	cursor: pointer;
+}
+
+#qr {
+	text-align: center;
+	margin-top: 30px;
+}
+
+#QRPollTitle {
+	text-align: center;
+	margin-top: 30px;
+}
+
+
+/*CHARTS AND DATA*/
+.pollData {
+	cursor: pointer;
+}
+
+#args-chart {
+	margin-top: 20px;
+}

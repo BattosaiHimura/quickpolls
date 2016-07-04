@@ -15,6 +15,8 @@ class Session {
 		if(isset($_SESSION[$key])) {
 			return $_SESSION[$key];
 		}
+
+		return null;
 	}
 
 	public static function destroy() {
@@ -23,5 +25,3 @@ class Session {
 	}
 
 }
-
-?>
