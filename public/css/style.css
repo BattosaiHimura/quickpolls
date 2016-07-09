@@ -1,0 +1,496 @@
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+
+/* Form di sign-in e sign-up
+-------------------------------------------------- */
+.form-signin {
+	max-width: 330px;
+	padding: 15px;
+	margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+	margin-bottom: 10px;
+}
+.form-signin .checkbox {
+	font-weight: normal;
+}
+.form-signin .form-control {
+	position: relative;
+	height: auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 16px;
+}
+.form-signin .form-control:focus {
+	z-index: 2;
+}
+.form-signin input[type="email"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+/* Pretty Navbar
+-------------------------------------------------- */
+
+.prettyNavbar > li + li {
+	margin-left: 20px;
+}
+
+.prettyNavbar> li > a {
+	padding-right: 0;
+	padding-left: 0;
+	font-size: 16px;
+	font-weight: bold;
+	color: #000; /* IE8 proofing */
+	color: rgba(0,0,0,.75);
+	border-bottom: 2px solid transparent;
+}
+.prettyNavbar > li > a:hover,
+.prettyNavbar > li > a:focus {
+	background-color: transparent;
+	border-bottom-color: #ffffff;
+	/*border-bottom-color: rgba(000,000,000,.25);*/
+}
+.prettyNavbar > .active > a,
+.prettyNavbar > .active > a:hover,
+.prettyNavbar > .active > a:focus {
+	color: #000;
+	border-bottom-color: #000;
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+	height: 500px;
+	margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+	z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+	height: 500px;
+	background-color: #777;
+}
+.carousel-inner > .item > img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	height: 500px;
+	max-width: none;
+	margin: auto;
+	opacity: 0.6;
+	filter: alpha(opacity=40); /* For IE8 and earlier */
+
+}
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+	margin-bottom: 20px;
+	text-align: center;
+}
+.marketing h2 {
+	font-weight: normal;
+}
+.marketing .col-lg-4 p {
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+	margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+
+
+/* Thin out the marketing headings */
+.featurette-heading {
+	font-weight: 300;
+	line-height: 1;
+	letter-spacing: -1px;
+}
+
+
+/* Pop-up div
+------------------------- */
+div#pop-up {
+	display: none;
+	position: absolute;
+	width: 280px;
+	padding: 10px;
+	background: #eeeeee;
+	color: #000000;
+	border-radius: 15px;
+	/* border: 1px solid #1a1a1a; */
+	font-size: 90%;
+}
+.textPopup{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.42857143;
+	color: #333;
+}
+
+
+/* Stars
+------------------------- */
+.glyphicon-star2:before {
+	content: "\e006 \e006 \e007 \e007 \e007";
+}
+
+.glyphicon-star3:before {
+	content: "\e006 \e006 \e006 \e007 \e007";
+}
+
+.glyphicon-star4:before {
+	content: "\e006 \e006 \e006 \e006 \e007";
+}
+
+.glyphicon-star5:before {
+	content: "\e006 \e006 \e006 \e006 \e006";
+}
+
+/* Colors
+------------------------- */
+.green{
+	color: green;
+}
+.red{
+	color: red;
+}
+.yellow{
+	color: yellow;
+}
+
+a.redLink {
+	color: rgba(255,0,0,.8);
+}
+
+/* Dashboard Block
+------------------------- */
+.centerBlock{
+	text-align: center;
+}
+
+.centerDim{
+	max-width: 330px;
+	margin: 0 auto;
+}
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+	margin-bottom: 30px;
+	text-align: center;
+}
+.placeholders h4 {
+	margin-bottom: 0;
+}
+.placeholder {
+	margin-bottom: 20px;
+}
+.placeholder img {
+	display: inline-block;
+	border-radius: 50%;
+}
+
+
+/* Custom Bootstrap classes for UNIBO colors
+------------------------- */
+.btn-primary {
+	background: #a90329; /* Old browsers */
+	background: -moz-linear-gradient(top,  #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+
+	border-color: #b61d0d;
+}
+.btn-primary:focus,
+.btn-primary.focus {
+	background: #a90329; /* Old browsers */
+	background: -moz-linear-gradient(top,  #a90329 68%, #a90329 70%, #8f0222 78%, #6d0019 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #a90329 68%,#a90329 70%,#8f0222 78%,#6d0019 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #a90329 68%,#a90329 70%,#8f0222 78%,#6d0019 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+
+	/*border-color: #ffffff; */
+}
+.btn-primary:hover {
+	background: #a90329; /* Old browsers */
+	background: -moz-linear-gradient(top,  #a90329 68%, #a90329 70%, #8f0222 78%, #6d0019 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #a90329 68%,#a90329 70%,#8f0222 78%,#6d0019 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #a90329 68%,#a90329 70%,#8f0222 78%,#6d0019 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+
+	border-color: #ffffff;
+}
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+	background: #a90329; /* Old browsers */
+	background: -moz-linear-gradient(top,  #a90329 68%, #a90329 70%, #8f0222 78%, #6d0019 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #a90329 68%,#a90329 70%,#8f0222 78%,#6d0019 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #a90329 68%,#a90329 70%,#8f0222 78%,#6d0019 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+
+	/*border-color: #204d74;*/
+}
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#8f0222+46,890002+100 */
+	background: #8f0222; /* Old browsers */
+	background: -moz-linear-gradient(top,  #8f0222 46%, #890002 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #8f0222 46%,#890002 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #8f0222 46%,#890002 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f0222', endColorstr='#890002',GradientType=0 ); /* IE6-9 */
+
+	/*border-color: #122b40;*/
+}
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+	background-image: none;
+}
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cc0000+14,cc0000+100;Red+Flat */
+	background: #cc0000; /* Old browsers */
+	background: -moz-linear-gradient(top,  #cc0000 14%, #cc0000 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #cc0000 14%,#cc0000 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #cc0000 14%,#cc0000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc0000', endColorstr='#cc0000',GradientType=0 ); /* IE6-9 */
+
+}
+.btn-primary .badge {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cc0000+14,cc0000+100;Red+Flat */
+	background: #cc0000; /* Old browsers */
+	background: -moz-linear-gradient(top,  #cc0000 14%, #cc0000 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #cc0000 14%,#cc0000 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #cc0000 14%,#cc0000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc0000', endColorstr='#cc0000',GradientType=0 ); /* IE6-9 */
+
+}
+
+.navbar-default {
+	background: #a90329; /* Old browsers */
+	background: -moz-linear-gradient(top,  #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+
+	border-color: #b61d0d;
+}
+.navbar-default .navbar-brand {
+	color: #ffffff;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+	color: #ffffff;
+}
+.navbar-default .navbar-text {
+	color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a {
+	color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+	color: #ffffff;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu {
+	background-color: #a71001;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+	color: #ffffff;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+	color: #ffffff;
+	background-color: #b61d0d;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+	background-color: #b61d0d;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+	color: #ffffff;
+	background-color: #b61d0d;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+	background: #a90329; /* Old browsers */
+	background: -moz-linear-gradient(top,  #a90329 0%, #8f0222 44%, #6d0019 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+
+	border-color: #b61d0d;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+	background: #8f0222; /* Old browsers */
+	background: -moz-linear-gradient(top,  #8f0222 46%, #890002 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #8f0222 46%,#890002 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #8f0222 46%,#890002 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8f0222', endColorstr='#890002',GradientType=0 ); /* IE6-9 */
+}
+.navbar-default .navbar-toggle {
+	border-color: #b61d0d;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+	background-color: #b61d0d;
+}
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #ffffff;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+	border-color: #ffffff;
+}
+.navbar-default .navbar-link {
+	color: #ffffff;
+}
+.navbar-default .navbar-link:hover {
+	color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a {
+	color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+	color: #ffffff;
+	background-color: transparent;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+	color: #ffffff;
+	background-color: #e7e7e7;
+}
+.navbar-default .navbar-nav > .disabled > a,
+.navbar-default .navbar-nav > .disabled > a:hover,
+.navbar-default .navbar-nav > .disabled > a:focus {
+	color: #ffffff;
+	background-color: transparent;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+	color: #ffffff;
+	background-color: #e7e7e7;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+	background-color: #ffffff;
+	border-color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+	color: #ffffff;
+	background-color: transparent;
+}
+
+@media (max-width: 767px) {
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+		color: #ecf0f1;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+		color: #ffffff;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+		color: #ffffff;
+		background-color: #b61d0d;
+	}
+}
+
+.jumbotron{
+	background-color:
+			#ffeded;
+}
+
+/*BADGE*/
+#badge {
+	height: 50px;
+	width: auto;
+	cursor: pointer;
+}
+
+#badgeModal {
+	max-height: 500px;
+	width: auto;
+	cursor: pointer;
+}
+
+#badgeMessage {
+	text-align: center;
+}
+
+/*QR CODES */
+.qr {
+	cursor: pointer;
+}
+
+#qr {
+	text-align: center;
+	margin-top: 30px;
+}
+
+#QRPollTitle {
+	text-align: center;
+	margin-top: 30px;
+}
+
+
+/*CHARTS AND DATA*/
+.pollData {
+	cursor: pointer;
+}
+
+#args-chart {
+	margin-top: 20px;
+}
