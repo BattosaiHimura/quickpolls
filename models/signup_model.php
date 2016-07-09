@@ -43,7 +43,10 @@ class SignUp_Model extends Model
 
 		//Creating the Password
 		$password = new Pwds();
-		$password->setPassword(hash("sha256", $_POST["pwd"]));
+		$salt = $this->rand_string(64);
+		$password->setSalt($salt);
+		$toSave = $salt . strip_tags($_POST["pwd"]) . $salt;
+		$password->setPassword(hash("sha256", $toSave));
 		$password->save();
 
 
@@ -63,5 +66,17 @@ class SignUp_Model extends Model
 		Session::set('user', $user->getId());
 		header("Location: ".URL."dashboard");
 		exit;
+	}
+
+
+	/* random string */
+	private function rand_string( $length ) {
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		$size = strlen( $chars );
+		$str="";
+		for( $i = 0; $i < $length; $i++ ) {
+			$str .= $chars[ rand( 0, $size - 1 ) ];
+		}
+		return $str;
 	}
 }

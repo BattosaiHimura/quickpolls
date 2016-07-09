@@ -11,7 +11,8 @@ class Login_Model extends Model
     {
 
         $username = strip_tags($_POST["email"]);
-        $password = hash("sha256", strip_tags($_POST["password"]));
+		$password = strip_tags($_POST["password"]);
+        //$password = hash("sha256", strip_tags($_POST["password"]));
 
         $user = UsersQuery::create()->findByEmail($username)->getData();
 
@@ -22,7 +23,8 @@ class Login_Model extends Model
 			$pwd = PwdsQuery::create()->findById($link->getPwdId())->getData()[0];
 
 			//check password
-			if($pwd->getPassword() == $password) {
+			$check = hash("sha256", $pwd->getSalt() . $password . $pwd->getSalt());
+			if($pwd->getPassword() == $check) {
 				Session::init();
 				Session::set('loggedIn', true);
 				Session::set('loggedAs', $user[0]->getUserTypeId());
