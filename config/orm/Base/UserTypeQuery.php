@@ -16,19 +16,15 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'User_type' table.
+ * Base class that represents a query for the 'user_type' table.
  *
  *
  *
- * @method     ChildUserTypeQuery orderByIdusertype($order = Criteria::ASC) Order by the idUserType column
+ * @method     ChildUserTypeQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildUserTypeQuery orderByDescription($order = Criteria::ASC) Order by the description column
- * @method     ChildUserTypeQuery orderByDatefrom($order = Criteria::ASC) Order by the dateFrom column
- * @method     ChildUserTypeQuery orderByDateto($order = Criteria::ASC) Order by the dateTo column
  *
- * @method     ChildUserTypeQuery groupByIdusertype() Group by the idUserType column
+ * @method     ChildUserTypeQuery groupById() Group by the id column
  * @method     ChildUserTypeQuery groupByDescription() Group by the description column
- * @method     ChildUserTypeQuery groupByDatefrom() Group by the dateFrom column
- * @method     ChildUserTypeQuery groupByDateto() Group by the dateTo column
  *
  * @method     ChildUserTypeQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildUserTypeQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -38,39 +34,33 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserTypeQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildUserTypeQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildUserTypeQuery leftJoinUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the User relation
- * @method     ChildUserTypeQuery rightJoinUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the User relation
- * @method     ChildUserTypeQuery innerJoinUser($relationAlias = null) Adds a INNER JOIN clause to the query using the User relation
+ * @method     ChildUserTypeQuery leftJoinUsers($relationAlias = null) Adds a LEFT JOIN clause to the query using the Users relation
+ * @method     ChildUserTypeQuery rightJoinUsers($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Users relation
+ * @method     ChildUserTypeQuery innerJoinUsers($relationAlias = null) Adds a INNER JOIN clause to the query using the Users relation
  *
- * @method     ChildUserTypeQuery joinWithUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the User relation
+ * @method     ChildUserTypeQuery joinWithUsers($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Users relation
  *
- * @method     ChildUserTypeQuery leftJoinWithUser() Adds a LEFT JOIN clause and with to the query using the User relation
- * @method     ChildUserTypeQuery rightJoinWithUser() Adds a RIGHT JOIN clause and with to the query using the User relation
- * @method     ChildUserTypeQuery innerJoinWithUser() Adds a INNER JOIN clause and with to the query using the User relation
+ * @method     ChildUserTypeQuery leftJoinWithUsers() Adds a LEFT JOIN clause and with to the query using the Users relation
+ * @method     ChildUserTypeQuery rightJoinWithUsers() Adds a RIGHT JOIN clause and with to the query using the Users relation
+ * @method     ChildUserTypeQuery innerJoinWithUsers() Adds a INNER JOIN clause and with to the query using the Users relation
  *
- * @method     \UserQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \UsersQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildUserType findOne(ConnectionInterface $con = null) Return the first ChildUserType matching the query
  * @method     ChildUserType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUserType matching the query, or a new ChildUserType object populated from the query conditions when no match is found
  *
- * @method     ChildUserType findOneByIdusertype(int $idUserType) Return the first ChildUserType filtered by the idUserType column
- * @method     ChildUserType findOneByDescription(string $description) Return the first ChildUserType filtered by the description column
- * @method     ChildUserType findOneByDatefrom(string $dateFrom) Return the first ChildUserType filtered by the dateFrom column
- * @method     ChildUserType findOneByDateto(string $dateTo) Return the first ChildUserType filtered by the dateTo column *
+ * @method     ChildUserType findOneById(int $id) Return the first ChildUserType filtered by the id column
+ * @method     ChildUserType findOneByDescription(string $description) Return the first ChildUserType filtered by the description column *
 
  * @method     ChildUserType requirePk($key, ConnectionInterface $con = null) Return the ChildUserType by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUserType requireOne(ConnectionInterface $con = null) Return the first ChildUserType matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildUserType requireOneByIdusertype(int $idUserType) Return the first ChildUserType filtered by the idUserType column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUserType requireOneById(int $id) Return the first ChildUserType filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUserType requireOneByDescription(string $description) Return the first ChildUserType filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUserType requireOneByDatefrom(string $dateFrom) Return the first ChildUserType filtered by the dateFrom column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUserType requireOneByDateto(string $dateTo) Return the first ChildUserType filtered by the dateTo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUserType[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUserType objects based on current ModelCriteria
- * @method     ChildUserType[]|ObjectCollection findByIdusertype(int $idUserType) Return ChildUserType objects filtered by the idUserType column
+ * @method     ChildUserType[]|ObjectCollection findById(int $id) Return ChildUserType objects filtered by the id column
  * @method     ChildUserType[]|ObjectCollection findByDescription(string $description) Return ChildUserType objects filtered by the description column
- * @method     ChildUserType[]|ObjectCollection findByDatefrom(string $dateFrom) Return ChildUserType objects filtered by the dateFrom column
- * @method     ChildUserType[]|ObjectCollection findByDateto(string $dateTo) Return ChildUserType objects filtered by the dateTo column
  * @method     ChildUserType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -169,7 +159,7 @@ abstract class UserTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT idUserType, description, dateFrom, dateTo FROM User_type WHERE idUserType = :p0';
+        $sql = 'SELECT id, description FROM user_type WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -243,7 +233,7 @@ abstract class UserTypeQuery extends ModelCriteria
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(UserTypeTableMap::COL_IDUSERTYPE, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(UserTypeTableMap::COL_ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -256,20 +246,20 @@ abstract class UserTypeQuery extends ModelCriteria
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(UserTypeTableMap::COL_IDUSERTYPE, $keys, Criteria::IN);
+        return $this->addUsingAlias(UserTypeTableMap::COL_ID, $keys, Criteria::IN);
     }
 
     /**
-     * Filter the query on the idUserType column
+     * Filter the query on the id column
      *
      * Example usage:
      * <code>
-     * $query->filterByIdusertype(1234); // WHERE idUserType = 1234
-     * $query->filterByIdusertype(array(12, 34)); // WHERE idUserType IN (12, 34)
-     * $query->filterByIdusertype(array('min' => 12)); // WHERE idUserType > 12
+     * $query->filterById(1234); // WHERE id = 1234
+     * $query->filterById(array(12, 34)); // WHERE id IN (12, 34)
+     * $query->filterById(array('min' => 12)); // WHERE id > 12
      * </code>
      *
-     * @param     mixed $idusertype The value to use as filter.
+     * @param     mixed $id The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -277,16 +267,16 @@ abstract class UserTypeQuery extends ModelCriteria
      *
      * @return $this|ChildUserTypeQuery The current query, for fluid interface
      */
-    public function filterByIdusertype($idusertype = null, $comparison = null)
+    public function filterById($id = null, $comparison = null)
     {
-        if (is_array($idusertype)) {
+        if (is_array($id)) {
             $useMinMax = false;
-            if (isset($idusertype['min'])) {
-                $this->addUsingAlias(UserTypeTableMap::COL_IDUSERTYPE, $idusertype['min'], Criteria::GREATER_EQUAL);
+            if (isset($id['min'])) {
+                $this->addUsingAlias(UserTypeTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($idusertype['max'])) {
-                $this->addUsingAlias(UserTypeTableMap::COL_IDUSERTYPE, $idusertype['max'], Criteria::LESS_EQUAL);
+            if (isset($id['max'])) {
+                $this->addUsingAlias(UserTypeTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -297,7 +287,7 @@ abstract class UserTypeQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(UserTypeTableMap::COL_IDUSERTYPE, $idusertype, $comparison);
+        return $this->addUsingAlias(UserTypeTableMap::COL_ID, $id, $comparison);
     }
 
     /**
@@ -330,126 +320,40 @@ abstract class UserTypeQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the dateFrom column
+     * Filter the query by a related \Users object
      *
-     * Example usage:
-     * <code>
-     * $query->filterByDatefrom('2011-03-14'); // WHERE dateFrom = '2011-03-14'
-     * $query->filterByDatefrom('now'); // WHERE dateFrom = '2011-03-14'
-     * $query->filterByDatefrom(array('max' => 'yesterday')); // WHERE dateFrom > '2011-03-13'
-     * </code>
-     *
-     * @param     mixed $datefrom The value to use as filter.
-     *              Values can be integers (unix timestamps), DateTime objects, or strings.
-     *              Empty strings are treated as NULL.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildUserTypeQuery The current query, for fluid interface
-     */
-    public function filterByDatefrom($datefrom = null, $comparison = null)
-    {
-        if (is_array($datefrom)) {
-            $useMinMax = false;
-            if (isset($datefrom['min'])) {
-                $this->addUsingAlias(UserTypeTableMap::COL_DATEFROM, $datefrom['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($datefrom['max'])) {
-                $this->addUsingAlias(UserTypeTableMap::COL_DATEFROM, $datefrom['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(UserTypeTableMap::COL_DATEFROM, $datefrom, $comparison);
-    }
-
-    /**
-     * Filter the query on the dateTo column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByDateto('2011-03-14'); // WHERE dateTo = '2011-03-14'
-     * $query->filterByDateto('now'); // WHERE dateTo = '2011-03-14'
-     * $query->filterByDateto(array('max' => 'yesterday')); // WHERE dateTo > '2011-03-13'
-     * </code>
-     *
-     * @param     mixed $dateto The value to use as filter.
-     *              Values can be integers (unix timestamps), DateTime objects, or strings.
-     *              Empty strings are treated as NULL.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildUserTypeQuery The current query, for fluid interface
-     */
-    public function filterByDateto($dateto = null, $comparison = null)
-    {
-        if (is_array($dateto)) {
-            $useMinMax = false;
-            if (isset($dateto['min'])) {
-                $this->addUsingAlias(UserTypeTableMap::COL_DATETO, $dateto['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($dateto['max'])) {
-                $this->addUsingAlias(UserTypeTableMap::COL_DATETO, $dateto['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(UserTypeTableMap::COL_DATETO, $dateto, $comparison);
-    }
-
-    /**
-     * Filter the query by a related \User object
-     *
-     * @param \User|ObjectCollection $user the related object to use as filter
+     * @param \Users|ObjectCollection $users the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildUserTypeQuery The current query, for fluid interface
      */
-    public function filterByUser($user, $comparison = null)
+    public function filterByUsers($users, $comparison = null)
     {
-        if ($user instanceof \User) {
+        if ($users instanceof \Users) {
             return $this
-                ->addUsingAlias(UserTypeTableMap::COL_IDUSERTYPE, $user->getUsertypeIdusertype(), $comparison);
-        } elseif ($user instanceof ObjectCollection) {
+                ->addUsingAlias(UserTypeTableMap::COL_ID, $users->getUserTypeId(), $comparison);
+        } elseif ($users instanceof ObjectCollection) {
             return $this
-                ->useUserQuery()
-                ->filterByPrimaryKeys($user->getPrimaryKeys())
+                ->useUsersQuery()
+                ->filterByPrimaryKeys($users->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByUser() only accepts arguments of type \User or Collection');
+            throw new PropelException('filterByUsers() only accepts arguments of type \Users or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the User relation
+     * Adds a JOIN clause to the query using the Users relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildUserTypeQuery The current query, for fluid interface
      */
-    public function joinUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinUsers($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('User');
+        $relationMap = $tableMap->getRelation('Users');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -464,14 +368,14 @@ abstract class UserTypeQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'User');
+            $this->addJoinObject($join, 'Users');
         }
 
         return $this;
     }
 
     /**
-     * Use the User relation User object
+     * Use the Users relation Users object
      *
      * @see useQuery()
      *
@@ -479,13 +383,13 @@ abstract class UserTypeQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \UserQuery A secondary query class using the current class as primary query
+     * @return \UsersQuery A secondary query class using the current class as primary query
      */
-    public function useUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useUsersQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinUser($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'User', '\UserQuery');
+            ->joinUsers($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Users', '\UsersQuery');
     }
 
     /**
@@ -498,14 +402,14 @@ abstract class UserTypeQuery extends ModelCriteria
     public function prune($userType = null)
     {
         if ($userType) {
-            $this->addUsingAlias(UserTypeTableMap::COL_IDUSERTYPE, $userType->getIdusertype(), Criteria::NOT_EQUAL);
+            $this->addUsingAlias(UserTypeTableMap::COL_ID, $userType->getId(), Criteria::NOT_EQUAL);
         }
 
         return $this;
     }
 
     /**
-     * Deletes all rows from the User_type table.
+     * Deletes all rows from the user_type table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).

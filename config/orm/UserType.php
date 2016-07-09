@@ -3,7 +3,7 @@
 use Base\UserType as BaseUserType;
 
 /**
- * Skeleton subclass for representing a row from the 'User_type' table.
+ * Skeleton subclass for representing a row from the 'user_type' table.
  *
  *
  *

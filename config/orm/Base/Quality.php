@@ -2,17 +2,17 @@
 
 namespace Base;
 
-use \DailylessonHasUser as ChildDailylessonHasUser;
-use \DailylessonHasUserQuery as ChildDailylessonHasUserQuery;
-use \FinalVote as ChildFinalVote;
-use \FinalVoteQuery as ChildFinalVoteQuery;
+use \FinalVotes as ChildFinalVotes;
+use \FinalVotesQuery as ChildFinalVotesQuery;
 use \Quality as ChildQuality;
 use \QualityQuery as ChildQualityQuery;
+use \Votes as ChildVotes;
+use \VotesQuery as ChildVotesQuery;
 use \Exception;
 use \PDO;
-use Map\DailylessonHasUserTableMap;
-use Map\FinalVoteTableMap;
+use Map\FinalVotesTableMap;
 use Map\QualityTableMap;
+use Map\VotesTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -27,12 +27,12 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'Quality' table.
+ * Base class that represents a row from the 'quality' table.
  *
  *
  *
-* @package    propel.generator..Base
-*/
+ * @package    propel.generator..Base
+ */
 abstract class Quality implements ActiveRecordInterface
 {
     /**
@@ -68,16 +68,16 @@ abstract class Quality implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the idquality field.
+     * The value for the id field.
      *
      * @var        int
      */
-    protected $idquality;
+    protected $id;
 
     /**
      * The value for the vote field.
      *
-     * @var        string
+     * @var        int
      */
     protected $vote;
 
@@ -89,16 +89,16 @@ abstract class Quality implements ActiveRecordInterface
     protected $description;
 
     /**
-     * @var        ObjectCollection|ChildDailylessonHasUser[] Collection to store aggregation of ChildDailylessonHasUser objects.
+     * @var        ObjectCollection|ChildFinalVotes[] Collection to store aggregation of ChildFinalVotes objects.
      */
-    protected $collDailylessonHasUsers;
-    protected $collDailylessonHasUsersPartial;
+    protected $collFinalVotess;
+    protected $collFinalVotessPartial;
 
     /**
-     * @var        ObjectCollection|ChildFinalVote[] Collection to store aggregation of ChildFinalVote objects.
+     * @var        ObjectCollection|ChildVotes[] Collection to store aggregation of ChildVotes objects.
      */
-    protected $collFinalVotes;
-    protected $collFinalVotesPartial;
+    protected $collVotess;
+    protected $collVotessPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -110,15 +110,15 @@ abstract class Quality implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildDailylessonHasUser[]
+     * @var ObjectCollection|ChildFinalVotes[]
      */
-    protected $dailylessonHasUsersScheduledForDeletion = null;
+    protected $finalVotessScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildFinalVote[]
+     * @var ObjectCollection|ChildVotes[]
      */
-    protected $finalVotesScheduledForDeletion = null;
+    protected $votessScheduledForDeletion = null;
 
     /**
      * Initializes internal state of Base\Quality object.
@@ -346,19 +346,19 @@ abstract class Quality implements ActiveRecordInterface
     }
 
     /**
-     * Get the [idquality] column value.
+     * Get the [id] column value.
      *
      * @return int
      */
-    public function getIdquality()
+    public function getId()
     {
-        return $this->idquality;
+        return $this->id;
     }
 
     /**
      * Get the [vote] column value.
      *
-     * @return string
+     * @return int
      */
     public function getVote()
     {
@@ -376,35 +376,35 @@ abstract class Quality implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [idquality] column.
+     * Set the value of [id] column.
      *
      * @param int $v new value
      * @return $this|\Quality The current object (for fluent API support)
      */
-    public function setIdquality($v)
+    public function setId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->idquality !== $v) {
-            $this->idquality = $v;
-            $this->modifiedColumns[QualityTableMap::COL_IDQUALITY] = true;
+        if ($this->id !== $v) {
+            $this->id = $v;
+            $this->modifiedColumns[QualityTableMap::COL_ID] = true;
         }
 
         return $this;
-    } // setIdquality()
+    } // setId()
 
     /**
      * Set the value of [vote] column.
      *
-     * @param string $v new value
+     * @param int $v new value
      * @return $this|\Quality The current object (for fluent API support)
      */
     public function setVote($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
         if ($this->vote !== $v) {
@@ -471,11 +471,11 @@ abstract class Quality implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : QualityTableMap::translateFieldName('Idquality', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->idquality = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : QualityTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : QualityTableMap::translateFieldName('Vote', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->vote = (null !== $col) ? (string) $col : null;
+            $this->vote = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : QualityTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
@@ -548,9 +548,9 @@ abstract class Quality implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collDailylessonHasUsers = null;
+            $this->collFinalVotess = null;
 
-            $this->collFinalVotes = null;
+            $this->collVotess = null;
 
         } // if (deep)
     }
@@ -662,34 +662,34 @@ abstract class Quality implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->dailylessonHasUsersScheduledForDeletion !== null) {
-                if (!$this->dailylessonHasUsersScheduledForDeletion->isEmpty()) {
-                    \DailylessonHasUserQuery::create()
-                        ->filterByPrimaryKeys($this->dailylessonHasUsersScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->finalVotessScheduledForDeletion !== null) {
+                if (!$this->finalVotessScheduledForDeletion->isEmpty()) {
+                    \FinalVotesQuery::create()
+                        ->filterByPrimaryKeys($this->finalVotessScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->dailylessonHasUsersScheduledForDeletion = null;
+                    $this->finalVotessScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collDailylessonHasUsers !== null) {
-                foreach ($this->collDailylessonHasUsers as $referrerFK) {
+            if ($this->collFinalVotess !== null) {
+                foreach ($this->collFinalVotess as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
                 }
             }
 
-            if ($this->finalVotesScheduledForDeletion !== null) {
-                if (!$this->finalVotesScheduledForDeletion->isEmpty()) {
-                    \FinalVoteQuery::create()
-                        ->filterByPrimaryKeys($this->finalVotesScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->votessScheduledForDeletion !== null) {
+                if (!$this->votessScheduledForDeletion->isEmpty()) {
+                    \VotesQuery::create()
+                        ->filterByPrimaryKeys($this->votessScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->finalVotesScheduledForDeletion = null;
+                    $this->votessScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collFinalVotes !== null) {
-                foreach ($this->collFinalVotes as $referrerFK) {
+            if ($this->collVotess !== null) {
+                foreach ($this->collVotess as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -716,14 +716,14 @@ abstract class Quality implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[QualityTableMap::COL_IDQUALITY] = true;
-        if (null !== $this->idquality) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . QualityTableMap::COL_IDQUALITY . ')');
+        $this->modifiedColumns[QualityTableMap::COL_ID] = true;
+        if (null !== $this->id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . QualityTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(QualityTableMap::COL_IDQUALITY)) {
-            $modifiedColumns[':p' . $index++]  = 'idquality';
+        if ($this->isColumnModified(QualityTableMap::COL_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'id';
         }
         if ($this->isColumnModified(QualityTableMap::COL_VOTE)) {
             $modifiedColumns[':p' . $index++]  = 'vote';
@@ -733,7 +733,7 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         $sql = sprintf(
-            'INSERT INTO Quality (%s) VALUES (%s)',
+            'INSERT INTO quality (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -742,11 +742,11 @@ abstract class Quality implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'idquality':
-                        $stmt->bindValue($identifier, $this->idquality, PDO::PARAM_INT);
+                    case 'id':
+                        $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
                     case 'vote':
-                        $stmt->bindValue($identifier, $this->vote, PDO::PARAM_STR);
+                        $stmt->bindValue($identifier, $this->vote, PDO::PARAM_INT);
                         break;
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
@@ -764,7 +764,7 @@ abstract class Quality implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setIdquality($pk);
+        $this->setId($pk);
 
         $this->setNew(false);
     }
@@ -814,7 +814,7 @@ abstract class Quality implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getIdquality();
+                return $this->getId();
                 break;
             case 1:
                 return $this->getVote();
@@ -852,7 +852,7 @@ abstract class Quality implements ActiveRecordInterface
         $alreadyDumpedObjects['Quality'][$this->hashCode()] = true;
         $keys = QualityTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getIdquality(),
+            $keys[0] => $this->getId(),
             $keys[1] => $this->getVote(),
             $keys[2] => $this->getDescription(),
         );
@@ -862,35 +862,35 @@ abstract class Quality implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collDailylessonHasUsers) {
+            if (null !== $this->collFinalVotess) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'dailylessonHasUsers';
+                        $key = 'finalVotess';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'DailyLesson_has_Users';
+                        $key = 'final_votess';
                         break;
                     default:
-                        $key = 'DailylessonHasUsers';
+                        $key = 'FinalVotess';
                 }
 
-                $result[$key] = $this->collDailylessonHasUsers->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->collFinalVotess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
-            if (null !== $this->collFinalVotes) {
+            if (null !== $this->collVotess) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'finalVotes';
+                        $key = 'votess';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'Final_votes';
+                        $key = 'votess';
                         break;
                     default:
-                        $key = 'FinalVotes';
+                        $key = 'Votess';
                 }
 
-                $result[$key] = $this->collFinalVotes->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->collVotess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -927,7 +927,7 @@ abstract class Quality implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                $this->setIdquality($value);
+                $this->setId($value);
                 break;
             case 1:
                 $this->setVote($value);
@@ -962,7 +962,7 @@ abstract class Quality implements ActiveRecordInterface
         $keys = QualityTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setIdquality($arr[$keys[0]]);
+            $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
             $this->setVote($arr[$keys[1]]);
@@ -1011,8 +1011,8 @@ abstract class Quality implements ActiveRecordInterface
     {
         $criteria = new Criteria(QualityTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(QualityTableMap::COL_IDQUALITY)) {
-            $criteria->add(QualityTableMap::COL_IDQUALITY, $this->idquality);
+        if ($this->isColumnModified(QualityTableMap::COL_ID)) {
+            $criteria->add(QualityTableMap::COL_ID, $this->id);
         }
         if ($this->isColumnModified(QualityTableMap::COL_VOTE)) {
             $criteria->add(QualityTableMap::COL_VOTE, $this->vote);
@@ -1037,7 +1037,7 @@ abstract class Quality implements ActiveRecordInterface
     public function buildPkeyCriteria()
     {
         $criteria = ChildQualityQuery::create();
-        $criteria->add(QualityTableMap::COL_IDQUALITY, $this->idquality);
+        $criteria->add(QualityTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1050,7 +1050,7 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getIdquality();
+        $validPk = null !== $this->getId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1070,18 +1070,18 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getIdquality();
+        return $this->getId();
     }
 
     /**
-     * Generic method to set the primary key (idquality column).
+     * Generic method to set the primary key (id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setIdquality($key);
+        $this->setId($key);
     }
 
     /**
@@ -1090,7 +1090,7 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getIdquality();
+        return null === $this->getId();
     }
 
     /**
@@ -1114,15 +1114,15 @@ abstract class Quality implements ActiveRecordInterface
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getDailylessonHasUsers() as $relObj) {
+            foreach ($this->getFinalVotess() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addDailylessonHasUser($relObj->copy($deepCopy));
+                    $copyObj->addFinalVotes($relObj->copy($deepCopy));
                 }
             }
 
-            foreach ($this->getFinalVotes() as $relObj) {
+            foreach ($this->getVotess() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addFinalVote($relObj->copy($deepCopy));
+                    $copyObj->addVotes($relObj->copy($deepCopy));
                 }
             }
 
@@ -1130,7 +1130,7 @@ abstract class Quality implements ActiveRecordInterface
 
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setIdquality(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1167,40 +1167,40 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('DailylessonHasUser' == $relationName) {
-            return $this->initDailylessonHasUsers();
+        if ('FinalVotes' == $relationName) {
+            return $this->initFinalVotess();
         }
-        if ('FinalVote' == $relationName) {
-            return $this->initFinalVotes();
+        if ('Votes' == $relationName) {
+            return $this->initVotess();
         }
     }
 
     /**
-     * Clears out the collDailylessonHasUsers collection
+     * Clears out the collFinalVotess collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addDailylessonHasUsers()
+     * @see        addFinalVotess()
      */
-    public function clearDailylessonHasUsers()
+    public function clearFinalVotess()
     {
-        $this->collDailylessonHasUsers = null; // important to set this to NULL since that means it is uninitialized
+        $this->collFinalVotess = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Reset is the collDailylessonHasUsers collection loaded partially.
+     * Reset is the collFinalVotess collection loaded partially.
      */
-    public function resetPartialDailylessonHasUsers($v = true)
+    public function resetPartialFinalVotess($v = true)
     {
-        $this->collDailylessonHasUsersPartial = $v;
+        $this->collFinalVotessPartial = $v;
     }
 
     /**
-     * Initializes the collDailylessonHasUsers collection.
+     * Initializes the collFinalVotess collection.
      *
-     * By default this just sets the collDailylessonHasUsers collection to an empty array (like clearcollDailylessonHasUsers());
+     * By default this just sets the collFinalVotess collection to an empty array (like clearcollFinalVotess());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1209,20 +1209,20 @@ abstract class Quality implements ActiveRecordInterface
      *
      * @return void
      */
-    public function initDailylessonHasUsers($overrideExisting = true)
+    public function initFinalVotess($overrideExisting = true)
     {
-        if (null !== $this->collDailylessonHasUsers && !$overrideExisting) {
+        if (null !== $this->collFinalVotess && !$overrideExisting) {
             return;
         }
 
-        $collectionClassName = DailylessonHasUserTableMap::getTableMap()->getCollectionClassName();
+        $collectionClassName = FinalVotesTableMap::getTableMap()->getCollectionClassName();
 
-        $this->collDailylessonHasUsers = new $collectionClassName;
-        $this->collDailylessonHasUsers->setModel('\DailylessonHasUser');
+        $this->collFinalVotess = new $collectionClassName;
+        $this->collFinalVotess->setModel('\FinalVotes');
     }
 
     /**
-     * Gets an array of ChildDailylessonHasUser objects which contain a foreign key that references this object.
+     * Gets an array of ChildFinalVotes objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
@@ -1232,111 +1232,108 @@ abstract class Quality implements ActiveRecordInterface
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildDailylessonHasUser[] List of ChildDailylessonHasUser objects
+     * @return ObjectCollection|ChildFinalVotes[] List of ChildFinalVotes objects
      * @throws PropelException
      */
-    public function getDailylessonHasUsers(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getFinalVotess(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collDailylessonHasUsersPartial && !$this->isNew();
-        if (null === $this->collDailylessonHasUsers || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collDailylessonHasUsers) {
+        $partial = $this->collFinalVotessPartial && !$this->isNew();
+        if (null === $this->collFinalVotess || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collFinalVotess) {
                 // return empty collection
-                $this->initDailylessonHasUsers();
+                $this->initFinalVotess();
             } else {
-                $collDailylessonHasUsers = ChildDailylessonHasUserQuery::create(null, $criteria)
+                $collFinalVotess = ChildFinalVotesQuery::create(null, $criteria)
                     ->filterByQuality($this)
                     ->find($con);
 
                 if (null !== $criteria) {
-                    if (false !== $this->collDailylessonHasUsersPartial && count($collDailylessonHasUsers)) {
-                        $this->initDailylessonHasUsers(false);
+                    if (false !== $this->collFinalVotessPartial && count($collFinalVotess)) {
+                        $this->initFinalVotess(false);
 
-                        foreach ($collDailylessonHasUsers as $obj) {
-                            if (false == $this->collDailylessonHasUsers->contains($obj)) {
-                                $this->collDailylessonHasUsers->append($obj);
+                        foreach ($collFinalVotess as $obj) {
+                            if (false == $this->collFinalVotess->contains($obj)) {
+                                $this->collFinalVotess->append($obj);
                             }
                         }
 
-                        $this->collDailylessonHasUsersPartial = true;
+                        $this->collFinalVotessPartial = true;
                     }
 
-                    return $collDailylessonHasUsers;
+                    return $collFinalVotess;
                 }
 
-                if ($partial && $this->collDailylessonHasUsers) {
-                    foreach ($this->collDailylessonHasUsers as $obj) {
+                if ($partial && $this->collFinalVotess) {
+                    foreach ($this->collFinalVotess as $obj) {
                         if ($obj->isNew()) {
-                            $collDailylessonHasUsers[] = $obj;
+                            $collFinalVotess[] = $obj;
                         }
                     }
                 }
 
-                $this->collDailylessonHasUsers = $collDailylessonHasUsers;
-                $this->collDailylessonHasUsersPartial = false;
+                $this->collFinalVotess = $collFinalVotess;
+                $this->collFinalVotessPartial = false;
             }
         }
 
-        return $this->collDailylessonHasUsers;
+        return $this->collFinalVotess;
     }
 
     /**
-     * Sets a collection of ChildDailylessonHasUser objects related by a one-to-many relationship
+     * Sets a collection of ChildFinalVotes objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $dailylessonHasUsers A Propel collection.
+     * @param      Collection $finalVotess A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
      * @return $this|ChildQuality The current object (for fluent API support)
      */
-    public function setDailylessonHasUsers(Collection $dailylessonHasUsers, ConnectionInterface $con = null)
+    public function setFinalVotess(Collection $finalVotess, ConnectionInterface $con = null)
     {
-        /** @var ChildDailylessonHasUser[] $dailylessonHasUsersToDelete */
-        $dailylessonHasUsersToDelete = $this->getDailylessonHasUsers(new Criteria(), $con)->diff($dailylessonHasUsers);
+        /** @var ChildFinalVotes[] $finalVotessToDelete */
+        $finalVotessToDelete = $this->getFinalVotess(new Criteria(), $con)->diff($finalVotess);
 
 
-        //since at least one column in the foreign key is at the same time a PK
-        //we can not just set a PK to NULL in the lines below. We have to store
-        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->dailylessonHasUsersScheduledForDeletion = clone $dailylessonHasUsersToDelete;
+        $this->finalVotessScheduledForDeletion = $finalVotessToDelete;
 
-        foreach ($dailylessonHasUsersToDelete as $dailylessonHasUserRemoved) {
-            $dailylessonHasUserRemoved->setQuality(null);
+        foreach ($finalVotessToDelete as $finalVotesRemoved) {
+            $finalVotesRemoved->setQuality(null);
         }
 
-        $this->collDailylessonHasUsers = null;
-        foreach ($dailylessonHasUsers as $dailylessonHasUser) {
-            $this->addDailylessonHasUser($dailylessonHasUser);
+        $this->collFinalVotess = null;
+        foreach ($finalVotess as $finalVotes) {
+            $this->addFinalVotes($finalVotes);
         }
 
-        $this->collDailylessonHasUsers = $dailylessonHasUsers;
-        $this->collDailylessonHasUsersPartial = false;
+        $this->collFinalVotess = $finalVotess;
+        $this->collFinalVotessPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related DailylessonHasUser objects.
+     * Returns the number of related FinalVotes objects.
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct
      * @param      ConnectionInterface $con
-     * @return int             Count of related DailylessonHasUser objects.
+     * @return int             Count of related FinalVotes objects.
      * @throws PropelException
      */
-    public function countDailylessonHasUsers(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countFinalVotess(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collDailylessonHasUsersPartial && !$this->isNew();
-        if (null === $this->collDailylessonHasUsers || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collDailylessonHasUsers) {
+        $partial = $this->collFinalVotessPartial && !$this->isNew();
+        if (null === $this->collFinalVotess || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collFinalVotess) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getDailylessonHasUsers());
+                return count($this->getFinalVotess());
             }
 
-            $query = ChildDailylessonHasUserQuery::create(null, $criteria);
+            $query = ChildFinalVotesQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
@@ -1346,28 +1343,28 @@ abstract class Quality implements ActiveRecordInterface
                 ->count($con);
         }
 
-        return count($this->collDailylessonHasUsers);
+        return count($this->collFinalVotess);
     }
 
     /**
-     * Method called to associate a ChildDailylessonHasUser object to this object
-     * through the ChildDailylessonHasUser foreign key attribute.
+     * Method called to associate a ChildFinalVotes object to this object
+     * through the ChildFinalVotes foreign key attribute.
      *
-     * @param  ChildDailylessonHasUser $l ChildDailylessonHasUser
+     * @param  ChildFinalVotes $l ChildFinalVotes
      * @return $this|\Quality The current object (for fluent API support)
      */
-    public function addDailylessonHasUser(ChildDailylessonHasUser $l)
+    public function addFinalVotes(ChildFinalVotes $l)
     {
-        if ($this->collDailylessonHasUsers === null) {
-            $this->initDailylessonHasUsers();
-            $this->collDailylessonHasUsersPartial = true;
+        if ($this->collFinalVotess === null) {
+            $this->initFinalVotess();
+            $this->collFinalVotessPartial = true;
         }
 
-        if (!$this->collDailylessonHasUsers->contains($l)) {
-            $this->doAddDailylessonHasUser($l);
+        if (!$this->collFinalVotess->contains($l)) {
+            $this->doAddFinalVotes($l);
 
-            if ($this->dailylessonHasUsersScheduledForDeletion and $this->dailylessonHasUsersScheduledForDeletion->contains($l)) {
-                $this->dailylessonHasUsersScheduledForDeletion->remove($this->dailylessonHasUsersScheduledForDeletion->search($l));
+            if ($this->finalVotessScheduledForDeletion and $this->finalVotessScheduledForDeletion->contains($l)) {
+                $this->finalVotessScheduledForDeletion->remove($this->finalVotessScheduledForDeletion->search($l));
             }
         }
 
@@ -1375,29 +1372,29 @@ abstract class Quality implements ActiveRecordInterface
     }
 
     /**
-     * @param ChildDailylessonHasUser $dailylessonHasUser The ChildDailylessonHasUser object to add.
+     * @param ChildFinalVotes $finalVotes The ChildFinalVotes object to add.
      */
-    protected function doAddDailylessonHasUser(ChildDailylessonHasUser $dailylessonHasUser)
+    protected function doAddFinalVotes(ChildFinalVotes $finalVotes)
     {
-        $this->collDailylessonHasUsers[]= $dailylessonHasUser;
-        $dailylessonHasUser->setQuality($this);
+        $this->collFinalVotess[]= $finalVotes;
+        $finalVotes->setQuality($this);
     }
 
     /**
-     * @param  ChildDailylessonHasUser $dailylessonHasUser The ChildDailylessonHasUser object to remove.
+     * @param  ChildFinalVotes $finalVotes The ChildFinalVotes object to remove.
      * @return $this|ChildQuality The current object (for fluent API support)
      */
-    public function removeDailylessonHasUser(ChildDailylessonHasUser $dailylessonHasUser)
+    public function removeFinalVotes(ChildFinalVotes $finalVotes)
     {
-        if ($this->getDailylessonHasUsers()->contains($dailylessonHasUser)) {
-            $pos = $this->collDailylessonHasUsers->search($dailylessonHasUser);
-            $this->collDailylessonHasUsers->remove($pos);
-            if (null === $this->dailylessonHasUsersScheduledForDeletion) {
-                $this->dailylessonHasUsersScheduledForDeletion = clone $this->collDailylessonHasUsers;
-                $this->dailylessonHasUsersScheduledForDeletion->clear();
+        if ($this->getFinalVotess()->contains($finalVotes)) {
+            $pos = $this->collFinalVotess->search($finalVotes);
+            $this->collFinalVotess->remove($pos);
+            if (null === $this->finalVotessScheduledForDeletion) {
+                $this->finalVotessScheduledForDeletion = clone $this->collFinalVotess;
+                $this->finalVotessScheduledForDeletion->clear();
             }
-            $this->dailylessonHasUsersScheduledForDeletion[]= clone $dailylessonHasUser;
-            $dailylessonHasUser->setQuality(null);
+            $this->finalVotessScheduledForDeletion[]= clone $finalVotes;
+            $finalVotes->setQuality(null);
         }
 
         return $this;
@@ -1409,7 +1406,7 @@ abstract class Quality implements ActiveRecordInterface
      * an identical criteria, it returns the collection.
      * Otherwise if this Quality is new, it will return
      * an empty collection; or if this Quality has previously
-     * been saved, it will retrieve related DailylessonHasUsers from storage.
+     * been saved, it will retrieve related FinalVotess from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
@@ -1418,14 +1415,14 @@ abstract class Quality implements ActiveRecordInterface
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildDailylessonHasUser[] List of ChildDailylessonHasUser objects
+     * @return ObjectCollection|ChildFinalVotes[] List of ChildFinalVotes objects
      */
-    public function getDailylessonHasUsersJoinDailylesson(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getFinalVotessJoinCourses(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        $query = ChildDailylessonHasUserQuery::create(null, $criteria);
-        $query->joinWith('Dailylesson', $joinBehavior);
+        $query = ChildFinalVotesQuery::create(null, $criteria);
+        $query->joinWith('Courses', $joinBehavior);
 
-        return $this->getDailylessonHasUsers($query, $con);
+        return $this->getFinalVotess($query, $con);
     }
 
 
@@ -1434,7 +1431,7 @@ abstract class Quality implements ActiveRecordInterface
      * an identical criteria, it returns the collection.
      * Otherwise if this Quality is new, it will return
      * an empty collection; or if this Quality has previously
-     * been saved, it will retrieve related DailylessonHasUsers from storage.
+     * been saved, it will retrieve related FinalVotess from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
@@ -1443,42 +1440,42 @@ abstract class Quality implements ActiveRecordInterface
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildDailylessonHasUser[] List of ChildDailylessonHasUser objects
+     * @return ObjectCollection|ChildFinalVotes[] List of ChildFinalVotes objects
      */
-    public function getDailylessonHasUsersJoinUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getFinalVotessJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        $query = ChildDailylessonHasUserQuery::create(null, $criteria);
-        $query->joinWith('User', $joinBehavior);
+        $query = ChildFinalVotesQuery::create(null, $criteria);
+        $query->joinWith('Users', $joinBehavior);
 
-        return $this->getDailylessonHasUsers($query, $con);
+        return $this->getFinalVotess($query, $con);
     }
 
     /**
-     * Clears out the collFinalVotes collection
+     * Clears out the collVotess collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addFinalVotes()
+     * @see        addVotess()
      */
-    public function clearFinalVotes()
+    public function clearVotess()
     {
-        $this->collFinalVotes = null; // important to set this to NULL since that means it is uninitialized
+        $this->collVotess = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Reset is the collFinalVotes collection loaded partially.
+     * Reset is the collVotess collection loaded partially.
      */
-    public function resetPartialFinalVotes($v = true)
+    public function resetPartialVotess($v = true)
     {
-        $this->collFinalVotesPartial = $v;
+        $this->collVotessPartial = $v;
     }
 
     /**
-     * Initializes the collFinalVotes collection.
+     * Initializes the collVotess collection.
      *
-     * By default this just sets the collFinalVotes collection to an empty array (like clearcollFinalVotes());
+     * By default this just sets the collVotess collection to an empty array (like clearcollVotess());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1487,20 +1484,20 @@ abstract class Quality implements ActiveRecordInterface
      *
      * @return void
      */
-    public function initFinalVotes($overrideExisting = true)
+    public function initVotess($overrideExisting = true)
     {
-        if (null !== $this->collFinalVotes && !$overrideExisting) {
+        if (null !== $this->collVotess && !$overrideExisting) {
             return;
         }
 
-        $collectionClassName = FinalVoteTableMap::getTableMap()->getCollectionClassName();
+        $collectionClassName = VotesTableMap::getTableMap()->getCollectionClassName();
 
-        $this->collFinalVotes = new $collectionClassName;
-        $this->collFinalVotes->setModel('\FinalVote');
+        $this->collVotess = new $collectionClassName;
+        $this->collVotess->setModel('\Votes');
     }
 
     /**
-     * Gets an array of ChildFinalVote objects which contain a foreign key that references this object.
+     * Gets an array of ChildVotes objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
@@ -1510,108 +1507,108 @@ abstract class Quality implements ActiveRecordInterface
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildFinalVote[] List of ChildFinalVote objects
+     * @return ObjectCollection|ChildVotes[] List of ChildVotes objects
      * @throws PropelException
      */
-    public function getFinalVotes(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getVotess(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collFinalVotesPartial && !$this->isNew();
-        if (null === $this->collFinalVotes || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collFinalVotes) {
+        $partial = $this->collVotessPartial && !$this->isNew();
+        if (null === $this->collVotess || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collVotess) {
                 // return empty collection
-                $this->initFinalVotes();
+                $this->initVotess();
             } else {
-                $collFinalVotes = ChildFinalVoteQuery::create(null, $criteria)
+                $collVotess = ChildVotesQuery::create(null, $criteria)
                     ->filterByQuality($this)
                     ->find($con);
 
                 if (null !== $criteria) {
-                    if (false !== $this->collFinalVotesPartial && count($collFinalVotes)) {
-                        $this->initFinalVotes(false);
+                    if (false !== $this->collVotessPartial && count($collVotess)) {
+                        $this->initVotess(false);
 
-                        foreach ($collFinalVotes as $obj) {
-                            if (false == $this->collFinalVotes->contains($obj)) {
-                                $this->collFinalVotes->append($obj);
+                        foreach ($collVotess as $obj) {
+                            if (false == $this->collVotess->contains($obj)) {
+                                $this->collVotess->append($obj);
                             }
                         }
 
-                        $this->collFinalVotesPartial = true;
+                        $this->collVotessPartial = true;
                     }
 
-                    return $collFinalVotes;
+                    return $collVotess;
                 }
 
-                if ($partial && $this->collFinalVotes) {
-                    foreach ($this->collFinalVotes as $obj) {
+                if ($partial && $this->collVotess) {
+                    foreach ($this->collVotess as $obj) {
                         if ($obj->isNew()) {
-                            $collFinalVotes[] = $obj;
+                            $collVotess[] = $obj;
                         }
                     }
                 }
 
-                $this->collFinalVotes = $collFinalVotes;
-                $this->collFinalVotesPartial = false;
+                $this->collVotess = $collVotess;
+                $this->collVotessPartial = false;
             }
         }
 
-        return $this->collFinalVotes;
+        return $this->collVotess;
     }
 
     /**
-     * Sets a collection of ChildFinalVote objects related by a one-to-many relationship
+     * Sets a collection of ChildVotes objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $finalVotes A Propel collection.
+     * @param      Collection $votess A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
      * @return $this|ChildQuality The current object (for fluent API support)
      */
-    public function setFinalVotes(Collection $finalVotes, ConnectionInterface $con = null)
+    public function setVotess(Collection $votess, ConnectionInterface $con = null)
     {
-        /** @var ChildFinalVote[] $finalVotesToDelete */
-        $finalVotesToDelete = $this->getFinalVotes(new Criteria(), $con)->diff($finalVotes);
+        /** @var ChildVotes[] $votessToDelete */
+        $votessToDelete = $this->getVotess(new Criteria(), $con)->diff($votess);
 
 
-        $this->finalVotesScheduledForDeletion = $finalVotesToDelete;
+        $this->votessScheduledForDeletion = $votessToDelete;
 
-        foreach ($finalVotesToDelete as $finalVoteRemoved) {
-            $finalVoteRemoved->setQuality(null);
+        foreach ($votessToDelete as $votesRemoved) {
+            $votesRemoved->setQuality(null);
         }
 
-        $this->collFinalVotes = null;
-        foreach ($finalVotes as $finalVote) {
-            $this->addFinalVote($finalVote);
+        $this->collVotess = null;
+        foreach ($votess as $votes) {
+            $this->addVotes($votes);
         }
 
-        $this->collFinalVotes = $finalVotes;
-        $this->collFinalVotesPartial = false;
+        $this->collVotess = $votess;
+        $this->collVotessPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related FinalVote objects.
+     * Returns the number of related Votes objects.
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct
      * @param      ConnectionInterface $con
-     * @return int             Count of related FinalVote objects.
+     * @return int             Count of related Votes objects.
      * @throws PropelException
      */
-    public function countFinalVotes(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countVotess(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collFinalVotesPartial && !$this->isNew();
-        if (null === $this->collFinalVotes || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collFinalVotes) {
+        $partial = $this->collVotessPartial && !$this->isNew();
+        if (null === $this->collVotess || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collVotess) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getFinalVotes());
+                return count($this->getVotess());
             }
 
-            $query = ChildFinalVoteQuery::create(null, $criteria);
+            $query = ChildVotesQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
@@ -1621,28 +1618,28 @@ abstract class Quality implements ActiveRecordInterface
                 ->count($con);
         }
 
-        return count($this->collFinalVotes);
+        return count($this->collVotess);
     }
 
     /**
-     * Method called to associate a ChildFinalVote object to this object
-     * through the ChildFinalVote foreign key attribute.
+     * Method called to associate a ChildVotes object to this object
+     * through the ChildVotes foreign key attribute.
      *
-     * @param  ChildFinalVote $l ChildFinalVote
+     * @param  ChildVotes $l ChildVotes
      * @return $this|\Quality The current object (for fluent API support)
      */
-    public function addFinalVote(ChildFinalVote $l)
+    public function addVotes(ChildVotes $l)
     {
-        if ($this->collFinalVotes === null) {
-            $this->initFinalVotes();
-            $this->collFinalVotesPartial = true;
+        if ($this->collVotess === null) {
+            $this->initVotess();
+            $this->collVotessPartial = true;
         }
 
-        if (!$this->collFinalVotes->contains($l)) {
-            $this->doAddFinalVote($l);
+        if (!$this->collVotess->contains($l)) {
+            $this->doAddVotes($l);
 
-            if ($this->finalVotesScheduledForDeletion and $this->finalVotesScheduledForDeletion->contains($l)) {
-                $this->finalVotesScheduledForDeletion->remove($this->finalVotesScheduledForDeletion->search($l));
+            if ($this->votessScheduledForDeletion and $this->votessScheduledForDeletion->contains($l)) {
+                $this->votessScheduledForDeletion->remove($this->votessScheduledForDeletion->search($l));
             }
         }
 
@@ -1650,29 +1647,29 @@ abstract class Quality implements ActiveRecordInterface
     }
 
     /**
-     * @param ChildFinalVote $finalVote The ChildFinalVote object to add.
+     * @param ChildVotes $votes The ChildVotes object to add.
      */
-    protected function doAddFinalVote(ChildFinalVote $finalVote)
+    protected function doAddVotes(ChildVotes $votes)
     {
-        $this->collFinalVotes[]= $finalVote;
-        $finalVote->setQuality($this);
+        $this->collVotess[]= $votes;
+        $votes->setQuality($this);
     }
 
     /**
-     * @param  ChildFinalVote $finalVote The ChildFinalVote object to remove.
+     * @param  ChildVotes $votes The ChildVotes object to remove.
      * @return $this|ChildQuality The current object (for fluent API support)
      */
-    public function removeFinalVote(ChildFinalVote $finalVote)
+    public function removeVotes(ChildVotes $votes)
     {
-        if ($this->getFinalVotes()->contains($finalVote)) {
-            $pos = $this->collFinalVotes->search($finalVote);
-            $this->collFinalVotes->remove($pos);
-            if (null === $this->finalVotesScheduledForDeletion) {
-                $this->finalVotesScheduledForDeletion = clone $this->collFinalVotes;
-                $this->finalVotesScheduledForDeletion->clear();
+        if ($this->getVotess()->contains($votes)) {
+            $pos = $this->collVotess->search($votes);
+            $this->collVotess->remove($pos);
+            if (null === $this->votessScheduledForDeletion) {
+                $this->votessScheduledForDeletion = clone $this->collVotess;
+                $this->votessScheduledForDeletion->clear();
             }
-            $this->finalVotesScheduledForDeletion[]= clone $finalVote;
-            $finalVote->setQuality(null);
+            $this->votessScheduledForDeletion[]= clone $votes;
+            $votes->setQuality(null);
         }
 
         return $this;
@@ -1684,7 +1681,7 @@ abstract class Quality implements ActiveRecordInterface
      * an identical criteria, it returns the collection.
      * Otherwise if this Quality is new, it will return
      * an empty collection; or if this Quality has previously
-     * been saved, it will retrieve related FinalVotes from storage.
+     * been saved, it will retrieve related Votess from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
@@ -1693,14 +1690,14 @@ abstract class Quality implements ActiveRecordInterface
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildFinalVote[] List of ChildFinalVote objects
+     * @return ObjectCollection|ChildVotes[] List of ChildVotes objects
      */
-    public function getFinalVotesJoinCourse(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getVotessJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        $query = ChildFinalVoteQuery::create(null, $criteria);
-        $query->joinWith('Course', $joinBehavior);
+        $query = ChildVotesQuery::create(null, $criteria);
+        $query->joinWith('Users', $joinBehavior);
 
-        return $this->getFinalVotes($query, $con);
+        return $this->getVotess($query, $con);
     }
 
 
@@ -1709,7 +1706,7 @@ abstract class Quality implements ActiveRecordInterface
      * an identical criteria, it returns the collection.
      * Otherwise if this Quality is new, it will return
      * an empty collection; or if this Quality has previously
-     * been saved, it will retrieve related FinalVotes from storage.
+     * been saved, it will retrieve related Votess from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
@@ -1718,14 +1715,14 @@ abstract class Quality implements ActiveRecordInterface
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildFinalVote[] List of ChildFinalVote objects
+     * @return ObjectCollection|ChildVotes[] List of ChildVotes objects
      */
-    public function getFinalVotesJoinUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getVotessJoinPollsHasArguments(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        $query = ChildFinalVoteQuery::create(null, $criteria);
-        $query->joinWith('User', $joinBehavior);
+        $query = ChildVotesQuery::create(null, $criteria);
+        $query->joinWith('PollsHasArguments', $joinBehavior);
 
-        return $this->getFinalVotes($query, $con);
+        return $this->getVotess($query, $con);
     }
 
     /**
@@ -1735,7 +1732,7 @@ abstract class Quality implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->idquality = null;
+        $this->id = null;
         $this->vote = null;
         $this->description = null;
         $this->alreadyInSave = false;
@@ -1756,20 +1753,20 @@ abstract class Quality implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collDailylessonHasUsers) {
-                foreach ($this->collDailylessonHasUsers as $o) {
+            if ($this->collFinalVotess) {
+                foreach ($this->collFinalVotess as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collFinalVotes) {
-                foreach ($this->collFinalVotes as $o) {
+            if ($this->collVotess) {
+                foreach ($this->collVotess as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
         } // if ($deep)
 
-        $this->collDailylessonHasUsers = null;
-        $this->collFinalVotes = null;
+        $this->collFinalVotess = null;
+        $this->collVotess = null;
     }
 
     /**

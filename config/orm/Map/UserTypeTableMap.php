@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'User_type' table.
+ * This class defines the structure of the 'user_type' table.
  *
  *
  *
@@ -44,7 +44,7 @@ class UserTypeTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'User_type';
+    const TABLE_NAME = 'user_type';
 
     /**
      * The related Propel class for this table
@@ -59,7 +59,7 @@ class UserTypeTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 4;
+    const NUM_COLUMNS = 2;
 
     /**
      * The number of lazy-loaded columns
@@ -69,27 +69,17 @@ class UserTypeTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 4;
+    const NUM_HYDRATE_COLUMNS = 2;
 
     /**
-     * the column name for the idUserType field
+     * the column name for the id field
      */
-    const COL_IDUSERTYPE = 'User_type.idUserType';
+    const COL_ID = 'user_type.id';
 
     /**
      * the column name for the description field
      */
-    const COL_DESCRIPTION = 'User_type.description';
-
-    /**
-     * the column name for the dateFrom field
-     */
-    const COL_DATEFROM = 'User_type.dateFrom';
-
-    /**
-     * the column name for the dateTo field
-     */
-    const COL_DATETO = 'User_type.dateTo';
+    const COL_DESCRIPTION = 'user_type.description';
 
     /**
      * The default string format for model objects of the related table
@@ -103,11 +93,11 @@ class UserTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Idusertype', 'Description', 'Datefrom', 'Dateto', ),
-        self::TYPE_CAMELNAME     => array('idusertype', 'description', 'datefrom', 'dateto', ),
-        self::TYPE_COLNAME       => array(UserTypeTableMap::COL_IDUSERTYPE, UserTypeTableMap::COL_DESCRIPTION, UserTypeTableMap::COL_DATEFROM, UserTypeTableMap::COL_DATETO, ),
-        self::TYPE_FIELDNAME     => array('idUserType', 'description', 'dateFrom', 'dateTo', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, )
+        self::TYPE_PHPNAME       => array('Id', 'Description', ),
+        self::TYPE_CAMELNAME     => array('id', 'description', ),
+        self::TYPE_COLNAME       => array(UserTypeTableMap::COL_ID, UserTypeTableMap::COL_DESCRIPTION, ),
+        self::TYPE_FIELDNAME     => array('id', 'description', ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -117,11 +107,11 @@ class UserTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Idusertype' => 0, 'Description' => 1, 'Datefrom' => 2, 'Dateto' => 3, ),
-        self::TYPE_CAMELNAME     => array('idusertype' => 0, 'description' => 1, 'datefrom' => 2, 'dateto' => 3, ),
-        self::TYPE_COLNAME       => array(UserTypeTableMap::COL_IDUSERTYPE => 0, UserTypeTableMap::COL_DESCRIPTION => 1, UserTypeTableMap::COL_DATEFROM => 2, UserTypeTableMap::COL_DATETO => 3, ),
-        self::TYPE_FIELDNAME     => array('idUserType' => 0, 'description' => 1, 'dateFrom' => 2, 'dateTo' => 3, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Description' => 1, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'description' => 1, ),
+        self::TYPE_COLNAME       => array(UserTypeTableMap::COL_ID => 0, UserTypeTableMap::COL_DESCRIPTION => 1, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'description' => 1, ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -134,17 +124,15 @@ class UserTypeTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('User_type');
+        $this->setName('user_type');
         $this->setPhpName('UserType');
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\UserType');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('idUserType', 'Idusertype', 'INTEGER', true, null, null);
+        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('description', 'Description', 'VARCHAR', true, 45, null);
-        $this->addColumn('dateFrom', 'Datefrom', 'TIMESTAMP', true, null, null);
-        $this->addColumn('dateTo', 'Dateto', 'TIMESTAMP', true, null, null);
     } // initialize()
 
     /**
@@ -152,13 +140,13 @@ class UserTypeTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('User', '\\User', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('Users', '\\Users', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':UserType_idUserType',
-    1 => ':idUserType',
+    0 => ':user_type_id',
+    1 => ':id',
   ),
-), null, null, 'Users', false);
+), null, null, 'Userss', false);
     } // buildRelations()
 
     /**
@@ -177,11 +165,11 @@ class UserTypeTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idusertype', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idusertype', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idusertype', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idusertype', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idusertype', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Idusertype', TableMap::TYPE_PHPNAME, $indexType)];
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -201,7 +189,7 @@ class UserTypeTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('Idusertype', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -302,15 +290,11 @@ class UserTypeTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(UserTypeTableMap::COL_IDUSERTYPE);
+            $criteria->addSelectColumn(UserTypeTableMap::COL_ID);
             $criteria->addSelectColumn(UserTypeTableMap::COL_DESCRIPTION);
-            $criteria->addSelectColumn(UserTypeTableMap::COL_DATEFROM);
-            $criteria->addSelectColumn(UserTypeTableMap::COL_DATETO);
         } else {
-            $criteria->addSelectColumn($alias . '.idUserType');
+            $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.dateFrom');
-            $criteria->addSelectColumn($alias . '.dateTo');
         }
     }
 
@@ -362,7 +346,7 @@ class UserTypeTableMap extends TableMap
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(UserTypeTableMap::DATABASE_NAME);
-            $criteria->add(UserTypeTableMap::COL_IDUSERTYPE, (array) $values, Criteria::IN);
+            $criteria->add(UserTypeTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
         $query = UserTypeQuery::create()->mergeWith($criteria);
@@ -379,7 +363,7 @@ class UserTypeTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the User_type table.
+     * Deletes all rows from the user_type table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -410,8 +394,8 @@ class UserTypeTableMap extends TableMap
             $criteria = $criteria->buildCriteria(); // build Criteria from UserType object
         }
 
-        if ($criteria->containsKey(UserTypeTableMap::COL_IDUSERTYPE) && $criteria->keyContainsValue(UserTypeTableMap::COL_IDUSERTYPE) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.UserTypeTableMap::COL_IDUSERTYPE.')');
+        if ($criteria->containsKey(UserTypeTableMap::COL_ID) && $criteria->keyContainsValue(UserTypeTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.UserTypeTableMap::COL_ID.')');
         }
 
 

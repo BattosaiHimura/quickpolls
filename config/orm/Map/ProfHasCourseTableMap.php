@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'Prof_has_Course' table.
+ * This class defines the structure of the 'prof_has_course' table.
  *
  *
  *
@@ -44,7 +44,7 @@ class ProfHasCourseTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'Prof_has_Course';
+    const TABLE_NAME = 'prof_has_course';
 
     /**
      * The related Propel class for this table
@@ -72,24 +72,24 @@ class ProfHasCourseTableMap extends TableMap
     const NUM_HYDRATE_COLUMNS = 4;
 
     /**
-     * the column name for the User_idUser field
+     * the column name for the users_id field
      */
-    const COL_USER_IDUSER = 'Prof_has_Course.User_idUser';
+    const COL_USERS_ID = 'prof_has_course.users_id';
 
     /**
-     * the column name for the Course_idCourse field
+     * the column name for the courses_id field
      */
-    const COL_COURSE_IDCOURSE = 'Prof_has_Course.Course_idCourse';
+    const COL_COURSES_ID = 'prof_has_course.courses_id';
 
     /**
-     * the column name for the isLab field
+     * the column name for the is_lab field
      */
-    const COL_ISLAB = 'Prof_has_Course.isLab';
+    const COL_IS_LAB = 'prof_has_course.is_lab';
 
     /**
      * the column name for the presence field
      */
-    const COL_PRESENCE = 'Prof_has_Course.presence';
+    const COL_PRESENCE = 'prof_has_course.presence';
 
     /**
      * The default string format for model objects of the related table
@@ -103,10 +103,10 @@ class ProfHasCourseTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('UserIduser', 'CourseIdcourse', 'Islab', 'Presence', ),
-        self::TYPE_CAMELNAME     => array('userIduser', 'courseIdcourse', 'islab', 'presence', ),
-        self::TYPE_COLNAME       => array(ProfHasCourseTableMap::COL_USER_IDUSER, ProfHasCourseTableMap::COL_COURSE_IDCOURSE, ProfHasCourseTableMap::COL_ISLAB, ProfHasCourseTableMap::COL_PRESENCE, ),
-        self::TYPE_FIELDNAME     => array('User_idUser', 'Course_idCourse', 'isLab', 'presence', ),
+        self::TYPE_PHPNAME       => array('UsersId', 'CoursesId', 'IsLab', 'Presence', ),
+        self::TYPE_CAMELNAME     => array('usersId', 'coursesId', 'isLab', 'presence', ),
+        self::TYPE_COLNAME       => array(ProfHasCourseTableMap::COL_USERS_ID, ProfHasCourseTableMap::COL_COURSES_ID, ProfHasCourseTableMap::COL_IS_LAB, ProfHasCourseTableMap::COL_PRESENCE, ),
+        self::TYPE_FIELDNAME     => array('users_id', 'courses_id', 'is_lab', 'presence', ),
         self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
@@ -117,10 +117,10 @@ class ProfHasCourseTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('UserIduser' => 0, 'CourseIdcourse' => 1, 'Islab' => 2, 'Presence' => 3, ),
-        self::TYPE_CAMELNAME     => array('userIduser' => 0, 'courseIdcourse' => 1, 'islab' => 2, 'presence' => 3, ),
-        self::TYPE_COLNAME       => array(ProfHasCourseTableMap::COL_USER_IDUSER => 0, ProfHasCourseTableMap::COL_COURSE_IDCOURSE => 1, ProfHasCourseTableMap::COL_ISLAB => 2, ProfHasCourseTableMap::COL_PRESENCE => 3, ),
-        self::TYPE_FIELDNAME     => array('User_idUser' => 0, 'Course_idCourse' => 1, 'isLab' => 2, 'presence' => 3, ),
+        self::TYPE_PHPNAME       => array('UsersId' => 0, 'CoursesId' => 1, 'IsLab' => 2, 'Presence' => 3, ),
+        self::TYPE_CAMELNAME     => array('usersId' => 0, 'coursesId' => 1, 'isLab' => 2, 'presence' => 3, ),
+        self::TYPE_COLNAME       => array(ProfHasCourseTableMap::COL_USERS_ID => 0, ProfHasCourseTableMap::COL_COURSES_ID => 1, ProfHasCourseTableMap::COL_IS_LAB => 2, ProfHasCourseTableMap::COL_PRESENCE => 3, ),
+        self::TYPE_FIELDNAME     => array('users_id' => 0, 'courses_id' => 1, 'is_lab' => 2, 'presence' => 3, ),
         self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
@@ -134,16 +134,16 @@ class ProfHasCourseTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('Prof_has_Course');
+        $this->setName('prof_has_course');
         $this->setPhpName('ProfHasCourse');
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\ProfHasCourse');
         $this->setPackage('');
         $this->setUseIdGenerator(false);
         // columns
-        $this->addForeignPrimaryKey('User_idUser', 'UserIduser', 'INTEGER' , 'User', 'idUser', true, null, null);
-        $this->addForeignPrimaryKey('Course_idCourse', 'CourseIdcourse', 'INTEGER' , 'Course', 'idCourse', true, null, null);
-        $this->addColumn('isLab', 'Islab', 'BOOLEAN', true, 1, null);
+        $this->addForeignPrimaryKey('users_id', 'UsersId', 'INTEGER' , 'users', 'id', true, null, null);
+        $this->addForeignPrimaryKey('courses_id', 'CoursesId', 'INTEGER' , 'courses', 'id', true, null, null);
+        $this->addColumn('is_lab', 'IsLab', 'BOOLEAN', true, 1, null);
         $this->addColumn('presence', 'Presence', 'INTEGER', true, null, null);
     } // initialize()
 
@@ -152,18 +152,18 @@ class ProfHasCourseTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Course', '\\Course', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Users', '\\Users', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':Course_idCourse',
-    1 => ':idCourse',
+    0 => ':users_id',
+    1 => ':id',
   ),
 ), null, null, null, false);
-        $this->addRelation('User', '\\User', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Courses', '\\Courses', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':User_idUser',
-    1 => ':idUser',
+    0 => ':courses_id',
+    1 => ':id',
   ),
 ), null, null, null, false);
     } // buildRelations()
@@ -183,7 +183,7 @@ class ProfHasCourseTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled()) {
             if (null === $key) {
-                $key = serialize([(null === $obj->getUserIduser() || is_scalar($obj->getUserIduser()) || is_callable([$obj->getUserIduser(), '__toString']) ? (string) $obj->getUserIduser() : $obj->getUserIduser()), (null === $obj->getCourseIdcourse() || is_scalar($obj->getCourseIdcourse()) || is_callable([$obj->getCourseIdcourse(), '__toString']) ? (string) $obj->getCourseIdcourse() : $obj->getCourseIdcourse())]);
+                $key = serialize([(null === $obj->getUsersId() || is_scalar($obj->getUsersId()) || is_callable([$obj->getUsersId(), '__toString']) ? (string) $obj->getUsersId() : $obj->getUsersId()), (null === $obj->getCoursesId() || is_scalar($obj->getCoursesId()) || is_callable([$obj->getCoursesId(), '__toString']) ? (string) $obj->getCoursesId() : $obj->getCoursesId())]);
             } // if key === null
             self::$instances[$key] = $obj;
         }
@@ -203,7 +203,7 @@ class ProfHasCourseTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled() && null !== $value) {
             if (is_object($value) && $value instanceof \ProfHasCourse) {
-                $key = serialize([(null === $value->getUserIduser() || is_scalar($value->getUserIduser()) || is_callable([$value->getUserIduser(), '__toString']) ? (string) $value->getUserIduser() : $value->getUserIduser()), (null === $value->getCourseIdcourse() || is_scalar($value->getCourseIdcourse()) || is_callable([$value->getCourseIdcourse(), '__toString']) ? (string) $value->getCourseIdcourse() : $value->getCourseIdcourse())]);
+                $key = serialize([(null === $value->getUsersId() || is_scalar($value->getUsersId()) || is_callable([$value->getUsersId(), '__toString']) ? (string) $value->getUsersId() : $value->getUsersId()), (null === $value->getCoursesId() || is_scalar($value->getCoursesId()) || is_callable([$value->getCoursesId(), '__toString']) ? (string) $value->getCoursesId() : $value->getCoursesId())]);
 
             } elseif (is_array($value) && count($value) === 2) {
                 // assume we've been passed a primary key";
@@ -237,11 +237,11 @@ class ProfHasCourseTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserIduser', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CourseIdcourse', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UsersId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CoursesId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize([(null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserIduser', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserIduser', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserIduser', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserIduser', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UserIduser', TableMap::TYPE_PHPNAME, $indexType)]), (null === $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CourseIdcourse', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CourseIdcourse', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CourseIdcourse', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CourseIdcourse', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CourseIdcourse', TableMap::TYPE_PHPNAME, $indexType)])]);
+        return serialize([(null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UsersId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UsersId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UsersId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UsersId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('UsersId', TableMap::TYPE_PHPNAME, $indexType)]), (null === $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CoursesId', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CoursesId', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CoursesId', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CoursesId', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CoursesId', TableMap::TYPE_PHPNAME, $indexType)])]);
     }
 
     /**
@@ -263,12 +263,12 @@ class ProfHasCourseTableMap extends TableMap
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('UserIduser', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('UsersId', TableMap::TYPE_PHPNAME, $indexType)
         ];
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 1 + $offset
-                : self::translateFieldName('CourseIdcourse', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('CoursesId', TableMap::TYPE_PHPNAME, $indexType)
         ];
 
         return $pks;
@@ -371,14 +371,14 @@ class ProfHasCourseTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(ProfHasCourseTableMap::COL_USER_IDUSER);
-            $criteria->addSelectColumn(ProfHasCourseTableMap::COL_COURSE_IDCOURSE);
-            $criteria->addSelectColumn(ProfHasCourseTableMap::COL_ISLAB);
+            $criteria->addSelectColumn(ProfHasCourseTableMap::COL_USERS_ID);
+            $criteria->addSelectColumn(ProfHasCourseTableMap::COL_COURSES_ID);
+            $criteria->addSelectColumn(ProfHasCourseTableMap::COL_IS_LAB);
             $criteria->addSelectColumn(ProfHasCourseTableMap::COL_PRESENCE);
         } else {
-            $criteria->addSelectColumn($alias . '.User_idUser');
-            $criteria->addSelectColumn($alias . '.Course_idCourse');
-            $criteria->addSelectColumn($alias . '.isLab');
+            $criteria->addSelectColumn($alias . '.users_id');
+            $criteria->addSelectColumn($alias . '.courses_id');
+            $criteria->addSelectColumn($alias . '.is_lab');
             $criteria->addSelectColumn($alias . '.presence');
         }
     }
@@ -438,8 +438,8 @@ class ProfHasCourseTableMap extends TableMap
                 $values = array($values);
             }
             foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(ProfHasCourseTableMap::COL_USER_IDUSER, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(ProfHasCourseTableMap::COL_COURSE_IDCOURSE, $value[1]));
+                $criterion = $criteria->getNewCriterion(ProfHasCourseTableMap::COL_USERS_ID, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(ProfHasCourseTableMap::COL_COURSES_ID, $value[1]));
                 $criteria->addOr($criterion);
             }
         }
@@ -458,7 +458,7 @@ class ProfHasCourseTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the Prof_has_Course table.
+     * Deletes all rows from the prof_has_course table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).

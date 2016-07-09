@@ -3,7 +3,7 @@
 use Base\UserTypeQuery as BaseUserTypeQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'User_type' table.
+ * Skeleton subclass for performing query and update operations on the 'user_type' table.
  *
  *
  *

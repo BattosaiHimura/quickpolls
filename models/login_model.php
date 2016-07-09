@@ -5,28 +5,51 @@ class Login_Model extends Model
 
     function __construct()
     {
-        //echo 'Login model';
     }
 
     public function run()
     {
-//        $login = $_POST['login'];
-//        $password = $_POST['password'];
 
+        $username = strip_tags($_POST["email"]);
+		$password = strip_tags($_POST["password"]);
+        //$password = hash("sha256", strip_tags($_POST["password"]));
 
-        //select x.*
-        //from User as x
-        //inner join User_has_Pwd as y
-        //on x.idUser = y.User_idUser
-        //inner join Pwd as z
-        //on z.idPwd = y.Pwd_idPwd
-        //where x.email = 'massimilian.martella@studio.unibo.it'
-        //       and z.pwd = '123'
-        //        and y.dateFrom < sysdate() and y.dateTo > sysdate()
-//        $user = UserQuery::create()
-//            ->findByIduser(1);
-//        echo $user;
-//
-//        $u = UserQuery::create()->findOneByEmail($login);
+        $user = UsersQuery::create()->findByEmail($username)->getData();
+
+		//check user
+        if($user != false) {
+
+			$link = UserHasPwdQuery::create()->findByUserId($user[0]->getId())->getData()[0];
+			$pwd = PwdsQuery::create()->findById($link->getPwdId())->getData()[0];
+
+			//check password
+			$check = hash("sha256", $pwd->getSalt() . $password . $pwd->getSalt());
+			if($pwd->getPassword() == $check) {
+				Session::init();
+				Session::set('loggedIn', true);
+				Session::set('loggedAs', $user[0]->getUserTypeId());
+				Session::set('user', $user[0]->getId());
+
+				//setCookie
+//				if(isset($_POST["remember-me"]) && $_POST["remember-me"] == true) {
+//					$value = implode(";", $_SESSION);
+//					setcookie("quickpolls", $value, time() + 60*60*24*30, "/", URL);
+//				}
+
+				header("Location: ".URL."dashboard");
+				exit;
+			} else {
+				//PASSWORDS DO NOT MATCH
+				$msg = urlencode("Password errata");
+				header("Location: ".URL."login?msg=$msg");
+				exit;
+			}
+
+		} else {
+			//USER DOES NOT EXISTS
+			$msg = urlencode("Username sbagliato");
+			header("Location: ".URL."login?msg=$msg");
+			exit;
+		}
     }
 }

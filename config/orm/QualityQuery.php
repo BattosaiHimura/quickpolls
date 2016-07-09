@@ -3,7 +3,7 @@
 use Base\QualityQuery as BaseQualityQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'Quality' table.
+ * Skeleton subclass for performing query and update operations on the 'quality' table.
  *
  *
  *
